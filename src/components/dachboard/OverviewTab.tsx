@@ -67,11 +67,8 @@ export const OverviewTab = ({ records, child }: OverviewTabProps) => {
       {/* Последний диагноз */}
       <Card className="border-yellow-400 bg-white">
         <CardContent className="p-4">
-          <h2 className="font-semibold text-lg mb-2">Последний диагноз (ИИ)</h2>
+          <h2 className="font-semibold text-lg mb-2">Диагноз ПНПК</h2>
           <p className="text-yellow-800">{child.diagnosis.join(", ") || "normal"}</p>
-          <p className="text-sm text-yellow-700 mt-1">
-            Дата анализа: {new Date(records[records.length - 1]?.uploaded_at || "").toLocaleDateString("ru-RU")}
-          </p>
         </CardContent>
       </Card>
 

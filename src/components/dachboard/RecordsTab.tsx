@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Play, Upload, Mic, Square, Loader2, StopCircle } from "lucide-react";
 import { RecordItem } from "@/lib/api";
+import React, { useEffect } from "react";
 
 interface RecordsTabProps {
   records: RecordItem[];
@@ -37,6 +38,40 @@ const RecordsTab: React.FC<RecordsTabProps> = ({
   const [isRecording, setIsRecording] = useState(false);
   const [audioChunks, setAudioChunks] = useState<Blob[]>([]);
   const [playingId, setPlayingId] = useState<string | null>(null); // <-- ID активного аудио
+
+  useEffect(() => {
+    // создаём один элемент audio и добавляем в документ (он hidden)
+    const audioEl = document.createElement("audio");
+    audioEl.preload = "auto";
+    audioEl.style.display = "none";
+    document.body.appendChild(audioEl);
+    audioRef.current = audioEl;
+
+    const onEnded = () => {
+      setPlayingId(null);
+      // очистка src чтобы браузер не держал ресурс
+      if (audioRef.current) {
+        audioRef.current.src = "";
+      }
+    };
+
+    const onError = (ev: any) => {
+      console.error("Audio element error event:", ev);
+      setPlayingId(null);
+    };
+
+    audioEl.addEventListener("ended", onEnded);
+    audioEl.addEventListener("error", onError);
+
+    return () => {
+      // cleanup при размонтировании
+      audioEl.pause();
+      audioEl.removeEventListener("ended", onEnded);
+      audioEl.removeEventListener("error", onError);
+      if (audioEl.parentNode) audioEl.parentNode.removeChild(audioEl);
+      audioRef.current = null;
+    };
+  }, []);
 
   // выбор файла вручную
   const handleAddRecord = () => {
@@ -90,27 +125,67 @@ const RecordsTab: React.FC<RecordsTabProps> = ({
 
   // воспроизведение аудио
   const handlePlayAudio = async (rec: RecordItem) => {
-    try {
-      setPlayingId(rec.id);
-      const audio = new Audio(rec.file_path);
-      audioRef.current = audio;
-      await onPlay(rec.file_path);
-      audio.play();
+    const audio = audioRef.current;
+    if (!audio) {
+      console.error("Audio element not initialized");
+      return;
+    }
 
-      audio.onended = () => {
-        setPlayingId(null);
-      };
+    try {
+      // Если уже играет другой трек — остановим
+      if (playingId && playingId !== rec.id) {
+        handleStopAudio();
+        // небольшая пауза, чтобы браузер успел сбросить ресурс
+        await new Promise((res) => setTimeout(res, 50));
+      }
+
+      setPlayingId(rec.id);
+
+      // Позволим внешней onPlay подготовить (например, логика авторизации/замены пути)
+      // onPlay может возвращать Promise — ждём его
+      await onPlay(rec.file_path);
+
+      // Устанавливаем src и пытаемся воспроизвести
+      // если rec.file_path — не прямой URL, onPlay должен вернуть/установить правильный доступный URL.
+      audio.src = rec.file_path;
+      audio.load();
+
+      // play() возвращает Promise — обработаем отказы (autoplay policy, CORS, etc)
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        await playPromise.catch((err) => {
+          console.error("Не удалось начать воспроизведение:", err);
+          // в случае ошибки сразу сбрасываем состояние
+          setPlayingId(null);
+          // очистим src чтобы не держать ресурс
+          audio.src = "";
+        });
+      }
     } catch (err) {
-      console.error("Ошибка при воспроизведении:", err);
+      console.error("Ошибка в handlePlayAudio:", err);
       setPlayingId(null);
+      if (audio) {
+        try {
+          audio.pause();
+          audio.src = "";
+        } catch {}
+      }
     }
   };
 
+
   // остановка воспроизведения
   const handleStopAudio = () => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    try {
+      audio.pause();
+      audio.currentTime = 0;
+      audio.src = "";
+    } catch (err) {
+      console.warn("Ошибка при остановке audio:", err);
+    } finally {
       setPlayingId(null);
     }
   };

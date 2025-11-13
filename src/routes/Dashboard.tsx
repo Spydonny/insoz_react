@@ -99,36 +99,94 @@ export default function Dashboard() {
   if (loading) return <div className="p-6">Загрузка...</div>;
   if (!child) return <div className="p-6">Пациент не найден.</div>;
 
-  // --- Моковые данные для графиков ---
-  const progressData = [
-    { date: "01.11", normal: 0.2 },
-    { date: "03.11", normal: 0.45 },
-    { date: "06.11", normal: 0.68 },
-    { date: "09.11", normal: 0.82 },
-  ];
-
   // ===== Генерация PDF =====
   const handleDownloadPDF = () => {
+    if (!child) return;
+
     const doc = new jsPDF();
-
-    // Устанавливаем наш шрифт
     doc.setFont("Roboto-Regular", "normal");
-
     doc.setFontSize(14);
+
+    // --- Заголовок ---
     doc.text("Отчёт о пациенте", 20, 20);
-
+    doc.setFontSize(12);
     doc.text(`Имя: ${child.name}`, 20, 35);
-    doc.text(`Возраст: ${child.age} лет`, 20, 45);
-    doc.text(`Статус: активное лечение`, 20, 55);
-    doc.text("Прогресс:", 20, 70);
+    doc.text(`Возраст: ${child.age ?? "не указан"} лет`, 20, 45);
 
-    progressData.forEach((p, i) => {
-      doc.text(`${p.date}: ${(p.normal * 100).toFixed(0)}% норма`, 30, 80 + i * 10);
-    });
+    // --- Раздел: Прогресс ---
+    let y = 70;
+    doc.setFontSize(13);
+    doc.text("Прогресс речевых показателей", 20, y);
+    doc.setFontSize(11);
+    y += 10;
 
-    doc.save(`Отчёт_${child.name}.pdf`);
+    if (records.length === 0) {
+      doc.text("Нет данных для анализа.", 25, y);
+    } else {
+      records.forEach((record, index) => {
+        const date = new Date(record.uploaded_at).toLocaleDateString("ru-RU");
+        doc.text(`${index + 1}. Запись от ${date}`, 20, y);
+        y += 8;
+
+        const probs = record.diagnosis_probabilities;
+        if (probs) {
+          Object.entries(probs).forEach(([key, val]) => {
+            if (val !== undefined && val !== null) {
+              const percent = (val * 100).toFixed(1);
+              doc.text(`- ${key}: ${percent}%`, 30, y);
+              y += 6;
+            }
+            if (y > 270) {
+              doc.addPage();
+              y = 20;
+            }
+          });
+        } else {
+          doc.text("- Нет данных о вероятностях диагнозов", 30, y);
+          y += 6;
+        }
+
+        y += 4;
+        if (y > 270 && index < records.length - 1) {
+          doc.addPage();
+          y = 20;
+        }
+      });
+    }
+
+    // --- Итоговый раздел ---
+    y += 10;
+    if (y > 270) {
+      doc.addPage();
+      y = 20;
+    }
+
+    doc.setFontSize(12);
+    doc.text("Общий вывод:", 20, y);
+    y += 10;
+
+    const avgNormal =
+      records.length > 0
+        ? (
+            records.reduce(
+              (sum, r) => sum + (r.diagnosis_probabilities?.normal ?? 0),
+              0
+            ) / records.length
+          ).toFixed(2)
+        : "0";
+
+    doc.text(
+      `Средний показатель нормы речи: ${(parseFloat(avgNormal) * 100).toFixed(1)}%`,
+      25,
+      y
+    );
+
+    // --- Сохранение PDF ---
+    const filename = `Отчёт_${child.name}_${new Date()
+      .toLocaleDateString("ru-RU")
+      .replace(/\./g, "-")}.pdf`;
+    doc.save(filename);
   };
-
 
   // ===== UI-компоненты =====
   const Header = () => (
