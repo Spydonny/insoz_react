@@ -1,0 +1,116 @@
+{
+  "common": {
+    "loading": "Загрузка...",
+    "notFound": "Данные не найдены.",
+    "back": "Назад",
+    "save": "Сохранить",
+    "saving": "Сохраняем...",
+    "addFile": "Добавить файл",
+    "uploading": "Загрузка...",
+    "audio": "Аудио"
+  },
+  "auth": {
+    "login": "Войти",
+    "logout": "Выйти",
+    "unauthorized": "Неавторизованный доступ",
+    "loginTitle": "Вход",
+    "loginButton": "Войти",
+    "loginSubmitting": "Входим...",
+    "loginError": "Ошибка входа или сервер недоступен",
+    "registerLink": "Зарегистрироваться",
+    "registerTitle": "Регистрация",
+    "registerButton": "Зарегистрироваться",
+    "registerSubmitting": "Регистрация...",
+    "registerError": "Ошибка регистрации или сервер недоступен",
+    "noAccountQuestion": "Нет аккаунта?",
+    "haveAccountQuestion": "Уже есть аккаунт?"
+  },
+  "addChild": {
+    "openButton": "Добавить ребёнка",
+    "title": "Добавить ребёнка",
+    "description": "Заполните информацию о ребёнке для добавления в список.",
+    "photoLabel": "Фото",
+    "fullNameLabel": "ФИО",
+    "ageLabel": "Возраст ребёнка",
+    "diagnosesLabel": "Основные диагнозы",
+    "diagnosesPlaceholder": "Пишите через запятую",
+    "validationError": "Пожалуйста, заполните имя и возраст.",
+    "createError": "Ошибка при добавлении ребёнка.",
+    "unknownError": "Не удалось добавить ребёнка."
+  },
+  "form": {
+    "email": "Email",
+    "password": "Пароль",
+    "fullName": "Полное имя"
+  },
+  "child": {
+    "ageYears_one": "год",
+    "ageYears_few": "года",
+    "ageYears_many": "лет",
+    "ageYears_other": "лет",
+    "status": {
+      "activeTreatment": "активное лечение"
+    }
+  },
+  "dashboard": {
+    "missingChild": "Пациент не найден.",
+    "tabs": {
+      "overview": "Обзор",
+      "records": "Записи",
+      "progress": "Прогресс"
+    },
+    "actions": {
+      "edit": "Редактировать",
+      "downloadPdf": "Скачать PDF"
+    },
+    "diagnosisCardTitle": "Диагноз ПНПК",
+    "probabilityChartTitle": "Прогресс вероятностей диагнозов (%)",
+    "filterTitle": "Фильтр признаков",
+    "recommendationsTitle": "Рекомендации по лечению",
+    "recommendations": [
+      "Тренировки дыхания 10 мин/день",
+      "Чтение коротких текстов с замедленным темпом",
+      "Упражнение «Ма-ме-ми»"
+    ],
+    "confirmRecommendations": "Подтвердить рекомендации",
+    "progressCardTitle": "{{diagnosis}} (%)",
+    "pdf": {
+      "title": "Отчёт о пациенте",
+      "name": "Имя: {{name}}",
+      "age": "Возраст: {{age}} {{unit}}",
+      "ageUnknown": "Возраст: не указан",
+      "progressTitle": "Прогресс речевых показателей",
+      "noData": "Нет данных для анализа.",
+      "recordLine": "{{index}}. Запись от {{date}}",
+      "noRecordData": "- Нет данных",
+      "summaryTitle": "Общий вывод:",
+      "avgNormal": "Средний показатель нормы речи: {{value}}%",
+      "filename": "Отчёт_{{name}}_{{date}}"
+    }
+  },
+  "records": {
+    "loading": "Загрузка записей...",
+    "empty": "Записей пока нет",
+    "columns": {
+      "date": "Дата",
+      "type": "Тип",
+      "prediction": "Предсказание ИИ",
+      "comment": "Комментарий",
+      "listen": "Прослушать"
+    },
+    "typeAudio": "Аудио",
+    "stop": "Остановить",
+    "record": "Записать",
+    "microphoneError": "Не удалось получить доступ к микрофону."
+  },
+  "diagnosis": {
+    "rhotacism": "Ротацизм",
+    "lisp": "Шепелявость",
+    "general_speech_disorder": "Общее недоразвитие речи",
+    "phonetic_phonemic_disorder": "Фонетико-фонематическое нарушение",
+    "stuttering": "Заикание",
+    "aphasia": "Афазия",
+    "dysarthria": "Дизартрия",
+    "normal": "Норма"
+  }
+}

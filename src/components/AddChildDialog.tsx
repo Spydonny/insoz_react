@@ -15,6 +15,7 @@ import Container from "@/components/ui/Container";
 import RoundedInput from "@/components/ui/RoundedInput";
 import { createChild } from "@/lib/api"; 
 import { Child } from "@/types/child";
+import { useTranslation } from "react-i18next";
 
 interface AddChildDialogProps {
   onAdd: (child: Child) => void;
@@ -32,6 +33,8 @@ export function AddChildDialog({ onAdd }: AddChildDialogProps) {
     preview: "",
   });
 
+  const { t } = useTranslation();
+
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -45,7 +48,7 @@ export function AddChildDialog({ onAdd }: AddChildDialogProps) {
 
   const handleSubmit = async () => {
     if (!form.fullName.trim() || !form.age.trim()) {
-      alert("Пожалуйста, заполните имя и возраст.");
+      alert(t("addChild.validationError"));
       return;
     }
 
@@ -64,7 +67,7 @@ export function AddChildDialog({ onAdd }: AddChildDialogProps) {
       });
 
       if (newChild) {
-        console.log("✅ Ребёнок создан:", newChild);
+        console.log("Child created:", newChild);
         onAdd(newChild); // 🔥 вызываем callback
         setOpen(false);
         setForm({
@@ -75,11 +78,11 @@ export function AddChildDialog({ onAdd }: AddChildDialogProps) {
           preview: "",
         });
       } else {
-        alert("Ошибка при добавлении ребёнка.");
+        alert(t("addChild.createError"));
       }
     } catch (err) {
-      console.error("Ошибка при создании:", err);
-      alert("Не удалось добавить ребёнка.");
+      console.error("Failed to create child:", err);
+      alert(t("addChild.unknownError"));
     } finally {
       setLoading(false);
     }
@@ -91,7 +94,7 @@ export function AddChildDialog({ onAdd }: AddChildDialogProps) {
         <div className="border-2 border-dashed border-yellow-400 flex flex-col items-center justify-center h-48 cursor-pointer rounded-xl hover:bg-yellow-100/30 dark:hover:bg-yellow-400/10 transition">
           <Plus className="w-8 h-8 text-yellow-500 dark:text-yellow-400" />
           <p className="text-sm text-yellow-600 dark:text-yellow-300 mt-2">
-            Добавить ребёнка
+            {t("addChild.openButton")}
           </p>
         </div>
       </DialogTrigger>
@@ -100,10 +103,10 @@ export function AddChildDialog({ onAdd }: AddChildDialogProps) {
         <Container>
           <DialogHeader>
             <DialogTitle className="text-xl font-semibold text-yellow-500">
-              Добавить ребёнка
+                {t("addChild.title")}
             </DialogTitle>
             <DialogDescription>
-              Заполните информацию о ребёнке для добавления в список.
+                {t("addChild.description")}
             </DialogDescription>
           </DialogHeader>
 
@@ -131,7 +134,9 @@ export function AddChildDialog({ onAdd }: AddChildDialogProps) {
                 )}
               >
                 <Upload className="text-yellow-400" size={20} />
-                <span className="text-xs text-black mt-1">Фото</span>
+                <span className="text-xs text-black mt-1">
+                  {t("addChild.photoLabel")}
+                </span>
               </label>
             )}
             <input
@@ -146,21 +151,21 @@ export function AddChildDialog({ onAdd }: AddChildDialogProps) {
           {/* Поля формы */}
           <div className="flex flex-col gap-4 mt-4">
             <RoundedInput
-              lbl="ФИО"
+              lbl={t("addChild.fullNameLabel")}
               value={form.fullName}
               onChange={(e) => setForm({ ...form, fullName: e.target.value })}
               placeholder=""
             />
             <RoundedInput
-              lbl="Возраст ребёнка"
+              lbl={t("addChild.ageLabel")}
               placeholder=""
               type="number"
               value={form.age}
               onChange={(e) => setForm({ ...form, age: e.target.value })}
             />
             <RoundedInput
-              lbl="Основные диагнозы"
-              placeholder="Пишите через запятую"
+              lbl={t("addChild.diagnosesLabel")}
+              placeholder={t("addChild.diagnosesPlaceholder")}
               value={form.diagnoses}
               onChange={(e) => setForm({ ...form, diagnoses: e.target.value })}
             />
@@ -172,7 +177,7 @@ export function AddChildDialog({ onAdd }: AddChildDialogProps) {
               disabled={loading}
               className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold w-full"
             >
-              {loading ? "Сохраняем..." : "Сохранить"}
+              {loading ? t("common.saving") : t("common.save")}
             </Button>
           </DialogFooter>
         </Container>

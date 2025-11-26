@@ -12,21 +12,52 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 
+import { useTranslation } from "react-i18next";
+
 export default function Home() {
   const [children, setChildren] = useState<Child[]>([]);
   const navigate = useNavigate();
   const { user, logout, loading } = useAuth();
 
+  const { t, i18n } = useTranslation();
+
   useEffect(() => {
     fetchChildren().then(setChildren);
   }, []);
 
-  if (loading) return <div className="p-6">Загрузка...</div>;
+  if (loading) return <div className="p-6">{t("common.loading")}</div>;
 
   return (
     <div className="min-h-screen bg-background text-foreground p-6">
       <header className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-yellow-500">InSoz.ai</h1>
+
+        <div className="flex items-center gap-4">
+        {/* Language switcher */}
+        <div className="flex border border-yellow-400 rounded-xl overflow-hidden">
+          <button
+            onClick={() => i18n.changeLanguage("ru")}
+            className={`px-3 py-1 text-sm font-medium transition ${
+              i18n.language === "ru"
+                ? "bg-yellow-500 text-black"
+                : "text-yellow-500 hover:bg-yellow-600 hover:text-black"
+            }`}
+          >
+            RU
+          </button>
+          <button
+            onClick={() => i18n.changeLanguage("kk")}
+            className={`px-3 py-1 text-sm font-medium transition ${
+              i18n.language === "kk"
+                ? "bg-yellow-500 text-black"
+                : "text-yellow-500 hover:bg-yellow-600 hover:text-black"
+            }`}
+          >
+            KZ
+          </button>
+        </div>
+      </div>
+
 
         <HoverCard openDelay={100} closeDelay={100}>
           <HoverCardTrigger asChild>
@@ -50,17 +81,17 @@ export default function Home() {
                   onClick={logout}
                   className="text-sm text-red-600 hover:underline"
                 >
-                  Выйти
+                  {t("auth.logout")}
                 </button>
               </div>
             ) : (
               <div>
-                <p>Не авторизован</p>
+                <p>{t("auth.unauthorized")}</p>
                 <button
                   onClick={() => navigate("/login")}
                   className="text-yellow-600 underline"
                 >
-                  Войти
+                  {t("auth.login")}
                 </button>
               </div>
             )}

@@ -2,6 +2,9 @@ import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip } from "rec
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RecordItem } from "@/lib/api";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface OverviewTabProps {
   records: RecordItem[];
@@ -9,30 +12,33 @@ interface OverviewTabProps {
 }
 
 const COLORS = ["#f59e0b", "#3b82f6", "#10b981", "#ef4444", "#8b5cf6", "#14b8a6", "#84cc16"];
-const diagnosisLabels: Record<string, string> = {
-  rhotacism: "Ротацизм",
-  lisp: "Шепелявость",
-  general_speech_disorder: "Общее недоразвитие речи",
-  phonetic_phonemic_disorder: "Фонетико-фонематическое нарушение",
-  stuttering: "Заикание",
-  aphasia: "Афазия",
-  dysarthria: "Дизартрия",
-  normal: "Норма",
-};
+
 
 export const OverviewTab = ({ records, child }: OverviewTabProps) => {
-  const chartData = records.map(rec => {
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language === "kk" ? "kk-KZ" : "ru-RU";
+  const recommendations = t("dashboard.recommendations", {
+    returnObjects: true,
+  }) as string[];
+  const getDiagnosisLabel = (key: string) =>
+    t(`diagnosis.${key}`, { defaultValue: key });
+
+  const chartData = records
+  .map(rec => {
     const probabilities = rec.diagnosis_probabilities
       ? Object.fromEntries(
           Object.entries(rec.diagnosis_probabilities).map(([key, value]) => [
             key,
-            (value ?? 0) * 100, // ← перевод вероятности в проценты
+            (value ?? 0) * 100,
           ])
         )
       : {};
 
+    const ts = new Date(rec.uploaded_at).getTime(); // ← добавляем timestamp
+
     return {
-      date: new Date(rec.uploaded_at).toLocaleString("ru-RU", {
+      ts,         // ← обязательно
+      date: new Date(ts).toLocaleString(locale, {
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
@@ -42,7 +48,9 @@ export const OverviewTab = ({ records, child }: OverviewTabProps) => {
       }),
       ...probabilities,
     };
-  });
+  })
+  .sort((a, b) => a.ts - b.ts); // ← сортировка по времени (важно!)
+
 
   const validDiagnosisKeys = [
     "rhotacism",
@@ -62,55 +70,124 @@ export const OverviewTab = ({ records, child }: OverviewTabProps) => {
         )
       : [];
 
+  // --- NEW: состояние выбранных линий ---
+  const [selectedKeys, setSelectedKeys] = useState<string[]>(diagnosisKeys);
+
+  const toggleKey = (key: string) => {
+    setSelectedKeys((prev) =>
+      prev.includes(key)
+        ? prev.filter((k) => k !== key)
+        : [...prev, key]
+    );
+  };
+
   return (
     <div className="space-y-6">
-      {/* Последний диагноз */}
+      
+      {/* Диагноз */}
       <Card className="border-yellow-400 bg-white">
         <CardContent className="p-4">
-          <h2 className="font-semibold text-lg mb-2">Диагноз ПНПК</h2>
-          <p className="text-yellow-800">{child.diagnosis.join(", ") || "normal"}</p>
+          <h2 className="font-semibold text-lg mb-2">
+            {t("dashboard.diagnosisCardTitle")}
+          </h2>
+          <p className="text-yellow-800">
+            {child.diagnosis.length > 0
+              ? child.diagnosis.join(", ")
+              : t("diagnosis.normal")}
+          </p>
         </CardContent>
       </Card>
 
-      {/* График прогресса */}
+      {/* График */}
+      <Card className="border-yellow-400 bg-white">
+  <CardContent className="p-4">
+    <h2 className="font-semibold text-lg mb-4">
+      {t("dashboard.probabilityChartTitle")}
+    </h2>
+
+    <ResponsiveContainer width="100%" height={240}>
+      <LineChart data={chartData}>
+        {/* --- X AXIS WITH REAL TIMELINE --- */}
+        <XAxis
+          dataKey="ts"               // timestamp в миллисекундах
+          type="number"
+          domain={['auto', 'auto']}
+          tickFormatter={(ts) =>
+            new Date(ts).toLocaleDateString(locale, {
+              day: "2-digit",
+              month: "2-digit",
+            })
+          }
+        />
+
+        <YAxis domain={[0, 100]} tickFormatter={(v) => `${v}%`} />
+
+        <Tooltip
+          labelFormatter={(ts) =>
+            new Date(ts).toLocaleString(locale, {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+            })
+          }
+          formatter={(v: number) => `${v.toFixed(1)}%`}
+        />
+
+        {selectedKeys.map((key, i) => (
+          <Line
+            key={key}
+            type="monotone"
+            dataKey={key}
+            stroke={COLORS[i % COLORS.length]}
+            strokeWidth={2}
+            dot={{ r: 3 }}
+            name={getDiagnosisLabel(key)}
+            connectNulls
+          />
+        ))}
+      </LineChart>
+    </ResponsiveContainer>
+  </CardContent>
+</Card>
+
+
+      {/* Фильтр признаков */}
       <Card className="border-yellow-400 bg-white">
         <CardContent className="p-4">
-          <h2 className="font-semibold text-lg mb-4">
-            Прогресс вероятностей диагнозов (%)
+          <h2 className="font-semibold text-lg mb-3">
+            {t("dashboard.filterTitle")}
           </h2>
-          <ResponsiveContainer width="100%" height={200}>
-            <LineChart data={chartData}>
-              <XAxis dataKey="date" />
-              <YAxis domain={[0, 100]} tickFormatter={(v) => `${v}%`} />
-              <Tooltip formatter={(v: number) => `${v.toFixed(1)}%`} />
-              {diagnosisKeys.map((key, i) => (
-                <Line
-                  key={key}
-                  type="monotone"
-                  dataKey={key}
-                  stroke={COLORS[i % COLORS.length]}
-                  strokeWidth={2}
-                  dot={{ r: 3 }}
-                  name={diagnosisLabels[key] || key}
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+            {diagnosisKeys.map((key) => (
+              <label key={key} className="flex items-center space-x-2">
+                <Checkbox
+                  checked={selectedKeys.includes(key)}
+                  onCheckedChange={() => toggleKey(key)}
                 />
-              ))}
-            </LineChart>
-          </ResponsiveContainer>
+                <span>{getDiagnosisLabel(key)}</span>
+              </label>
+            ))}
+          </div>
         </CardContent>
       </Card>
 
       {/* Рекомендации */}
       <Card className="border-yellow-400 bg-white">
         <CardContent className="p-4">
-          <h2 className="font-semibold text-lg mb-3">Рекомендации по лечению</h2>
+          <h2 className="font-semibold text-lg mb-3">
+            {t("dashboard.recommendationsTitle")}
+          </h2>
           <ul className="list-disc list-inside space-y-1 text-yellow-800">
-            <li>Тренировки дыхания 10 мин/день</li>
-            <li>Чтение коротких текстов с замедленным темпом</li>
-            <li>Ритм речи: упражнение “Ма-ме-ми”</li>
+            {recommendations.map((item: string) => (
+              <li key={item}>{item}</li>
+            ))}
           </ul>
           <div className="flex justify-end mt-4">
             <Button className="bg-yellow-500 hover:bg-yellow-600 text-white">
-              Подтвердить рекомендации
+              {t("dashboard.confirmRecommendations")}
             </Button>
           </div>
         </CardContent>
@@ -118,3 +195,4 @@ export const OverviewTab = ({ records, child }: OverviewTabProps) => {
     </div>
   );
 };
+

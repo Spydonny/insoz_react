@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import Container from "@/components/ui/Container";
 import RoundedInput from "@/components/ui/RoundedInput";
 import { registerUser, loginUser } from "@/lib/api";
+import { useTranslation } from "react-i18next";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ export default function Register() {
     password: "",
   });
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -22,7 +24,7 @@ export default function Register() {
       await loginUser({ email: form.username, password: form.password });
       navigate("/");
     } catch (err) {
-      alert("Ошибка регистрации или сервер недоступен");
+      alert(t("auth.registerError"));
     } finally {
       setLoading(false);
     }
@@ -30,21 +32,23 @@ export default function Register() {
 
   return (
     <Container>
-      <h2 className="text-2xl font-bold text-center mb-6">Регистрация</h2>
+      <h2 className="text-2xl font-bold text-center mb-6">
+        {t("auth.registerTitle")}
+      </h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <RoundedInput
-          lbl="Полное имя"
+          lbl={t("form.fullName")}
           value={form.full_name}
           onChange={(e) => setForm({ ...form, full_name: e.target.value })}
         />
         <RoundedInput
-          lbl="Email"
+          lbl={t("form.email")}
           value={form.username}
           onChange={(e) => setForm({ ...form, username: e.target.value })}
           type="email"
         />
         <RoundedInput
-          lbl="Пароль"
+          lbl={t("form.password")}
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
           type="password"
@@ -54,17 +58,17 @@ export default function Register() {
           disabled={loading}
           className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-xl transition-all"
         >
-          {loading ? "Регистрация..." : "Зарегистрироваться"}
+          {loading ? t("auth.registerSubmitting") : t("auth.registerButton")}
         </Button>
       </form>
 
       <p className="text-center text-sm text-muted-foreground mt-4">
-        Уже есть аккаунт?{" "}
+        {t("auth.haveAccountQuestion")}{" "}
         <Link
           to="/login"
           className="underline text-yellow-600 hover:text-yellow-700"
         >
-          Войти
+          {t("auth.loginButton")}
         </Link>
       </p>
     </Container>

@@ -1,0 +1,116 @@
+{
+  "common": {
+    "loading": "Жүктелуде...",
+    "notFound": "Деректер табылмады.",
+    "back": "Артқа",
+    "save": "Сақтау",
+    "saving": "Сақталуда...",
+    "addFile": "Файл қосу",
+    "uploading": "Жүктелуде...",
+    "audio": "Аудио"
+  },
+  "auth": {
+    "login": "Кіру",
+    "logout": "Шығу",
+    "unauthorized": "Қол жеткізу рұқсат етілмеген",
+    "loginTitle": "Кіру",
+    "loginButton": "Кіру",
+    "loginSubmitting": "Кіріп жатыр...",
+    "loginError": "Кіру кезінде қате немесе сервер қолжетімсіз",
+    "registerLink": "Тіркелу",
+    "registerTitle": "Тіркелу",
+    "registerButton": "Тіркелу",
+    "registerSubmitting": "Тіркелуде...",
+    "registerError": "Тіркелу кезінде қате немесе сервер қолжетімсіз",
+    "noAccountQuestion": "Тіркелгі жоқ па?",
+    "haveAccountQuestion": "Тіркелгіңіз бар ма?"
+  },
+  "addChild": {
+    "openButton": "Баланы қосу",
+    "title": "Баланы қосу",
+    "description": "Тізімге қосу үшін баланың ақпаратын толтырыңыз.",
+    "photoLabel": "Фото",
+    "fullNameLabel": "Аты-жөні",
+    "ageLabel": "Баланың жасы",
+    "diagnosesLabel": "Негізгі диагноздар",
+    "diagnosesPlaceholder": "Үтір арқылы жазыңыз",
+    "validationError": "Аты-жөнін және жасын толтырыңыз.",
+    "createError": "Баланы қосу кезінде қате кетті.",
+    "unknownError": "Баланы қосу мүмкін болмады."
+  },
+  "form": {
+    "email": "Email",
+    "password": "Құпиясөз",
+    "fullName": "Толық аты-жөні"
+  },
+  "child": {
+    "ageYears_one": "жыл",
+    "ageYears_few": "жыл",
+    "ageYears_many": "жыл",
+    "ageYears_other": "жыл",
+    "status": {
+      "activeTreatment": "емдеу үдерісінде"
+    }
+  },
+  "dashboard": {
+    "missingChild": "Пациент табылмады.",
+    "tabs": {
+      "overview": "Шолу",
+      "records": "Жазбалар",
+      "progress": "Даму"
+    },
+    "actions": {
+      "edit": "Өңдеу",
+      "downloadPdf": "PDF жүктеп алу"
+    },
+    "diagnosisCardTitle": "ПНПК диагнозы",
+    "probabilityChartTitle": "Диагноз ықтималдықтарының прогресі (%)",
+    "filterTitle": "Белгілер сүзгісі",
+    "recommendationsTitle": "Емдеу бойынша ұсыныстар",
+    "recommendations": [
+      "Күніне 10 минут тыныс жаттығулары",
+      "Қарқыны баяу қысқа мәтіндерді оқу",
+      "«Ма-ме-ми» жаттығуы"
+    ],
+    "confirmRecommendations": "Ұсыныстарды растау",
+    "progressCardTitle": "{{diagnosis}} (%)",
+    "pdf": {
+      "title": "Пациент туралы есеп",
+      "name": "Аты: {{name}}",
+      "age": "Жасы: {{age}} {{unit}}",
+      "ageUnknown": "Жасы: көрсетілмеген",
+      "progressTitle": "Сөйлеу көрсеткіштерінің прогресі",
+      "noData": "Талдауға дерек жоқ.",
+      "recordLine": "{{index}}. {{date}} күнгі жазба",
+      "noRecordData": "- Дерек жоқ",
+      "summaryTitle": "Жалпы қорытынды:",
+      "avgNormal": "Сөйлеудің норма көрсеткіші: {{value}}%",
+      "filename": "Есеп_{{name}}_{{date}}"
+    }
+  },
+  "records": {
+    "loading": "Жазбалар жүктелуде...",
+    "empty": "Жазбалар әлі жоқ",
+    "columns": {
+      "date": "Күні",
+      "type": "Түрі",
+      "prediction": "ЖИ болжамы",
+      "comment": "Түсініктеме",
+      "listen": "Тыңдау"
+    },
+    "typeAudio": "Аудио",
+    "stop": "Тоқтату",
+    "record": "Жазу",
+    "microphoneError": "Микрофонға қол жеткізу мүмкін болмады."
+  },
+  "diagnosis": {
+    "rhotacism": "Ротацизм",
+    "lisp": "Сигматизм",
+    "general_speech_disorder": "Сөйлеудің жалпы дамымауы",
+    "phonetic_phonemic_disorder": "Фонетика-фонемалық бұзылыс",
+    "stuttering": "Кекештену",
+    "aphasia": "Афазия",
+    "dysarthria": "Дизартрия",
+    "normal": "Норма"
+  }
+}

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Child } from "@/types/child";
 import { User } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   child: Child;
@@ -13,6 +14,7 @@ interface Props {
 export function ChildCard({ child }: Props) {
   const navigate = useNavigate();
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!child.picture_id) return;
@@ -40,13 +42,15 @@ export function ChildCard({ child }: Props) {
           </div>
         )}
         <p className="font-semibold text-yellow-900">{child.name}</p>
-        <p className="text-sm text-yellow-800">{child.age} {child?.age % 10 === 1 && child?.age % 100 !== 11
-            ? "год"
-            : child?.age % 10 >= 2 && child?.age % 10 <= 4 && (child?.age % 100 < 10 || child?.age % 100 >= 20)
-            ? "года"
-            : "лет"}</p>
+        {child.age != null && (
+          <p className="text-sm text-yellow-800">
+            {child.age} {t("child.ageYears", { count: child.age })}
+          </p>
+        )}
         <p className="text-xs text-center mt-2 text-yellow-700">
-          {child.diagnosis.join(",  ")}
+          {child.diagnosis.length > 0
+            ? child.diagnosis.join(", ")
+            : t("diagnosis.normal")}
         </p>
       </CardContent>
     </Card>
