@@ -44,10 +44,10 @@
     "fullName": "Толық аты-жөні"
   },
   "child": {
-    "ageYears_one": "жыл",
-    "ageYears_few": "жыл",
-    "ageYears_many": "жыл",
-    "ageYears_other": "жыл",
+    "ageYears_one": "жаста",
+    "ageYears_few": "жаста",
+    "ageYears_many": "жаста",
+    "ageYears_other": "жаста",
     "status": {
       "activeTreatment": "емдеу үдерісінде"
     }
