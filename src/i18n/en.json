@@ -1,0 +1,117 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "notFound": "Data not found.",
+    "back": "Back",
+    "save": "Save",
+    "saving": "Saving...",
+    "addFile": "Add file",
+    "uploading": "Uploading...",
+    "audio": "Audio"
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "unauthorized": "Unauthorized access",
+    "loginTitle": "Login",
+    "loginButton": "Login",
+    "loginSubmitting": "Logging in...",
+    "loginError": "Login error or server unavailable",
+    "registerLink": "Register",
+    "registerTitle": "Registration",
+    "registerButton": "Register",
+    "registerSubmitting": "Registering...",
+    "registerError": "Registration error or server unavailable",
+    "noAccountQuestion": "Don't have an account?",
+    "haveAccountQuestion": "Already have an account?"
+  },
+  "addChild": {
+    "openButton": "Add child",
+    "title": "Add child",
+    "description": "Fill in the child's information to add them to the list.",
+    "photoLabel": "Photo",
+    "fullNameLabel": "Full name",
+    "ageLabel": "Child's age",
+    "diagnosesLabel": "Main diagnoses",
+    "diagnosesPlaceholder": "Separate with commas",
+    "validationError": "Please fill in the name and age.",
+    "createError": "Error while adding the child.",
+    "unknownError": "Failed to add the child."
+  },
+  "form": {
+    "email": "Email",
+    "password": "Password",
+    "fullName": "Full name"
+  },
+  "child": {
+    "ageYears_one": "year",
+    "ageYears_few": "years",
+    "ageYears_many": "years",
+    "ageYears_other": "years",
+    "status": {
+      "activeTreatment": "active treatment"
+    }
+  },
+  "dashboard": {
+    "missingChild": "Patient not found.",
+    "tabs": {
+      "overview": "Overview",
+      "records": "Records",
+      "progress": "Progress",
+      "exercises": "Exercises"
+    },
+    "actions": {
+      "edit": "Edit",
+      "downloadPdf": "Download PDF"
+    },
+    "diagnosisCardTitle": "Dysarthria Diagnosis",
+    "probabilityChartTitle": "Diagnosis Probability Progress (%)",
+    "filterTitle": "Feature filter",
+    "recommendationsTitle": "Treatment recommendations",
+    "recommendations": [
+      "Breathing training 10 min/day",
+      "Reading short texts at a slow pace",
+      "Exercise “Ma-me-mi”"
+    ],
+    "confirmRecommendations": "Confirm recommendations",
+    "progressCardTitle": "{{diagnosis}} (%)",
+    "pdf": {
+      "title": "Patient report",
+      "name": "Name: {{name}}",
+      "age": "Age: {{age}} {{unit}}",
+      "ageUnknown": "Age: not specified",
+      "progressTitle": "Speech performance progress",
+      "noData": "No data for analysis.",
+      "recordLine": "{{index}}. Record from {{date}}",
+      "noRecordData": "- No data",
+      "summaryTitle": "Overall summary:",
+      "avgNormal": "Average speech norm score: {{value}}%",
+      "filename": "Report_{{name}}_{{date}}"
+    }
+  },
+  "records": {
+    "loading": "Loading records...",
+    "empty": "No records yet",
+    "columns": {
+      "date": "Date",
+      "type": "Type",
+      "prediction": "AI prediction",
+      "comment": "Comment",
+      "listen": "Listen"
+    },
+    "typeAudio": "Audio",
+    "stop": "Stop",
+    "record": "Record",
+    "microphoneError": "Unable to access the microphone."
+  },
+  "diagnosis": {
+    "rhotacism": "Rhotacism",
+    "lisp": "Lisp",
+    "general_speech_disorder": "General speech underdevelopment",
+    "phonetic_phonemic_disorder": "Phonetic-phonemic disorder",
+    "stuttering": "Stuttering",
+    "aphasia": "Aphasia",
+    "dysarthria": "Dysarthria",
+    "normal": "Normal"
+  }
+}

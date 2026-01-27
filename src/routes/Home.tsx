@@ -46,6 +46,16 @@ export default function Home() {
             RU
           </button>
           <button
+            onClick={() => i18n.changeLanguage("en")}
+            className={`px-3 py-1 text-sm font-medium transition ${
+              i18n.language === "en"
+                ? "bg-yellow-500 text-black"
+                : "text-yellow-500 hover:bg-yellow-600 hover:text-black"
+            }`}
+          >
+            EN
+          </button>
+          <button
             onClick={() => i18n.changeLanguage("kk")}
             className={`px-3 py-1 text-sm font-medium transition ${
               i18n.language === "kk"
@@ -104,7 +114,7 @@ export default function Home() {
           <ChildCard key={child.uuid} child={child} />
         ))}
         <AddChildDialog 
-          onAdd={(newChild) => setChildren((prev) => [newChild, ...prev])}
+          onAdd={(newChild) => setChildren((prev) => [...prev, newChild])}
         />
       </div>
     </div>

@@ -68,7 +68,17 @@ export function AddChildDialog({ onAdd }: AddChildDialogProps) {
 
       if (newChild) {
         console.log("Child created:", newChild);
-        onAdd(newChild); // 🔥 вызываем callback
+        const raw = newChild;
+
+        const normalized = {
+          uuid: raw.uuid,
+          name: form.fullName,
+          age: Number(form.age),
+          diagnosis: diagnosesArray,
+          picture: form.photo || undefined,
+        };
+
+        onAdd(normalized);
         setOpen(false);
         setForm({
           fullName: "",

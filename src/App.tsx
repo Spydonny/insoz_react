@@ -3,6 +3,7 @@ import Home from "@/routes/Home";
 import Dashboard from "@/routes/Dashboard";
 import Login from "@/routes/Login";
 import Register from "@/routes/Register";
+import ExercisePage, {} from "@/components/exercises/ExercisePage"; 
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
         <Route path="/dashboard/:id" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/exercises/:id" element={<ExercisePage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -57,7 +57,8 @@
     "tabs": {
       "overview": "Обзор",
       "records": "Записи",
-      "progress": "Прогресс"
+      "progress": "Прогресс",
+      "exercises": "Упражнения"
     },
     "actions": {
       "edit": "Редактировать",

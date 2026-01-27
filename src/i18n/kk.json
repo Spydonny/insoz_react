@@ -57,7 +57,8 @@
     "tabs": {
       "overview": "Шолу",
       "records": "Жазбалар",
-      "progress": "Даму"
+      "progress": "Даму",
+      "exercises": "Жаттығулар"
     },
     "actions": {
       "edit": "Өңдеу",

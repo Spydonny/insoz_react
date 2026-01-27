@@ -4,6 +4,7 @@ import LanguageDetector from "i18next-browser-languagedetector";
 
 import kk from "./kk.json";
 import ru from "./ru.json";
+import en from "./en.json";
 
 i18n
   .use(LanguageDetector)
@@ -11,10 +12,11 @@ i18n
   .init({
     resources: {
       kk: { translation: kk },
-      ru: { translation: ru }
+      ru: { translation: ru },
+      en: { translation: en }
     },
     fallbackLng: "ru",
-    supportedLngs: ["ru", "kk"],
+    supportedLngs: ["ru", "kk", "en"],
     interpolation: { escapeValue: false },
     detection: {
       order: ["localStorage", "navigator", "htmlTag"],

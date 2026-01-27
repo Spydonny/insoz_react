@@ -1,6 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import jsPDF from "jspdf";
 
 import {
   getChildById,
@@ -19,9 +18,13 @@ import { ArrowLeft, Edit, Download, User } from "lucide-react";
 import RecordsTab from "@/components/dachboard/RecordsTab";
 import { OverviewTab } from "@/components/dachboard/OverviewTab";
 import { ProgressTab } from "@/components/dachboard/ProgressTab";
+import { ExercisesTab } from "@/components/dachboard/ExercisesTab";
 
 import "@/fonts/Roboto-Regular-normal";
 import { useTranslation } from "react-i18next";
+
+import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
+
 
 export default function Dashboard() {
   const { id } = useParams();
@@ -99,106 +102,149 @@ export default function Dashboard() {
   };
 
   // ------ PDF ------
-  const handleDownloadPDF = () => {
-    if (!child) return;
+const handleDownloadPDF = async () => {
+  if (!child) return;
 
-    const doc = new jsPDF();
-    doc.setFont("Roboto-Regular", "normal");
-    doc.setFontSize(14);
+  const pdfDoc = await PDFDocument.create();
+  let page = pdfDoc.addPage([595, 842]); // A4
+  const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+  const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+  let y = 800;
+  const marginX = 40;
 
-    // Header
-    doc.text(t("dashboard.pdf.title"), 20, 20);
-    doc.setFontSize(12);
-    doc.text(t("dashboard.pdf.name", { name: child.name }), 20, 35);
-    if (child.age != null) {
-      doc.text(
-        t("dashboard.pdf.age", {
-          age: child.age,
-          unit: t("child.ageYears", { count: child.age }),
-        }),
-        20,
-        45
-      );
-    } else {
-      doc.text(t("dashboard.pdf.ageUnknown"), 20, 45);
+  const addPageIfNeeded = () => {
+    if (y < 60) {
+      page = pdfDoc.addPage([595, 842]);
+      y = 800;
     }
-
-    // Progress section
-    let y = 70;
-    doc.setFontSize(13).text(t("dashboard.pdf.progressTitle"), 20, y);
-    y += 10;
-
-    doc.setFontSize(11);
-
-    const addPageIfNeeded = () => {
-      if (y > 270) {
-        doc.addPage();
-        y = 20;
-      }
-    };
-
-    if (records.length === 0) {
-      doc.text(t("dashboard.pdf.noData"), 25, y);
-    } else {
-      records.forEach((record, index) => {
-        addPageIfNeeded();
-        const date = new Date(record.uploaded_at).toLocaleDateString(locale);
-        doc.text(
-          t("dashboard.pdf.recordLine", { index: index + 1, date }),
-          20,
-          y
-        );
-        y += 8;
-
-        const probs = record.diagnosis_probabilities;
-
-        if (probs) {
-          Object.entries(probs).forEach(([key, val]) => {
-            if (val != null) {
-              doc.text(`- ${key}: ${(val * 100).toFixed(1)}%`, 30, y);
-              y += 6;
-              addPageIfNeeded();
-            }
-          });
-        } else {
-          doc.text(t("dashboard.pdf.noRecordData"), 30, y);
-          y += 6;
-        }
-
-        y += 4;
-        addPageIfNeeded();
-      });
-    }
-
-    // Summary
-    y += 10;
-    addPageIfNeeded();
-
-    doc.setFontSize(12).text(t("dashboard.pdf.summaryTitle"), 20, y);
-    y += 10;
-
-    const avgNormal =
-      records.length > 0
-        ? records.reduce((s, r) => s + (r.diagnosis_probabilities?.normal ?? 0), 0) /
-          records.length
-        : 0;
-
-    doc.text(
-      t("dashboard.pdf.avgNormal", {
-        value: (avgNormal * 100).toFixed(1),
-      }),
-      25,
-      y
-    );
-
-    const reportDate = new Date().toLocaleDateString(locale).replace(/\./g, "-");
-    const filename = `${t("dashboard.pdf.filename", {
-      name: child.name,
-      date: reportDate,
-    })}.pdf`;
-
-    doc.save(filename);
   };
+
+  const drawText = (text: string, size = 11, bold = false, offsetX = 0) => {
+    page.drawText(text, {
+      x: marginX + offsetX,
+      y,
+      size,
+      font: bold ? boldFont : font,
+      color: rgb(0, 0, 0),
+    });
+    y -= size + 6;
+    addPageIfNeeded();
+  };
+
+  drawText(t("dashboard.pdf.title"), 16, true);
+  y -= 10;
+
+  drawText(
+    t("dashboard.pdf.name", { name: child.name }),
+    12
+  );
+
+  if (child.age != null) {
+    drawText(
+      t("dashboard.pdf.age", {
+        age: child.age,
+        unit: t("child.ageYears", { count: child.age }),
+      }),
+      12
+    );
+  } else {
+    drawText(t("dashboard.pdf.ageUnknown"), 12);
+  }
+
+  y -= 20;
+
+  drawText(t("dashboard.pdf.progressTitle"), 14, true);
+  y -= 6;
+
+  if (records.length === 0) {
+    drawText(t("dashboard.pdf.noData"), 11, false, 10);
+  } else {
+    records.forEach((record, index) => {
+      const date = new Date(record.uploaded_at).toLocaleDateString(locale);
+
+      drawText(
+        t("dashboard.pdf.recordLine", {
+          index: index + 1,
+          date,
+        }),
+        11,
+        true
+      );
+
+      const probs = record.diagnosis_probabilities;
+
+      if (probs) {
+        Object.entries(probs).forEach(([key, val]) => {
+          if (val != null) {
+            drawText(
+              `• ${key}: ${(val * 100).toFixed(1)}%`,
+              11,
+              false,
+              15
+            );
+          }
+        });
+      } else {
+        drawText(
+          t("dashboard.pdf.noRecordData"),
+          11,
+          false,
+          15
+        );
+      }
+
+      y -= 6;
+      addPageIfNeeded();
+    });
+  }
+
+  y -= 10;
+  drawText(t("dashboard.pdf.summaryTitle"), 14, true);
+
+  const avgNormal =
+    records.length > 0
+      ? records.reduce(
+          (s, r) =>
+            s + (r.diagnosis_probabilities?.normal ?? 0),
+          0
+        ) / records.length
+      : 0;
+
+  drawText(
+    t("dashboard.pdf.avgNormal", {
+      value: (avgNormal * 100).toFixed(1),
+    }),
+    12,
+    false,
+    10
+  );
+
+  // —————————————
+  // Generate bytes
+  const bytes = await pdfDoc.save();
+
+  // Make blob
+  const blob = new Blob([new Uint8Array(bytes)], { type: "application/pdf" });
+
+  // Format filename
+  const reportDate = new Date()
+    .toLocaleDateString(locale)
+    .replace(/\./g, "-");
+  const filename = `${t("dashboard.pdf.filename", {
+    name: child.name,
+    date: reportDate,
+  })}.pdf`;
+
+  // Create link and force download
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = filename;
+  link.click();
+
+  // Cleanup URL object
+  URL.revokeObjectURL(link.href);
+};
+
 
   if (loading) return <div className="p-6">{t("common.loading")}</div>;
   if (!child) return <div className="p-6">{t("dashboard.missingChild")}</div>;
@@ -273,6 +319,9 @@ export default function Dashboard() {
           <TabsTrigger value="progress">
             {t("dashboard.tabs.progress")}
           </TabsTrigger>
+          <TabsTrigger value="exercises">
+            {t("dashboard.tabs.exercises")}
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview">
@@ -291,6 +340,10 @@ export default function Dashboard() {
 
         <TabsContent value="progress">
           <ProgressTab records={records} />
+        </TabsContent>
+
+        <TabsContent value="exercises">
+          <ExercisesTab />
         </TabsContent>
       </Tabs>
     </div>
