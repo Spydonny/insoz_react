@@ -75,7 +75,7 @@ import { Child } from "@/types/child";
 export async function fetchChildren(): Promise<Child[]> {
   try {
     const token = getToken();
-    const res = await fetch(`${API_URL}/children`, {
+    const res = await fetch(`${API_URL}/children/`, {
       headers: token ? { Authorization: `Bearer ${token}` } : {},
     });
     if (!res.ok) throw new Error("Ошибка загрузки");

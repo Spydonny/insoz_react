@@ -113,5 +113,14 @@
     "aphasia": "Aphasia",
     "dysarthria": "Dysarthria",
     "normal": "Normal"
-  }
+  },
+  "browser_no_speech_support": "Your browser does not support speech recognition",
+  "say_prompt": "Say:",
+  "start": "Start",
+  "stop": "Stop",
+  "recording": "Recording...",
+  "waiting": "Waiting",
+  "you_said": "You said:",
+  "well_done": "Great!",
+  "try_again": "Try again slowly"
 }

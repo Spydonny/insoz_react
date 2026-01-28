@@ -7,7 +7,7 @@ export type SpeechExercise = {
   id: string;
   title: string;
   description: string;
-  category: "ОНР" | "Артикуляция" | "Фонетика";
+  category: string;
   type: ExerciseType;
   prompt: string;
 };

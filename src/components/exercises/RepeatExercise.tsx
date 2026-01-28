@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mic, Square, CheckCircle, XCircle } from "lucide-react";
 
+import { useTranslation } from "react-i18next";
+
 type Props = {
   prompt: string;
 };
@@ -13,12 +15,13 @@ export function RepeatExercise({ prompt }: Props) {
     useSpeechEngine();
 
   const [result, setResult] = useState<"ok" | "fail" | null>(null);
+  const { t, i18n } = useTranslation();
 
   if (!supported) {
     return (
       <Card className="border-yellow-400 bg-white">
         <CardContent className="p-4 text-yellow-700">
-          Браузер не поддерживает распознавание речи
+          {t("browser_no_speech_support", "Your browser does not support speech recognition")}
         </CardContent>
       </Card>
     );
@@ -42,10 +45,8 @@ export function RepeatExercise({ prompt }: Props) {
     <Card className="border-yellow-400 bg-white">
       <CardContent className="p-4 space-y-4">
         <p className="text-lg">
-          Произнеси:{" "}
-          <span className="font-semibold text-yellow-900">
-            {prompt}
-          </span>
+          {t("say_prompt", "Say:")}{" "}
+          <span className="font-semibold text-yellow-900">{prompt}</span>
         </p>
 
         <div className="flex items-center gap-3">
@@ -58,38 +59,40 @@ export function RepeatExercise({ prompt }: Props) {
             {listening ? (
               <>
                 <Square className="w-4 h-4" />
-                Остановить
+                {t("stop", "Stop")}
               </>
             ) : (
               <>
                 <Mic className="w-4 h-4" />
-                Начать
+                {t("start", "Start")}
               </>
             )}
           </Button>
 
           <span className="text-sm text-yellow-700">
-            {listening ? "Идёт запись..." : "Ожидание"}
+            {listening
+              ? t("recording", "Recording...")
+              : t("waiting", "Waiting")}
           </span>
         </div>
 
         {transcript && (
           <p className="text-sm text-yellow-800 bg-yellow-50 p-2 rounded">
-            Ты сказал: {transcript}
+            {t("you_said", "You said:")} {transcript}
           </p>
         )}
 
         {result === "ok" && (
           <div className="flex items-center gap-2 text-green-600 font-semibold">
             <CheckCircle className="w-5 h-5" />
-            Отлично!
+            {t("well_done", "Great!")}
           </div>
         )}
 
         {result === "fail" && (
           <div className="flex items-center gap-2 text-red-600">
             <XCircle className="w-5 h-5" />
-            Попробуй ещё раз медленно
+            {t("try_again", "Try again slowly")}
           </div>
         )}
       </CardContent>
