@@ -88,7 +88,12 @@ export default function Home() {
                 </p>
                 <div className="border-t my-2" />
                 <button
-                  onClick={logout}
+                  onClick={
+                    () => {
+                      logout();
+                      navigate("/login");
+                    }
+                  }
                   className="text-sm text-red-600 hover:underline"
                 >
                   {t("auth.logout")}
