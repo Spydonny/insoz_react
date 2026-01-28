@@ -25,6 +25,8 @@ import { useTranslation } from "react-i18next";
 
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 
+import fontkit from "@pdf-lib/fontkit";
+
 
 export default function Dashboard() {
   const { id } = useParams();
@@ -106,9 +108,17 @@ const handleDownloadPDF = async () => {
   if (!child) return;
 
   const pdfDoc = await PDFDocument.create();
+
+  // 👇 ОБЯЗАТЕЛЬНО
+  pdfDoc.registerFontkit(fontkit);
+
+  // загрузка ttf
+  const fontBytes = await fetch("/Roboto/static/Roboto-Regular.ttf").then(r => r.arrayBuffer());
+  const boldBytes = await fetch("/Roboto/static/Roboto-Bold.ttf").then(r => r.arrayBuffer());
+
+  const font = await pdfDoc.embedFont(fontBytes);
+  const boldFont = await pdfDoc.embedFont(boldBytes);
   let page = pdfDoc.addPage([595, 842]); // A4
-  const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-  const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
   let y = 800;
   const marginX = 40;
 

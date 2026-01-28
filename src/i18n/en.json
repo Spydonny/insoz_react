@@ -122,5 +122,22 @@
   "waiting": "Waiting",
   "you_said": "You said:",
   "well_done": "Great!",
-  "try_again": "Try again slowly"
+  "try_again": "Try again slowly",
+  "recommendations": {
+    "articulation_assessment": "Conduct a detailed articulation assessment to identify misarticulated phonemes.",
+    "phonemic_hearing_test": "Evaluate phonemic awareness using standardized perception tests.",
+    "individual_plan_update": "Update the individualized intervention plan based on current performance data.",
+    "dynamic_monitoring": "Document progress dynamics and compare results with previous sessions.",
+    "breathing_protocol": "Introduce structured breathing exercises to normalize expiratory control during speech.",
+    "sound_automation": "Progress from sound elicitation to automation at word and sentence levels.",
+    "syllable_drills": "Use syllable drills to reinforce correct articulatory placement.",
+    "speech_tempo_control": "Monitor and regulate speech rate and fluency during tasks.",
+    "prosody_training": "Target prosody, stress patterns, and intonation for natural speech production.",
+    "parent_instruction": "Provide caregivers with clear home-practice guidelines and supervision strategies.",
+    "homework_assignment": "Assign structured home exercises with measurable goals.",
+    "audio_record_analysis": "Analyze recorded speech samples for objective progress tracking.",
+    "difficulty_scaling": "Gradually increase linguistic and articulatory task complexity.",
+    "session_frequency_review": "Reassess therapy frequency if progress remains limited.",
+    "specialist_referral": "Refer to related specialists (neurologist, psychologist, ENT) when clinically indicated."
+  }
 }

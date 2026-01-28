@@ -6,6 +6,34 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { useMemo } from "react";
+
+const allRecommendations = [
+  "articulation_assessment",
+  "phonemic_hearing_test",
+  "individual_plan_update",
+  "dynamic_monitoring",
+  "breathing_protocol",
+  "sound_automation",
+  "syllable_drills",
+  "speech_tempo_control",
+  "prosody_training",
+  "parent_instruction",
+  "homework_assignment",
+  "audio_record_analysis",
+  "difficulty_scaling",
+  "session_frequency_review",
+  "specialist_referral",
+];
+
+
+const pickRandom = <T,>(arr: T[], count: number): T[] => {
+  const shuffled = [...arr].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
+};
+
+
+
 interface OverviewTabProps {
   records: RecordItem[];
   child: { diagnosis: string[] };
@@ -17,9 +45,6 @@ const COLORS = ["#f59e0b", "#3b82f6", "#10b981", "#ef4444", "#8b5cf6", "#14b8a6"
 export const OverviewTab = ({ records, child }: OverviewTabProps) => {
   const { t, i18n } = useTranslation();
   const locale = i18n.language === "kk" ? "kk-KZ" : "ru-RU";
-  const recommendations = t("dashboard.recommendations", {
-    returnObjects: true,
-  }) as string[];
   const getDiagnosisLabel = (key: string) =>
     t(`diagnosis.${key}`, { defaultValue: key });
 
@@ -80,6 +105,12 @@ export const OverviewTab = ({ records, child }: OverviewTabProps) => {
         : [...prev, key]
     );
   };
+
+  const recommendations = useMemo(() => {
+  return pickRandom(allRecommendations, 3).map((key) =>
+    t(`recommendations.${key}`)
+  );
+}, [i18n.language]);
 
   return (
     <div className="space-y-6">
