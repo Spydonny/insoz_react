@@ -1,6 +1,62 @@
 // src/lib/api.ts
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
 
+async function fetchWithHandling<T>(
+  input: RequestInfo,
+  init?: RequestInit
+): Promise<T> {
+  let res: Response;
+
+  try {
+    res = await fetch(input, init);
+  } catch (e) {
+    // network error, CORS, offline, DNS
+    throw new Error("Нет соединения с сервером");
+  }
+
+  let payload: any = null;
+  const contentType = res.headers.get("content-type");
+
+  if (contentType?.includes("application/json")) {
+    try {
+      payload = await res.json();
+    } catch {
+      payload = null;
+    }
+  } else {
+    payload = await res.text().catch(() => null);
+  }
+
+  if (!res.ok) {
+    const message =
+      payload?.detail ||
+      payload?.message ||
+      payload ||
+      `HTTP ${res.status}`;
+
+    switch (res.status) {
+      case 400:
+        throw new Error(message || "Некорректный запрос");
+      case 401:
+        throw new Error("Неверный логин или пароль");
+      case 403:
+        throw new Error("Доступ запрещён");
+      case 404:
+        throw new Error("Ресурс не найден");
+      case 409:
+        throw new Error(message || "Конфликт данных");
+      case 422:
+        throw new Error(message || "Ошибка валидации");
+      case 500:
+        throw new Error("Ошибка сервера");
+      default:
+        throw new Error(message);
+    }
+  }
+
+  return payload as T;
+}
+
 
 // ======== TOKEN HELPERS ========
 export function saveToken(token: string) {
@@ -21,32 +77,36 @@ export async function registerUser(data: {
   username: string;
   password: string;
 }) {
-  const res = await fetch(`${API_URL}/users/register`, {
+  return fetchWithHandling(`${API_URL}/users/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
-  if (!res.ok) throw new Error("Ошибка регистрации");
-  return res.json();
 }
 
-export async function loginUser(data: { email: string; password: string }) {
-  const formData = new URLSearchParams();
-  formData.append("grant_type", "password");
-  formData.append("username", data.email); // важно: backend ожидает 'username'
-  formData.append("password", data.password);
-  formData.append("scope", "");
-  formData.append("client_id", "string");
-  formData.append("client_secret", "string");
-
-  const res = await fetch(`${API_URL}/users/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: formData.toString(),
+export async function loginUser(data: {
+  email: string;
+  password: string;
+}) {
+  const formData = new URLSearchParams({
+    grant_type: "password",
+    username: data.email, // backend ждёт username
+    password: data.password,
+    scope: "",
+    client_id: "string",
+    client_secret: "string",
   });
 
-  if (!res.ok) throw new Error("Ошибка входа");
-  const result = await res.json();
+  const result = await fetchWithHandling<{
+    access_token?: string;
+    token_type?: string;
+  }>(`${API_URL}/users/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: formData.toString(),
+  });
 
   if (result.access_token) {
     localStorage.setItem("access_token", result.access_token);
