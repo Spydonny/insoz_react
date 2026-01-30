@@ -30,7 +30,16 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground p-6">
       <header className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-yellow-500">InSoz.ai</h1>
+          <div className="flex items-center gap-2">
+            <img
+              src="/logo_insoz.png"
+              alt="InSoz.ai logo"
+              className="w-10 h-10"
+            />
+            <h1 className="text-2xl font-bold text-yellow-400">
+              InSoz.ai
+            </h1>
+          </div>
 
         <div className="flex items-center gap-4">
         {/* Language switcher */}
