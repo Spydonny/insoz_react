@@ -140,21 +140,9 @@ export async function fetchChildren(): Promise<Child[]> {
     });
     if (!res.ok) throw new Error("Ошибка загрузки");
     return await res.json();
-  } catch {
+  } catch (err) {
     // fallback mock
     return [
-      {
-        uuid: "1",
-        name: "Алихан Садыков",
-        age: 7,
-        diagnosis: ["ОНР Сторой степени", "Заикание"],
-      },
-      {
-        uuid: "2",
-        name: "Мадина Ержанова",
-        age: 5,
-        diagnosis: ["Картавость"],
-      },
     ];
   }
 }

@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { getToken } from "@/lib/api";
+import { getToken, getCurrentUser } from "@/lib/api";
 import { JSX } from "react";
 
 type Props = {
@@ -9,7 +9,9 @@ type Props = {
 export default function ProtectedRoute({ children }: Props) {
   const token = getToken();
 
-  if (!token) {
+  const user = token ? getCurrentUser().catch(() => null) : null;
+
+  if (!user) {
     return <Navigate to="/login" replace />;
   }
 
