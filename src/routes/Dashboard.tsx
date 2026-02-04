@@ -23,7 +23,7 @@ import { ExercisesTab } from "@/components/dachboard/ExercisesTab";
 import "@/fonts/Roboto-Regular-normal";
 import { useTranslation } from "react-i18next";
 
-import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
+import { PDFDocument, rgb } from "pdf-lib";
 
 import fontkit from "@pdf-lib/fontkit";
 
@@ -104,156 +104,249 @@ export default function Dashboard() {
   };
 
   // ------ PDF ------
-const handleDownloadPDF = async () => {
-  if (!child) return;
+  const handleDownloadPDF = async () => {
+    if (!child) return;
 
-  const pdfDoc = await PDFDocument.create();
+    // ==============================
+    // INIT
+    // ==============================
+    const pdfDoc = await PDFDocument.create();
+    pdfDoc.registerFontkit(fontkit);
 
-  // 👇 ОБЯЗАТЕЛЬНО
-  pdfDoc.registerFontkit(fontkit);
+    const fontBytes = await fetch("/Roboto/static/Roboto-Regular.ttf").then(r => r.arrayBuffer());
+    const boldBytes = await fetch("/Roboto/static/Roboto-Bold.ttf").then(r => r.arrayBuffer());
 
-  // загрузка ttf
-  const fontBytes = await fetch("/Roboto/static/Roboto-Regular.ttf").then(r => r.arrayBuffer());
-  const boldBytes = await fetch("/Roboto/static/Roboto-Bold.ttf").then(r => r.arrayBuffer());
+    const font = await pdfDoc.embedFont(fontBytes);
+    const bold = await pdfDoc.embedFont(boldBytes);
 
-  const font = await pdfDoc.embedFont(fontBytes);
-  const boldFont = await pdfDoc.embedFont(boldBytes);
-  let page = pdfDoc.addPage([595, 842]); // A4
-  let y = 800;
-  const marginX = 40;
+    const locale = i18n.language === "kk" ? "kk-KZ" : "ru-RU";
 
-  const addPageIfNeeded = () => {
-    if (y < 60) {
+    // ==============================
+    // 🌍 TRANSLATIONS
+    // ==============================
+    const dict = {
+      en: {
+        title: "Speech Therapy Report",
+        child: "Child Information",
+        nn: "Neural Network Summary",
+        progress: "Therapy Progress",
+        details: "Detailed Analysis",
+        date: "Date",
+        normal: "Normal",
+        risk: "Risk",
+        improvement: "Δ",
+        trend: "Trend",
+        top: "Top diagnoses",
+      },
+      ru: {
+        title: "Отчёт по логопедической терапии",
+        child: "Информация о ребёнке",
+        nn: "Сводка нейросети",
+        progress: "Динамика терапии",
+        details: "Подробный анализ",
+        date: "Дата",
+        normal: "Норма",
+        risk: "Риск",
+        improvement: "Δ",
+        trend: "Тренд",
+        top: "Основные диагнозы",
+      },
+      kk: {
+        title: "Сөйлеу терапиясының есебі",
+        child: "Бала туралы ақпарат",
+        nn: "Нейрожелі қорытындысы",
+        progress: "Терапия динамикасы",
+        details: "Толық талдау",
+        date: "Күні",
+        normal: "Қалыпты",
+        risk: "Қауіп",
+        improvement: "Δ",
+        trend: "Бағыт",
+        top: "Негізгі диагноздар",
+      }
+    };
+
+    console.log(i18n.language);
+
+    const lang = i18n.resolvedLanguage?.slice(0, 2) || "ru";
+    const tr = dict[lang as keyof typeof dict] ?? dict.en;
+
+
+
+    // ==============================
+    // PAGE HELPERS
+    // ==============================
+    let page = pdfDoc.addPage([595, 842]);
+    const margin = 40;
+    const line = 16;
+    let y = 800;
+
+    const newPage = () => {
       page = pdfDoc.addPage([595, 842]);
       y = 800;
-    }
-  };
+    };
 
-  const drawText = (text: string, size = 11, bold = false, offsetX = 0) => {
-    page.drawText(text, {
-      x: marginX + offsetX,
-      y,
-      size,
-      font: bold ? boldFont : font,
-      color: rgb(0, 0, 0),
-    });
-    y -= size + 6;
-    addPageIfNeeded();
-  };
+    const checkPage = () => {
+      if (y < 60) newPage();
+    };
 
-  drawText(t("dashboard.pdf.title"), 16, true);
-  y -= 10;
+    const text = (t: string, size = 11, isBold = false, x = margin) => {
+      page.drawText(t, { x, y, size, font: isBold ? bold : font });
+      y -= line;
+      checkPage();
+    };
 
-  drawText(
-    t("dashboard.pdf.name", { name: child.name }),
-    12
-  );
+    const row = (cols: string[], widths: number[], isBold = false) => {
+      let x = margin;
+      cols.forEach((c, i) => {
+        page.drawText(c, { x, y, size: 9, font: isBold ? bold : font });
+        x += widths[i];
+      });
+      y -= line;
+      checkPage();
+    };
 
-  if (child.age != null) {
-    drawText(
-      t("dashboard.pdf.age", {
-        age: child.age,
-        unit: t("child.ageYears", { count: child.age }),
-      }),
-      12
+    // ==============================
+    // SORT RECORDS
+    // ==============================
+    const sorted = [...records].sort(
+      (a, b) => new Date(a.uploaded_at).getTime() - new Date(b.uploaded_at).getTime()
     );
-  } else {
-    drawText(t("dashboard.pdf.ageUnknown"), 12);
-  }
 
-  y -= 20;
+    // ==============================
+    // TITLE
+    // ==============================
+    text(tr.title, 18, true);
+    y -= 10;
 
-  drawText(t("dashboard.pdf.progressTitle"), 14, true);
-  y -= 6;
+    // ==============================
+    // CHILD INFO
+    // ==============================
+    text(tr.child, 14, true);
+    text(`Name: ${child.name}`);
+    text(`Age: ${child.age ?? "-"}`);
+    text(`Diagnosis: ${child.diagnosis?.join(", ") || "Normal"}`);
+    y -= 20;
 
-  if (records.length === 0) {
-    drawText(t("dashboard.pdf.noData"), 11, false, 10);
-  } else {
-    records.forEach((record, index) => {
-      const date = new Date(record.uploaded_at).toLocaleDateString(locale);
+    // =====================================================
+    // ✅ COMPACT NN TABLE (красивый)
+    // =====================================================
+    text(tr.nn, 14, true);
 
-      drawText(
-        t("dashboard.pdf.recordLine", {
-          index: index + 1,
+    const widths = [80, 70, 70, 220];
+
+    row(
+      [tr.date, `${tr.normal}%`, `${tr.risk}%`, tr.top],
+      widths,
+      true
+    );
+
+    sorted.forEach(r => {
+      const probs = r.diagnosis_probabilities || {};
+      const date = new Date(r.uploaded_at).toLocaleDateString(locale);
+
+      const normal = (probs.normal ?? 0) * 100;
+      const risk = 100 - normal;
+
+      const top = Object.entries(probs)
+        .filter(([k]) => k !== "normal")
+        .sort((a, b) => (b[1] ?? 0) - (a[1] ?? 0))
+        .slice(0, 2)
+        .map(([k, v]) => `${k}: ${(v! * 100).toFixed(1)}%`)
+        .join(", ");
+
+      row(
+        [
           date,
-        }),
-        11,
-        true
+          normal.toFixed(1),
+          risk.toFixed(1),
+          top || "-"
+        ],
+        widths
       );
+    });
 
-      const probs = record.diagnosis_probabilities;
+    // =====================================================
+    // ✅ THERAPY TIME ANALYSIS
+    // =====================================================
+    y -= 25;
+    text(tr.progress, 14, true);
 
-      if (probs) {
-        Object.entries(probs).forEach(([key, val]) => {
-          if (val != null) {
-            drawText(
-              `• ${key}: ${(val * 100).toFixed(1)}%`,
-              11,
-              false,
-              15
-            );
-          }
-        });
-      } else {
-        drawText(
-          t("dashboard.pdf.noRecordData"),
-          11,
-          false,
-          15
-        );
+    const timeWidths = [80, 70, 70, 70, 50];
+
+    row(
+      [tr.date, tr.normal, tr.improvement, tr.risk, tr.trend],
+      timeWidths,
+      true
+    );
+
+    let prev: number | null = null;
+
+    sorted.forEach(r => {
+      const normal = (r.diagnosis_probabilities?.normal ?? 0) * 100;
+      const risk = 100 - normal;
+
+      let diff = 0;
+      let trend = "→";
+
+      if (prev !== null) {
+        diff = normal - prev;
+        if (diff > 1) trend = "↑";
+        else if (diff < -1) trend = "↓";
       }
 
-      y -= 6;
-      addPageIfNeeded();
+      const date = new Date(r.uploaded_at).toLocaleDateString(locale);
+
+      row(
+        [
+          date,
+          `${normal.toFixed(1)}%`,
+          `${diff >= 0 ? "+" : ""}${diff.toFixed(1)}%`,
+          `${risk.toFixed(1)}%`,
+          trend
+        ],
+        timeWidths
+      );
+
+      prev = normal;
     });
-  }
 
-  y -= 10;
-  drawText(t("dashboard.pdf.summaryTitle"), 14, true);
+    // =====================================================
+    // ✅ DETAILS (вертикально — читабельно)
+    // =====================================================
+    y -= 25;
+    text(tr.details, 14, true);
 
-  const avgNormal =
-    records.length > 0
-      ? records.reduce(
-          (s, r) =>
-            s + (r.diagnosis_probabilities?.normal ?? 0),
-          0
-        ) / records.length
-      : 0;
+    sorted.forEach(r => {
+      const date = new Date(r.uploaded_at).toLocaleDateString(locale);
+      text(date, 12, true);
 
-  drawText(
-    t("dashboard.pdf.avgNormal", {
-      value: (avgNormal * 100).toFixed(1),
-    }),
-    12,
-    false,
-    10
-  );
+      Object.entries(r.diagnosis_probabilities || {}).forEach(([k, v]) => {
+        text(`   ${k}: ${(v! * 100).toFixed(1)}%`, 10);
+      });
 
-  // —————————————
-  // Generate bytes
-  const bytes = await pdfDoc.save();
+      y -= 4;
+      checkPage();
+    });
 
-  // Make blob
-  const blob = new Blob([new Uint8Array(bytes)], { type: "application/pdf" });
+    // =====================================================
+    // SAVE (TS SAFE)
+    // =====================================================
+    const bytes = await pdfDoc.save();
 
-  // Format filename
-  const reportDate = new Date()
-    .toLocaleDateString(locale)
-    .replace(/\./g, "-");
-  const filename = `${t("dashboard.pdf.filename", {
-    name: child.name,
-    date: reportDate,
-  })}.pdf`;
+    const blob = new Blob([bytes.slice()], {
+      type: "application/pdf",
+    });
 
-  // Create link and force download
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = filename;
-  link.click();
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `${child.name}_therapy_report.pdf`;
+    link.click();
 
-  // Cleanup URL object
-  URL.revokeObjectURL(link.href);
-};
+    URL.revokeObjectURL(link.href);
+  };
+
+
 
 
   if (loading) return <div className="p-6">{t("common.loading")}</div>;
