@@ -354,25 +354,29 @@ export default function Dashboard() {
 
   // ------ UI Components ------
   const Header = () => (
-    <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-      <h1 className="text-2xl font-bold">
-        {child.name}
-        {child.age != null && `, ${child.age}`}
-        {" — "}
-        <span className="text-yellow-700">
-          {t("child.status.activeTreatment")}
-        </span>
-      </h1>
-
-      <div className="flex flex-wrap gap-2">
+    <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
+      {/* Left side */}
+      <div className="flex items-center gap-3">
         <Button
           variant="outline"
           className="border-yellow-300 text-yellow-800 hover:bg-yellow-100"
           onClick={() => navigate("/")}
         >
-          <ArrowLeft className="mr-2 w-4 h-4" /> {t("common.back")}
+          <ArrowLeft className="w-4 h-4" />
         </Button>
 
+        <h1 className="text-2xl font-bold">
+          {child.name}
+          {child.age != null && `, ${child.age}`}
+          {" — "}
+          <span className="text-yellow-700">
+            {t("child.status.activeTreatment")}
+          </span>
+        </h1>
+      </div>
+
+      {/* Right side */}
+      <div className="flex flex-wrap gap-2">
         <Button variant="outline" className="border-yellow-300 text-yellow-800">
           <Edit className="mr-2 w-4 h-4" /> {t("dashboard.actions.edit")}
         </Button>
@@ -387,6 +391,7 @@ export default function Dashboard() {
       </div>
     </header>
   );
+
 
   const ChildCard = () => (
     <Card className="mb-6 border-yellow-400 bg-white">
