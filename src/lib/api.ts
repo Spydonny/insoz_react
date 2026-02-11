@@ -281,7 +281,7 @@ export async function uploadChildRecord(childId: string, file: File): Promise<an
 export async function playChildRecord(recordPath: string): Promise<void> {
   try {
     const token = getToken();
-    const res = await fetch(`${API_URL}/${recordPath}`, {
+    const res = await fetch(`${recordPath}`, {
       headers: token ? { Authorization: `Bearer ${token}` } : {},
     });
 

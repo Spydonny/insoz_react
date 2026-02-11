@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Speech Therapy Report</title>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background: #3a3a3a; /* темный фон страницы */
+    font-family: monospace;
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+#paper {
+    background: #fff;
+    width: 45%;
+    padding: 40px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    line-height: 1.6;
+    font-family: monospace;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 24px 0;
+    font-family: monospace;
+}
+
+th, td {
+    border: 1px solid #555;
+    padding: 10px 12px;
+}
+
+th {
+    background-color: #e0e0e0;
+    font-weight: bold;
+    text-align: center;
+}
+
+td {
+    text-align: center;
+}
+
+td:first-child {
+    text-align: left; /* первый столбец — слева */
+}
+</style>
+</head>
+
+<body>
+
+<div id="paper"></div>
+
+<script>
+const blocks = [
+{
+    type: "text",
+    content:
+`SPEECH AND LANGUAGE THERAPY CLINICAL REPORT
+==========================================
+
+Client Name: Alex Johnson
+Date of Birth: 14.08.2018
+Age: 7 years, 6 months
+Report Date: 12.02.2026
+Clinician: Emily Carter, MS, CCC-SLP
+
+--------------------------------------------------
+
+REASON FOR REFERRAL:
+Alex was referred for a comprehensive speech and language evaluation
+due to concerns regarding speech sound production and expressive
+language development.
+
+ASSESSMENT PROCEDURES:
+The following assessment tools and procedures were utilized:
+- Clinical Evaluation of Language Fundamentals (CELF-5)
+- Goldman-Fristoe Test of Articulation (GFTA-3)
+- Informal speech sampling
+- Parent and teacher interview
+
+`
+},
+{
+    type: "text",
+    content:
+`ASSESSMENT RESULTS:\n\n`
+},
+{
+    type: "html",
+    content:
+`
+<table>
+<tr>
+<th>Domain</th>
+<th>Assessment Tool</th>
+<th>Standard Score</th>
+<th>Severity</th>
+</tr>
+<tr>
+<td>Articulation</td>
+<td>GFTA-3</td>
+<td>78</td>
+<td>Moderate</td>
+</tr>
+<tr>
+<td>Receptive Language</td>
+<td>CELF-5</td>
+<td>92</td>
+<td>Within Normal Limits</td>
+</tr>
+<tr>
+<td>Expressive Language</td>
+<td>CELF-5</td>
+<td>85</td>
+<td>Mild</td>
+</tr>
+</table>
+`
+},
+{
+    type: "text",
+    content:
+`CLINICAL OBSERVATIONS:
+- Speech intelligibility was reduced in connected speech.
+- Consistent distortions of /r/, /s/, and /l/ phonemes were observed.
+- Expressive language was characterized by reduced sentence complexity.
+- Attention and task engagement were age-appropriate.
+
+CLINICAL IMPRESSION:
+Results of the evaluation indicate a moderate speech sound disorder
+with mild expressive language delay. Receptive language skills are
+considered age-appropriate at this time.
+
+RECOMMENDATIONS:
+1. Initiate speech-language therapy at a frequency of 2 sessions per week.
+2. Target articulation accuracy for /r/, /s/, and /l/ in structured and
+   conversational contexts.
+3. Implement expressive language goals focusing on sentence expansion.
+4. Provide home practice activities to support generalization of skills.
+5. Re-evaluation is recommended in 6 months to monitor progress.
+
+--------------------------------------------------
+
+Clinician Signature: ____________________________
+Emily Carter, MS, CCC-SLP
+License No.: SLP-48291
+`
+}
+];
+
+const report = document.getElementById("paper");
+let blockIndex = 0;
+let charIndex = 0;
+let currentPre = null;
+
+function typeWriter() {
+    if (blockIndex >= blocks.length) return;
+
+    const block = blocks[blockIndex];
+
+    if (block.type === "html") {
+        report.insertAdjacentHTML("beforeend", block.content);
+        blockIndex++;
+        setTimeout(typeWriter, 400);
+        return;
+    }
+
+    if (charIndex < block.content.length) {
+        if (!currentPre) {
+            currentPre = document.createElement("pre");
+            currentPre.style.margin = "0";
+            currentPre.style.fontFamily = "Courier New, monospace";
+            report.appendChild(currentPre);
+        }
+
+        currentPre.textContent += block.content.charAt(charIndex);
+        charIndex++;
+        setTimeout(typeWriter, 18);
+    } else {
+        blockIndex++;
+        charIndex = 0;
+        currentPre = null;
+        setTimeout(typeWriter, 300);
+    }
+
+}
+
+typeWriter();
+</script>
+</body>
+</html>
