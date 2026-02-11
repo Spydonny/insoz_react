@@ -181,8 +181,8 @@ const RecordsTab: React.FC<RecordsTabProps> = ({
               {records.map((rec) => {
                 const prediction = rec.diagnosis_probabilities
                   ? Object.entries(rec.diagnosis_probabilities)
-                      .filter(([, v]) => typeof v === "number")
-                      .sort((a, b) => b[1] - a[1])[0]?.[0]
+                    .filter(([, v]) => typeof v === "number")
+                    .sort((a, b) => b[1] - a[1])[0]?.[0]
                   : null;
 
                 return (
@@ -240,9 +240,8 @@ const RecordsTab: React.FC<RecordsTabProps> = ({
           <Button
             onClick={isRecording ? stopRecording : startRecording}
             disabled={uploading}
-            className={`${
-              isRecording ? "bg-red-500" : "bg-yellow-500"
-            } text-white flex items-center gap-2`}
+            className={`${isRecording ? "bg-red-500" : "bg-yellow-500"
+              } text-white flex items-center gap-2`}
           >
             {isRecording ? (
               <>
