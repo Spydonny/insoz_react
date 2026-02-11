@@ -26,7 +26,15 @@ export default function ProtectedRoute({ children }: Props) {
   }, [token]);
 
   if (loading) {
-    return null; // или спиннер
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <img
+          src="/logo_insoz.png"
+          alt="InSoz.ai"
+          className="w-32 h-32 animate-pulse"
+        />
+      </div>
+    );
   }
 
   if (!user) {
