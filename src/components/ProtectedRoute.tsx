@@ -31,8 +31,9 @@ export default function ProtectedRoute({ children }: Props) {
         <img
           src="/logo_insoz.png"
           alt="InSoz.ai"
-          className="w-32 h-32 animate-pulse"
-        />
+          className="w-48 h-48 animate-pulse"
+        /><br/>
+        <span className="text-2xl text-gray-500 mt-4">Wait 6-7 seconds loading...</span>
       </div>
     );
   }
