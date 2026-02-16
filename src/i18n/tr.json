@@ -1,0 +1,143 @@
+{
+    "common": {
+        "loading": "Yükleniyor...",
+        "notFound": "Veri bulunamadı.",
+        "back": "Geri",
+        "save": "Kaydet",
+        "saving": "Kaydediliyor...",
+        "addFile": "Dosya ekle",
+        "uploading": "Yükleniyor...",
+        "audio": "Ses"
+    },
+    "auth": {
+        "login": "Giriş",
+        "logout": "Çıkış",
+        "unauthorized": "Yetkisiz erişim",
+        "loginTitle": "Giriş Yap",
+        "loginButton": "Giriş Yap",
+        "loginSubmitting": "Giriş yapılıyor...",
+        "loginError": "Giriş hatası veya sunucu kullanılamıyor",
+        "registerLink": "Kayıt Ol",
+        "registerTitle": "Kayıt",
+        "registerButton": "Kayıt Ol",
+        "registerSubmitting": "Kaydediliyor...",
+        "registerError": "Kayıt hatası veya sunucu kullanılamıyor",
+        "noAccountQuestion": "Hesabınız yok mu?",
+        "haveAccountQuestion": "Zaten hesabınız var mı?"
+    },
+    "addChild": {
+        "openButton": "Çocuk ekle",
+        "title": "Çocuk ekle",
+        "description": "Listeye eklemek için çocuğun bilgilerini doldurun.",
+        "photoLabel": "Fotoğraf",
+        "fullNameLabel": "Ad Soyad",
+        "ageLabel": "Çocuğun yaşı",
+        "diagnosesLabel": "Ana teşhisler",
+        "diagnosesPlaceholder": "Virgülle ayırın",
+        "validationError": "Lütfen isim ve yaşı doldurun.",
+        "createError": "Çocuk eklenirken hata oluştu.",
+        "unknownError": "Çocuk eklenemedi."
+    },
+    "form": {
+        "email": "E-posta",
+        "password": "Şifre",
+        "fullName": "Ad Soyad"
+    },
+    "child": {
+        "ageYears_one": "yaş",
+        "ageYears_few": "yaş",
+        "ageYears_many": "yaş",
+        "ageYears_other": "yaş",
+        "status": {
+            "activeTreatment": "aktif tedavi"
+        }
+    },
+    "dashboard": {
+        "missingChild": "Hasta bulunamadı.",
+        "tabs": {
+            "overview": "Genel Bakış",
+            "records": "Kayıtlar",
+            "progress": "İlerleme",
+            "exercises": "Egzersizler"
+        },
+        "actions": {
+            "edit": "Düzenle",
+            "downloadPdf": "PDF İndir"
+        },
+        "diagnosisCardTitle": "Dizartri Teşhisi",
+        "probabilityChartTitle": "Teşhis Olasılığı İlerlemesi (%)",
+        "filterTitle": "Özellik filtresi",
+        "recommendationsTitle": "Tedavi önerileri",
+        "recommendations": [
+            "Günde 10 dk nefes eğitimi",
+            "Yavaş tempoda kısa metinler okuma",
+            "“Ma-me-mi” egzersizi"
+        ],
+        "confirmRecommendations": "Önerileri onayla",
+        "progressCardTitle": "{{diagnosis}} (%)",
+        "pdf": {
+            "title": "Hasta raporu",
+            "name": "İsim: {{name}}",
+            "age": "Yaş: {{age}} {{unit}}",
+            "ageUnknown": "Yaş: belirtilmemiş",
+            "progressTitle": "Konuşma performansı ilerlemesi",
+            "noData": "Analiz için veri yok.",
+            "recordLine": "{{index}}. {{date}} tarihli kayıt",
+            "noRecordData": "- Veri yok",
+            "summaryTitle": "Genel özet:",
+            "avgNormal": "Ortalama konuşma normu puanı: %{{value}}",
+            "filename": "Rapor_{{name}}_{{date}}"
+        }
+    },
+    "records": {
+        "loading": "Kayıtlar yükleniyor...",
+        "empty": "Henüz kayıt yok",
+        "columns": {
+            "date": "Tarih",
+            "type": "Tür",
+            "prediction": "YZ tahmini",
+            "comment": "Yorum",
+            "listen": "Dinle"
+        },
+        "typeAudio": "Ses",
+        "stop": "Durdur",
+        "record": "Kaydet",
+        "microphoneError": "Mikrofona erişilemiyor."
+    },
+    "diagnosis": {
+        "rhotacism": "Rotasizm",
+        "lisp": "Pelteklik",
+        "general_speech_disorder": "Genel konuşma bozukluğu",
+        "phonetic_phonemic_disorder": "Fonetik-fonemik bozukluk",
+        "stuttering": "Kekemelik",
+        "aphasia": "Afazi",
+        "dysarthria": "Dizartri",
+        "normal": "Normal"
+    },
+    "browser_no_speech_support": "Tarayıcınız konuşma tanımayı desteklemiyor",
+    "say_prompt": "Söyle:",
+    "start": "Başla",
+    "stop": "Durdur",
+    "recording": "Kaydediliyor...",
+    "waiting": "Bekleniyor",
+    "you_said": "Söylediğiniz:",
+    "well_done": "Harika!",
+    "try_again": "Yavaşça tekrar deneyin",
+    "recommendations": {
+        "articulation_assessment": "Hatalı telaffuz edilen fonemleri belirlemek için detaylı bir artikülasyon değerlendirmesi yapın.",
+        "phonemic_hearing_test": "Standart algı testlerini kullanarak fonemik farkındalığı değerlendirin.",
+        "individual_plan_update": "Mevcut performans verilerine dayanarak bireyselleştirilmiş müdahale planını güncelleyin.",
+        "dynamic_monitoring": "İlerleme dinamiklerini belgeleyin ve sonuçları önceki oturumlarla karşılaştırın.",
+        "breathing_protocol": "Konuşma sırasında nefes kontrolünü normalleştirmek için yapılandırılmış nefes egzersizleri uygulayın.",
+        "sound_automation": "Ses üretiminden kelime ve cümle düzeyinde otomasyona geçin.",
+        "syllable_drills": "Doğru artikülatör yerleşimini pekiştirmek için hece çalışmaları kullanın.",
+        "speech_tempo_control": "Görevler sırasında konuşma hızını ve akıcılığını izleyin ve düzenleyin.",
+        "prosody_training": "Doğal konuşma üretimi için prozodi, vurgu kalıpları ve tonlamayı hedefleyin.",
+        "parent_instruction": "Bakım verenlere net evde uygulama yönergeleri ve gözetim stratejileri sağlayın.",
+        "homework_assignment": "Ölçülebilir hedefler içeren yapılandırılmış ev egzersizleri atayın.",
+        "audio_record_analysis": "Objektif ilerleme takibi için kaydedilen konuşma örneklerini analiz edin.",
+        "difficulty_scaling": "Dilsel ve artikülatör görev karmaşıklığını kademeli olarak artırın.",
+        "session_frequency_review": "İlerleme sınırlı kalırsa terapi sıklığını yeniden değerlendirin.",
+        "specialist_referral": "Klinik olarak belirtildiğinde ilgili uzmanlara (nörolog, psikolog, KBB) yönlendirin."
+    }
+}

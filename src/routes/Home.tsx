@@ -107,6 +107,15 @@ export default function Home() {
             >
               KZ
             </button>
+            <button
+              onClick={() => i18n.changeLanguage("tr")}
+              className={`px-3 py-1 text-sm font-medium transition ${i18n.language === "tr"
+                ? "bg-yellow-500 text-black"
+                : "text-yellow-500 hover:bg-yellow-600 hover:text-black"
+                }`}
+            >
+              TR
+            </button>
           </div>
         </div>
 
