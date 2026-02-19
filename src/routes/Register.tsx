@@ -14,7 +14,7 @@ export default function Register() {
     password: "",
   });
   const [loading, setLoading] = useState(false);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -32,6 +32,47 @@ export default function Register() {
 
   return (
     <Container>
+      <div className="flex items-center gap-4 justify-center">
+        {/* Language switcher */}
+        <div className="flex border border-yellow-400 rounded-xl overflow-hidden">
+          <button
+            onClick={() => i18n.changeLanguage("ru")}
+            className={`px-3 py-1 text-sm font-medium transition ${i18n.language === "ru"
+              ? "bg-yellow-500 text-black"
+              : "text-yellow-500 hover:bg-yellow-600 hover:text-black"
+              }`}
+          >
+            RU
+          </button>
+          <button
+            onClick={() => i18n.changeLanguage("en")}
+            className={`px-3 py-1 text-sm font-medium transition ${i18n.language === "en"
+              ? "bg-yellow-500 text-black"
+              : "text-yellow-500 hover:bg-yellow-600 hover:text-black"
+              }`}
+          >
+            EN
+          </button>
+          <button
+            onClick={() => i18n.changeLanguage("kk")}
+            className={`px-3 py-1 text-sm font-medium transition ${i18n.language === "kk"
+              ? "bg-yellow-500 text-black"
+              : "text-yellow-500 hover:bg-yellow-600 hover:text-black"
+              }`}
+          >
+            KZ
+          </button>
+          <button
+            onClick={() => i18n.changeLanguage("tr")}
+            className={`px-3 py-1 text-sm font-medium transition ${i18n.language === "tr"
+              ? "bg-yellow-500 text-black"
+              : "text-yellow-500 hover:bg-yellow-600 hover:text-black"
+              }`}
+          >
+            TR
+          </button>
+        </div>
+      </div>
       <h2 className="text-2xl font-bold text-center mb-6">
         {t("auth.registerTitle")}
       </h2>
