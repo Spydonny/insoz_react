@@ -131,6 +131,7 @@ export async function getCurrentUser() {
 
 // ======== CHILDREN ========
 import { Child } from "@/types/child";
+import type { TherapyReportResponse } from "@/types/report";
 
 export async function fetchChildren(): Promise<Child[]> {
   try {
@@ -294,4 +295,25 @@ export async function playChildRecord(recordPath: string): Promise<void> {
   } catch (err) {
     console.error("Ошибка при воспроизведении:", err);
   }
+}
+
+// ======== AI THERAPY REPORT (MedGemma) ========
+
+export async function generateTherapyReport(
+  childUuid: string,
+  doctorNotes?: string
+): Promise<TherapyReportResponse> {
+  const token = getToken();
+
+  return fetchWithHandling<TherapyReportResponse>(`${API_URL}/generate-therapy-report/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify({
+      child_uuid: childUuid,
+      doctor_notes: doctorNotes ?? null,
+    }),
+  });
 }

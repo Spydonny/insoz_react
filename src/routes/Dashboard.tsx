@@ -19,6 +19,7 @@ import RecordsTab from "@/components/dachboard/RecordsTab";
 import { OverviewTab } from "@/components/dachboard/OverviewTab";
 import { ProgressTab } from "@/components/dachboard/ProgressTab";
 import { ExercisesTab } from "@/components/dachboard/ExercisesTab";
+import { ReportGenerator } from "@/components/dachboard/ReportGenerator";
 
 import "@/fonts/Roboto-Regular-normal";
 import { useTranslation } from "react-i18next";
@@ -492,6 +493,9 @@ export default function Dashboard() {
           <TabsTrigger value="exercises">
             {t("dashboard.tabs.exercises")}
           </TabsTrigger>
+          <TabsTrigger value="ai-report">
+            AI отчёт
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview">
@@ -514,6 +518,10 @@ export default function Dashboard() {
 
         <TabsContent value="exercises">
           <ExercisesTab />
+        </TabsContent>
+
+        <TabsContent value="ai-report">
+          <ReportGenerator child={child} />
         </TabsContent>
       </Tabs>
     </div>
