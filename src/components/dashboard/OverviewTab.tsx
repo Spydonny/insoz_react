@@ -1,81 +1,116 @@
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip } from "recharts";
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+} from "recharts";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { RecordItem } from "@/lib/api";
+import { RecordItem, ragTherapyAnswer } from "@/lib/api";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-
-import { useMemo } from "react";
-
-const allRecommendations = [
-  "articulation_assessment",
-  "phonemic_hearing_test",
-  "individual_plan_update",
-  "dynamic_monitoring",
-  "breathing_protocol",
-  "sound_automation",
-  "syllable_drills",
-  "speech_tempo_control",
-  "prosody_training",
-  "parent_instruction",
-  "homework_assignment",
-  "audio_record_analysis",
-  "difficulty_scaling",
-  "session_frequency_review",
-  "specialist_referral",
-];
-
-
-const pickRandom = <T,>(arr: T[], count: number): T[] => {
-  const shuffled = [...arr].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, count);
-};
-
-
+import { Child } from "@/types/child";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface OverviewTabProps {
   records: RecordItem[];
-  child: { diagnosis: string[] };
+  child: Child;
 }
 
-const COLORS = ["#f59e0b", "#3b82f6", "#10b981", "#ef4444", "#8b5cf6", "#14b8a6", "#84cc16"];
-
+const COLORS = [
+  "#f59e0b",
+  "#3b82f6",
+  "#10b981",
+  "#ef4444",
+  "#8b5cf6",
+  "#14b8a6",
+  "#84cc16",
+];
 
 export const OverviewTab = ({ records, child }: OverviewTabProps) => {
   const { t, i18n } = useTranslation();
   const locale = i18n.language === "kk" ? "kk-KZ" : "ru-RU";
+
   const getDiagnosisLabel = (key: string) =>
     t(`diagnosis.${key}`, { defaultValue: key });
 
-  const chartData = records
-  .map(rec => {
-    const probabilities = rec.diagnosis_probabilities
-      ? Object.fromEntries(
-          Object.entries(rec.diagnosis_probabilities).map(([key, value]) => [
-            key,
-            (value ?? 0) * 100,
-          ])
-        )
-      : {};
+  const [ragAnswer, setRagAnswer] = useState<string | null>(null);
+  const [ragLoading, setRagLoading] = useState(false);
+  const [ragError, setRagError] = useState<string | null>(null);
 
-    const ts = new Date(rec.uploaded_at).getTime(); // ← добавляем timestamp
+  useEffect(() => {
+    if (!child.uuid) return;
 
-    return {
-      ts,         // ← обязательно
-      date: new Date(ts).toLocaleString(locale, {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false,
-      }),
-      ...probabilities,
+    let cancelled = false;
+
+    const runRag = async () => {
+      setRagLoading(true);
+      setRagError(null);
+
+      try {
+        const question = t("dashboard.rag.therapyQuestion");
+
+        const res = await ragTherapyAnswer({
+          child_uuid: child.uuid,
+          question,
+          k_total: 3,
+          include_context: false,
+        });
+
+        if (!cancelled) {
+          setRagAnswer(res.answer);
+        }
+      } catch (err: any) {
+        if (!cancelled) {
+          console.error("Failed to fetch RAG:", err);
+          setRagError(
+            err?.message ?? t("dashboard.rag.recommendationsError")
+          );
+        }
+      } finally {
+        if (!cancelled) setRagLoading(false);
+      }
     };
-  })
-  .sort((a, b) => a.ts - b.ts); // ← сортировка по времени (важно!)
 
+    runRag();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [child.uuid]);
+
+  // ===== CHART DATA =====
+
+  const chartData = records
+    .map((rec) => {
+      const probabilities = rec.diagnosis_probabilities
+        ? Object.fromEntries(
+            Object.entries(rec.diagnosis_probabilities).map(
+              ([key, value]) => [key, (value ?? 0) * 100]
+            )
+          )
+        : {};
+
+      const ts = new Date(rec.uploaded_at).getTime();
+
+      return {
+        ts,
+        date: new Date(ts).toLocaleString(locale, {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        }),
+        ...probabilities,
+      };
+    })
+    .sort((a, b) => a.ts - b.ts);
 
   const validDiagnosisKeys = [
     "rhotacism",
@@ -95,7 +130,6 @@ export const OverviewTab = ({ records, child }: OverviewTabProps) => {
         )
       : [];
 
-  // --- NEW: состояние выбранных линий ---
   const [selectedKeys, setSelectedKeys] = useState<string[]>(diagnosisKeys);
 
   const toggleKey = (key: string) => {
@@ -106,16 +140,9 @@ export const OverviewTab = ({ records, child }: OverviewTabProps) => {
     );
   };
 
-  const recommendations = useMemo(() => {
-  return pickRandom(allRecommendations, 3).map((key) =>
-    t(`recommendations.${key}`)
-  );
-}, [i18n.language]);
-
   return (
     <div className="space-y-6">
-      
-      {/* Диагноз */}
+      {/* ===== DIAGNOSIS CARD ===== */}
       <Card className="border-yellow-400 bg-white">
         <CardContent className="p-4">
           <h2 className="font-semibold text-lg mb-2">
@@ -129,62 +156,63 @@ export const OverviewTab = ({ records, child }: OverviewTabProps) => {
         </CardContent>
       </Card>
 
-      {/* График */}
+      {/* ===== CHART ===== */}
       <Card className="border-yellow-400 bg-white">
-  <CardContent className="p-4">
-    <h2 className="font-semibold text-lg mb-4">
-      {t("dashboard.probabilityChartTitle")}
-    </h2>
+        <CardContent className="p-4">
+          <h2 className="font-semibold text-lg mb-4">
+            {t("dashboard.probabilityChartTitle")}
+          </h2>
 
-    <ResponsiveContainer width="100%" height={240}>
-      <LineChart data={chartData}>
-        {/* --- X AXIS WITH REAL TIMELINE --- */}
-        <XAxis
-          dataKey="ts"               // timestamp в миллисекундах
-          type="number"
-          domain={['auto', 'auto']}
-          tickFormatter={(ts) =>
-            new Date(ts).toLocaleDateString(locale, {
-              day: "2-digit",
-              month: "2-digit",
-            })
-          }
-        />
+          <ResponsiveContainer width="100%" height={240}>
+            <LineChart data={chartData}>
+              <XAxis
+                dataKey="ts"
+                type="number"
+                domain={["auto", "auto"]}
+                tickFormatter={(ts) =>
+                  new Date(ts).toLocaleDateString(locale, {
+                    day: "2-digit",
+                    month: "2-digit",
+                  })
+                }
+              />
 
-        <YAxis domain={[0, 100]} tickFormatter={(v) => `${v}%`} />
+              <YAxis
+                domain={[0, 100]}
+                tickFormatter={(v) => `${v}%`}
+              />
 
-        <Tooltip
-          labelFormatter={(ts) =>
-            new Date(ts).toLocaleString(locale, {
-              day: "2-digit",
-              month: "2-digit",
-              year: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-            })
-          }
-          formatter={(v: number) => `${v.toFixed(1)}%`}
-        />
+              <Tooltip
+                labelFormatter={(ts) =>
+                  new Date(ts).toLocaleString(locale, {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })
+                }
+                formatter={(v: number) => `${v.toFixed(1)}%`}
+              />
 
-        {selectedKeys.map((key, i) => (
-          <Line
-            key={key}
-            type="monotone"
-            dataKey={key}
-            stroke={COLORS[i % COLORS.length]}
-            strokeWidth={2}
-            dot={{ r: 3 }}
-            name={getDiagnosisLabel(key)}
-            connectNulls
-          />
-        ))}
-      </LineChart>
-    </ResponsiveContainer>
-  </CardContent>
-</Card>
+              {selectedKeys.map((key, i) => (
+                <Line
+                  key={key}
+                  type="monotone"
+                  dataKey={key}
+                  stroke={COLORS[i % COLORS.length]}
+                  strokeWidth={2}
+                  dot={{ r: 3 }}
+                  name={getDiagnosisLabel(key)}
+                  connectNulls
+                />
+              ))}
+            </LineChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
 
-
-      {/* Фильтр признаков */}
+      {/* ===== FILTER ===== */}
       <Card className="border-yellow-400 bg-white">
         <CardContent className="p-4">
           <h2 className="font-semibold text-lg mb-3">
@@ -205,17 +233,31 @@ export const OverviewTab = ({ records, child }: OverviewTabProps) => {
         </CardContent>
       </Card>
 
-      {/* Рекомендации */}
+      {/* ===== RAG RECOMMENDATIONS (MARKDOWN) ===== */}
       <Card className="border-yellow-400 bg-white">
         <CardContent className="p-4">
           <h2 className="font-semibold text-lg mb-3">
             {t("dashboard.recommendationsTitle")}
           </h2>
-          <ul className="list-disc list-inside space-y-1 text-yellow-800">
-            {recommendations.map((item: string) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
+
+          {ragLoading && (
+            <p className="italic text-yellow-700">
+              {t("common.loading")}
+            </p>
+          )}
+
+          {!ragLoading && ragAnswer && (
+            <div className="prose prose-sm max-w-none text-yellow-900">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {ragAnswer}
+              </ReactMarkdown>
+            </div>
+          )}
+
+          {ragError && (
+            <p className="text-xs text-red-500 mt-2">{ragError}</p>
+          )}
+
           <div className="flex justify-end mt-4">
             <Button className="bg-yellow-500 hover:bg-yellow-600 text-white">
               {t("dashboard.confirmRecommendations")}
@@ -226,4 +268,3 @@ export const OverviewTab = ({ records, child }: OverviewTabProps) => {
     </div>
   );
 };
-

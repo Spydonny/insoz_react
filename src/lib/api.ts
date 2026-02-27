@@ -295,3 +295,33 @@ export async function playChildRecord(recordPath: string): Promise<void> {
     console.error("Ошибка при воспроизведении:", err);
   }
 }
+
+// ======== THERAPY ASSISTANT (RAG) ========
+
+export interface RagTherapyAnswerRequest {
+  child_uuid: string;
+  question: string;
+  k_total?: number;
+  include_context?: boolean;
+}
+
+export interface RagTherapyAnswerResponse {
+  answer: string;
+  sources: string[];
+  context?: string | null;
+}
+
+export async function ragTherapyAnswer(
+  payload: RagTherapyAnswerRequest
+): Promise<RagTherapyAnswerResponse> {
+  const token = getToken();
+
+  return fetchWithHandling<RagTherapyAnswerResponse>(`${API_URL}/rag/therapy-answer`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify(payload),
+  });
+}

@@ -14,7 +14,7 @@ export function LanguageSwitcher() {
         }`;
 
     return (
-        <div className="flex border border-yellow-400 rounded-xl overflow-hidden">
+        <div className="flex h-10 items-stretch border border-yellow-400 rounded-xl overflow-hidden">
             <button onClick={() => handleLanguageChange("ru")} className={getButtonClass("ru")}>
                 RU
             </button>

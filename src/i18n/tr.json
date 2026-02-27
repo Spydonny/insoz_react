@@ -75,6 +75,22 @@
         ],
         "confirmRecommendations": "Önerileri onayla",
         "progressCardTitle": "{{diagnosis}} (%)",
+        "assistant": {
+            "open": "Asistanı aç",
+            "hide": "Asistanı gizle",
+            "title": "Terapist Asistanı",
+            "close": "Kapat",
+            "empty": "Bu çocuk için terapi stratejisi hakkında bir soru sorun. Yanıtlar, materyalleriniz dikkate alınarak (RAG) oluşturulur.",
+            "thinking": "Düşünüyorum...",
+            "placeholder": "Terapist asistana sorun...",
+            "mobileOpen": "Asistan",
+            "mobileClose": "Asistanı kapat",
+            "error": "Asistan geçici olarak kullanılamıyor. Lütfen tekrar deneyin."
+            },
+            "rag": {
+            "therapyQuestion": "Bu çocuk için konuşma terapistine yönelik 3 temel ve alışılmadık öneri ver. Kısa maddeler halinde yanıtla.",
+            "recommendationsError": "Yapay zekâ terapi önerileri yüklenemedi."
+        },
         "pdf": {
             "title": "Hasta raporu",
             "name": "İsim: {{name}}",

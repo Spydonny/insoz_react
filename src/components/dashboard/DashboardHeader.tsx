@@ -9,9 +9,11 @@ import { generateAndDownloadTherapyReport } from "@/lib/pdfReport";
 interface Props {
     child: Child;
     records: RecordItem[];
+    onToggleChat?: () => void;
+    chatOpen?: boolean;
 }
 
-export function DashboardHeader({ child, records }: Props) {
+export function DashboardHeader({ child, records, onToggleChat, chatOpen }: Props) {
     const navigate = useNavigate();
     const { t, i18n } = useTranslation();
 
@@ -42,7 +44,19 @@ export function DashboardHeader({ child, records }: Props) {
             </div>
 
             {/* Right side */}
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 items-center">
+                {onToggleChat && (
+                    <Button
+                        variant="outline"
+                        className="border-yellow-300 text-yellow-800"
+                        onClick={onToggleChat}
+                    >
+                        {chatOpen
+                            ? t("dashboard.assistant.hide")
+                            : t("dashboard.assistant.open")}
+                    </Button>
+                )}
+
                 <Button variant="outline" className="border-yellow-300 text-yellow-800">
                     <Edit className="mr-2 w-4 h-4" /> {t("dashboard.actions.edit")}
                 </Button>
