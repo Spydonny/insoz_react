@@ -16,12 +16,12 @@
         "loginTitle": "Giriş Yap",
         "loginButton": "Giriş Yap",
         "loginSubmitting": "Giriş yapılıyor...",
-        "loginError": "Giriş hatası veya sunucu kullanılamıyor",
+        "loginError": "Geçersiz e-posta veya şifre",
         "registerLink": "Kayıt Ol",
         "registerTitle": "Kayıt",
         "registerButton": "Kayıt Ol",
         "registerSubmitting": "Kaydediliyor...",
-        "registerError": "Kayıt hatası veya sunucu kullanılamıyor",
+        "registerError": "Kayıt olunamadı",
         "noAccountQuestion": "Hesabınız yok mu?",
         "haveAccountQuestion": "Zaten hesabınız var mı?"
     },
@@ -86,8 +86,8 @@
             "mobileOpen": "Asistan",
             "mobileClose": "Asistanı kapat",
             "error": "Asistan geçici olarak kullanılamıyor. Lütfen tekrar deneyin."
-            },
-            "rag": {
+        },
+        "rag": {
             "therapyQuestion": "Bu çocuk için konuşma terapistine yönelik 3 temel ve alışılmadık öneri ver. Kısa maddeler halinde yanıtla.",
             "recommendationsError": "Yapay zekâ terapi önerileri yüklenemedi."
         },

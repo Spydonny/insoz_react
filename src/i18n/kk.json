@@ -16,12 +16,12 @@
     "loginTitle": "Кіру",
     "loginButton": "Кіру",
     "loginSubmitting": "Кіріп жатыр...",
-    "loginError": "Кіру кезінде қате немесе сервер қолжетімсіз",
+    "loginError": "Қате email немесе құпиясөз",
     "registerLink": "Тіркелу",
     "registerTitle": "Тіркелу",
     "registerButton": "Тіркелу",
     "registerSubmitting": "Тіркелуде...",
-    "registerError": "Тіркелу кезінде қате немесе сервер қолжетімсіз",
+    "registerError": "Тіркелу мүмкін болмады",
     "noAccountQuestion": "Тіркелгі жоқ па?",
     "haveAccountQuestion": "Тіркелгіңіз бар ма?"
   },
@@ -156,5 +156,4 @@
     "session_frequency_review": "Қажет болса сабақ жиілігін қайта қарастыру.",
     "specialist_referral": "Қажет жағдайда басқа мамандарға жолдау."
   }
-
 }
