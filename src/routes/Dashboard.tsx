@@ -30,6 +30,38 @@ export default function Dashboard() {
   const [chatInput, setChatInput] = useState("");
   const [chatLoading, setChatLoading] = useState(false);
 
+  // ===== RAG RECOMMENDATIONS (page-level so it survives tab switches) =====
+  const [ragAnswer, setRagAnswer] = useState<string | null>(null);
+  const [ragLoading, setRagLoading] = useState(false);
+  const [ragError, setRagError] = useState<string | null>(null);
+
+  const handleLoadRecommendations = async () => {
+    if (!id) return;
+
+    setRagLoading(true);
+    setRagError(null);
+
+    try {
+      const question = t("dashboard.rag.therapyQuestion");
+
+      const res = await ragTherapyAnswer({
+        child_uuid: id,
+        question,
+        k_total: 3,
+        include_context: false,
+      });
+
+      setRagAnswer(res.answer);
+    } catch (err: any) {
+      console.error("Failed to fetch RAG:", err);
+      setRagError(
+        err?.message ?? t("dashboard.rag.recommendationsError")
+      );
+    } finally {
+      setRagLoading(false);
+    }
+  };
+
   const {
     child,
     loading,
@@ -126,7 +158,14 @@ export default function Dashboard() {
           </TabsList>
 
           <TabsContent value="overview">
-            <OverviewTab records={records} child={child} />
+            <OverviewTab
+              records={records}
+              child={child}
+              ragAnswer={ragAnswer}
+              ragLoading={ragLoading}
+              ragError={ragError}
+              onLoadRecommendations={handleLoadRecommendations}
+            />
           </TabsContent>
 
           <TabsContent value="records">

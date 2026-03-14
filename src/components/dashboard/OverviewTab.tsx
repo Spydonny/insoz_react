@@ -8,7 +8,7 @@ import {
 } from "recharts";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { RecordItem, ragTherapyAnswer } from "@/lib/api";
+import { RecordItem } from "@/lib/api";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -16,11 +16,15 @@ import { Child } from "@/types/child";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Download, RefreshCw } from "lucide-react";
-import { generateAndDownloadTherapyReport } from "@/lib/pdfReport";
+import { generateAndDownloadRecommendationsPdf } from "@/lib/pdfReport";
 
 interface OverviewTabProps {
   records: RecordItem[];
   child: Child;
+  ragAnswer: string | null;
+  ragLoading: boolean;
+  ragError: string | null;
+  onLoadRecommendations: () => void;
 }
 
 const COLORS = [
@@ -33,46 +37,23 @@ const COLORS = [
   "#84cc16",
 ];
 
-export const OverviewTab = ({ records, child }: OverviewTabProps) => {
+export const OverviewTab = ({
+  records,
+  child,
+  ragAnswer,
+  ragLoading,
+  ragError,
+  onLoadRecommendations,
+}: OverviewTabProps) => {
   const { t, i18n } = useTranslation();
   const locale = i18n.language === "kk" ? "kk-KZ" : "ru-RU";
 
   const getDiagnosisLabel = (key: string) =>
     t(`diagnosis.${key}`, { defaultValue: key });
 
-  const [ragAnswer, setRagAnswer] = useState<string | null>(null);
-  const [ragLoading, setRagLoading] = useState(false);
-  const [ragError, setRagError] = useState<string | null>(null);
-
-  const handleLoadRecommendations = async () => {
-    if (!child.uuid) return;
-
-    setRagLoading(true);
-    setRagError(null);
-
-    try {
-      const question = t("dashboard.rag.therapyQuestion");
-
-      const res = await ragTherapyAnswer({
-        child_uuid: child.uuid,
-        question,
-        k_total: 3,
-        include_context: false,
-      });
-
-      setRagAnswer(res.answer);
-    } catch (err: any) {
-      console.error("Failed to fetch RAG:", err);
-      setRagError(
-        err?.message ?? t("dashboard.rag.recommendationsError")
-      );
-    } finally {
-      setRagLoading(false);
-    }
-  };
-
   const handleDownloadPDF = async () => {
-    await generateAndDownloadTherapyReport(child, records, i18n.language, i18n.resolvedLanguage);
+    if (!ragAnswer) return;
+    await generateAndDownloadRecommendationsPdf(ragAnswer, child.name);
   };
 
   // ===== CHART DATA =====
@@ -242,6 +223,7 @@ export const OverviewTab = ({ records, child }: OverviewTabProps) => {
                 variant="outline"
                 className="border-yellow-300 text-yellow-800 hover:bg-yellow-100"
                 onClick={handleDownloadPDF}
+                disabled={!ragAnswer}
               >
                 <Download className="mr-2 w-4 h-4" />
                 {t("dashboard.actions.downloadPdf")}
@@ -249,7 +231,7 @@ export const OverviewTab = ({ records, child }: OverviewTabProps) => {
 
               <Button
                 className="bg-yellow-500 hover:bg-yellow-600 text-white"
-                onClick={handleLoadRecommendations}
+                onClick={onLoadRecommendations}
                 disabled={ragLoading}
               >
                 <RefreshCw className={`mr-2 w-4 h-4 ${ragLoading ? "animate-spin" : ""}`} />

@@ -239,3 +239,119 @@ export async function generateAndDownloadTherapyReport(
 
     URL.revokeObjectURL(link.href);
 }
+
+export async function generateAndDownloadRecommendationsPdf(
+    markdown: string,
+    childName: string,
+) {
+    const pdfDoc = await PDFDocument.create();
+    pdfDoc.registerFontkit(fontkit);
+
+    const fontBytes = await fetch("/Roboto/static/Roboto-Regular.ttf").then((r) => r.arrayBuffer());
+    const boldBytes = await fetch("/Roboto/static/Roboto-Bold.ttf").then((r) => r.arrayBuffer());
+
+    const font = await pdfDoc.embedFont(fontBytes);
+    const bold = await pdfDoc.embedFont(boldBytes);
+
+    let page = pdfDoc.addPage([595, 842]);
+    const margin = 40;
+    const maxWidth = 595 - margin * 2;
+    const lineHeight = 16;
+    let y = 800;
+
+    const newPage = () => {
+        page = pdfDoc.addPage([595, 842]);
+        y = 800;
+    };
+
+    const checkPage = (needed = lineHeight) => {
+        if (y < 60 + needed) newPage();
+    };
+
+    // Word-wrap helper
+    const wrapText = (text: string, size: number, usedFont: typeof font, indent = 0): string[] => {
+        const words = text.split(/\s+/);
+        const lines: string[] = [];
+        let current = "";
+        const available = maxWidth - indent;
+
+        for (const word of words) {
+            const test = current ? `${current} ${word}` : word;
+            const w = usedFont.widthOfTextAtSize(test, size);
+            if (w > available && current) {
+                lines.push(current);
+                current = word;
+            } else {
+                current = test;
+            }
+        }
+        if (current) lines.push(current);
+        return lines;
+    };
+
+    const drawWrapped = (text: string, size: number, isBold: boolean, indent = 0) => {
+        const usedFont = isBold ? bold : font;
+        const lines = wrapText(text, size, usedFont, indent);
+        for (const l of lines) {
+            checkPage();
+            page.drawText(l, { x: margin + indent, y, size, font: usedFont });
+            y -= lineHeight;
+        }
+    };
+
+    // Parse and render markdown lines
+    const lines = markdown.split("\n");
+
+    for (const raw of lines) {
+        const trimmed = raw.trim();
+        if (!trimmed) {
+            y -= 8; // blank line spacing
+            continue;
+        }
+
+        // Headings
+        if (trimmed.startsWith("### ")) {
+            y -= 6;
+            drawWrapped(trimmed.slice(4), 12, true);
+            y -= 2;
+        } else if (trimmed.startsWith("## ")) {
+            y -= 8;
+            drawWrapped(trimmed.slice(3), 14, true);
+            y -= 4;
+        } else if (trimmed.startsWith("# ")) {
+            y -= 10;
+            drawWrapped(trimmed.slice(2), 16, true);
+            y -= 6;
+        }
+        // Bullet points
+        else if (/^[-*•]\s/.test(trimmed)) {
+            const content = trimmed.slice(2).replace(/\*\*/g, "");
+            checkPage();
+            page.drawText("•", { x: margin + 8, y, size: 11, font });
+            drawWrapped(content, 11, false, 22);
+        }
+        // Numbered lists
+        else if (/^\d+[.)]\s/.test(trimmed)) {
+            const match = trimmed.match(/^(\d+[.)]\s)/);
+            const prefix = match?.[1] ?? "";
+            const content = trimmed.slice(prefix.length).replace(/\*\*/g, "");
+            checkPage();
+            page.drawText(prefix, { x: margin, y, size: 11, font: bold });
+            drawWrapped(content, 11, false, 22);
+        }
+        // Regular paragraph
+        else {
+            const cleaned = trimmed.replace(/\*\*/g, "");
+            drawWrapped(cleaned, 11, false);
+        }
+    }
+
+    // Save
+    const bytes = await pdfDoc.save();
+    const blob = new Blob([bytes.slice()], { type: "application/pdf" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `${childName}_recommendations.pdf`;
+    link.click();
+    URL.revokeObjectURL(link.href);
+}
