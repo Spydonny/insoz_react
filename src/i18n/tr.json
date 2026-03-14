@@ -58,11 +58,13 @@
             "overview": "Genel Bakış",
             "records": "Kayıtlar",
             "progress": "İlerleme",
-            "exercises": "Egzersizler"
+            "exercises": "Egzersizler",
+            "phonemes": "Fonemler"
         },
         "actions": {
             "edit": "Düzenle",
-            "downloadPdf": "PDF İndir"
+            "downloadPdf": "PDF İndir",
+            "loadRecommendations": "Önerileri Yükle"
         },
         "diagnosisCardTitle": "Dizartri Teşhisi",
         "probabilityChartTitle": "Teşhis Olasılığı İlerlemesi (%)",
@@ -89,7 +91,8 @@
         },
         "rag": {
             "therapyQuestion": "Bu çocuk için konuşma terapistine yönelik 3 temel ve alışılmadık öneri ver. Kısa maddeler halinde yanıtla.",
-            "recommendationsError": "Yapay zekâ terapi önerileri yüklenemedi."
+            "recommendationsError": "Yapay zekâ terapi önerileri yüklenemedi.",
+            "emptyHint": "Yapay zekâ tabanlı terapi önerileri oluşturmak için \"Önerileri Yükle\" düğmesine tıklayın."
         },
         "pdf": {
             "title": "Hasta raporu",
@@ -139,6 +142,31 @@
     "you_said": "Söylediğiniz:",
     "well_done": "Harika!",
     "try_again": "Yavaşça tekrar deneyin",
+    "phonemes": {
+        "maxScore": "Maksimum puan",
+        "selectPhonemes": "Sorunlu fonemleri seçin",
+        "selected": "{{count}} fonem seçildi",
+        "clearSelection": "Seçimi temizle",
+        "aiAnalysis": "Yapay Zekâ Analizi",
+        "manualEval": "Manuel Değerlendirme",
+        "manualEvalDesc": "Seçilen her fonem için 0'dan maksimuma kadar bir puan verin.",
+        "mixedLangError": "Farklı dillerden fonem seçilemez",
+        "noSelection": "Fonem seçilmedi",
+        "analyzing": "Analiz ediliyor...",
+        "analysisResult": "Analiz Sonucu",
+        "analysisError": "Fonemler analiz edilemedi",
+        "scoreLabel": "Puan",
+        "commentLabel": "Yorum",
+        "commentPlaceholder": "İsteğe bağlı yorum...",
+        "submit": "Gönder",
+        "submitting": "Gönderiliyor...",
+        "submitError": "Puanlar gönderilemedi",
+        "cancel": "İptal",
+        "langEnglish": "İngilizce",
+        "langRussian": "Rusça",
+        "langKazakh": "Kazakça",
+        "langTurkish": "Türkçe"
+    },
     "recommendations": {
         "articulation_assessment": "Hatalı telaffuz edilen fonemleri belirlemek için detaylı bir artikülasyon değerlendirmesi yapın.",
         "phonemic_hearing_test": "Standart algı testlerini kullanarak fonemik farkındalığı değerlendirin.",

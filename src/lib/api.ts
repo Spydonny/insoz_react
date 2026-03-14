@@ -325,3 +325,61 @@ export async function ragTherapyAnswer(
     body: JSON.stringify(payload),
   });
 }
+
+// ======== PHONEME ANALYSIS ========
+
+export interface AnalyzePhonemesRequest {
+  child_uuid: string;
+  language: string;
+  phonemes: string[];
+  max_score: number;
+}
+
+export interface AnalyzePhonemesResponse {
+  scores: Record<string, number>;
+  summary: string;
+}
+
+export async function analyzePhonemes(
+  payload: AnalyzePhonemesRequest
+): Promise<AnalyzePhonemesResponse> {
+  const token = getToken();
+
+  return fetchWithHandling<AnalyzePhonemesResponse>(`${API_URL}/children/phonemes/analyze/${payload.child_uuid}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify(payload),
+  });
+}
+
+export interface ManualPhonemeScoreRequest {
+  child_uuid: string;
+  language: string;
+  phonemes: string[];
+  scores: Record<string, number>;
+  max_score: number;
+  comment?: string;
+}
+
+export interface ManualPhonemeScoreResponse {
+  success: boolean;
+}
+
+/** Stub — endpoint does not exist yet on backend */
+export async function submitManualPhonemeScore(
+  payload: ManualPhonemeScoreRequest
+): Promise<ManualPhonemeScoreResponse> {
+  const token = getToken();
+
+  return fetchWithHandling<ManualPhonemeScoreResponse>(`${API_URL}/children/phonemes/manual-score/${payload.child_uuid}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify(payload),
+  });
+}

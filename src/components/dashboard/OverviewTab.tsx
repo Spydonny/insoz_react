@@ -10,11 +10,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RecordItem, ragTherapyAnswer } from "@/lib/api";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Child } from "@/types/child";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { Download, RefreshCw } from "lucide-react";
+import { generateAndDownloadTherapyReport } from "@/lib/pdfReport";
 
 interface OverviewTabProps {
   records: RecordItem[];
@@ -42,46 +44,36 @@ export const OverviewTab = ({ records, child }: OverviewTabProps) => {
   const [ragLoading, setRagLoading] = useState(false);
   const [ragError, setRagError] = useState<string | null>(null);
 
-  useEffect(() => {
+  const handleLoadRecommendations = async () => {
     if (!child.uuid) return;
 
-    let cancelled = false;
+    setRagLoading(true);
+    setRagError(null);
 
-    const runRag = async () => {
-      setRagLoading(true);
-      setRagError(null);
+    try {
+      const question = t("dashboard.rag.therapyQuestion");
 
-      try {
-        const question = t("dashboard.rag.therapyQuestion");
+      const res = await ragTherapyAnswer({
+        child_uuid: child.uuid,
+        question,
+        k_total: 3,
+        include_context: false,
+      });
 
-        const res = await ragTherapyAnswer({
-          child_uuid: child.uuid,
-          question,
-          k_total: 3,
-          include_context: false,
-        });
+      setRagAnswer(res.answer);
+    } catch (err: any) {
+      console.error("Failed to fetch RAG:", err);
+      setRagError(
+        err?.message ?? t("dashboard.rag.recommendationsError")
+      );
+    } finally {
+      setRagLoading(false);
+    }
+  };
 
-        if (!cancelled) {
-          setRagAnswer(res.answer);
-        }
-      } catch (err: any) {
-        if (!cancelled) {
-          console.error("Failed to fetch RAG:", err);
-          setRagError(
-            err?.message ?? t("dashboard.rag.recommendationsError")
-          );
-        }
-      } finally {
-        if (!cancelled) setRagLoading(false);
-      }
-    };
-
-    runRag();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [child.uuid]);
+  const handleDownloadPDF = async () => {
+    await generateAndDownloadTherapyReport(child, records, i18n.language, i18n.resolvedLanguage);
+  };
 
   // ===== CHART DATA =====
 
@@ -89,10 +81,10 @@ export const OverviewTab = ({ records, child }: OverviewTabProps) => {
     .map((rec) => {
       const probabilities = rec.diagnosis_probabilities
         ? Object.fromEntries(
-            Object.entries(rec.diagnosis_probabilities).map(
-              ([key, value]) => [key, (value ?? 0) * 100]
-            )
+          Object.entries(rec.diagnosis_probabilities).map(
+            ([key, value]) => [key, (value ?? 0) * 100]
           )
+        )
         : {};
 
       const ts = new Date(rec.uploaded_at).getTime();
@@ -126,8 +118,8 @@ export const OverviewTab = ({ records, child }: OverviewTabProps) => {
   const diagnosisKeys =
     records[0]?.diagnosis_probabilities
       ? Object.keys(records[0].diagnosis_probabilities).filter((key) =>
-          validDiagnosisKeys.includes(key)
-        )
+        validDiagnosisKeys.includes(key)
+      )
       : [];
 
   const [selectedKeys, setSelectedKeys] = useState<string[]>(diagnosisKeys);
@@ -233,38 +225,67 @@ export const OverviewTab = ({ records, child }: OverviewTabProps) => {
         </CardContent>
       </Card>
 
-      {/* ===== RAG RECOMMENDATIONS (MARKDOWN) ===== */}
-      <Card className="border-yellow-400 bg-white">
-        <CardContent className="p-4">
-          <h2 className="font-semibold text-lg mb-3">
-            {t("dashboard.recommendationsTitle")}
-          </h2>
+      {/* ===== RAG RECOMMENDATIONS (A4 paper-like) ===== */}
+      <div
+        className="mx-auto w-full"
+        style={{ maxWidth: "794px" }}
+      >
+        <Card className="border-yellow-400 bg-white shadow-lg min-h-[600px] flex flex-col">
+          <CardContent className="p-8 flex-1 flex flex-col">
+            <h2 className="font-semibold text-lg mb-3">
+              {t("dashboard.recommendationsTitle")}
+            </h2>
 
-          {ragLoading && (
-            <p className="italic text-yellow-700">
-              {t("common.loading")}
-            </p>
-          )}
+            {/* Action buttons */}
+            <div className="flex flex-wrap gap-2 mb-4">
+              <Button
+                variant="outline"
+                className="border-yellow-300 text-yellow-800 hover:bg-yellow-100"
+                onClick={handleDownloadPDF}
+              >
+                <Download className="mr-2 w-4 h-4" />
+                {t("dashboard.actions.downloadPdf")}
+              </Button>
 
-          {!ragLoading && ragAnswer && (
-            <div className="prose prose-sm max-w-none text-yellow-900">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                {ragAnswer}
-              </ReactMarkdown>
+              <Button
+                className="bg-yellow-500 hover:bg-yellow-600 text-white"
+                onClick={handleLoadRecommendations}
+                disabled={ragLoading}
+              >
+                <RefreshCw className={`mr-2 w-4 h-4 ${ragLoading ? "animate-spin" : ""}`} />
+                {t("dashboard.actions.loadRecommendations")}
+              </Button>
             </div>
-          )}
 
-          {ragError && (
-            <p className="text-xs text-red-500 mt-2">{ragError}</p>
-          )}
+            {/* Content area */}
+            <div className="flex-1">
+              {ragLoading && (
+                <p className="italic text-yellow-700">
+                  {t("common.loading")}
+                </p>
+              )}
 
-          <div className="flex justify-end mt-4">
-            <Button className="bg-yellow-500 hover:bg-yellow-600 text-white">
-              {t("dashboard.confirmRecommendations")}
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+              {!ragLoading && ragAnswer && (
+                <div className="prose prose-sm max-w-none text-yellow-900">
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {ragAnswer}
+                  </ReactMarkdown>
+                </div>
+              )}
+
+              {!ragLoading && !ragAnswer && !ragError && (
+                <p className="text-yellow-600 italic text-sm">
+                  {t("dashboard.rag.emptyHint")}
+                </p>
+              )}
+
+              {ragError && (
+                <p className="text-xs text-red-500 mt-2">{ragError}</p>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };

@@ -58,11 +58,18 @@
       "overview": "Overview",
       "records": "Records",
       "progress": "Progress",
-      "exercises": "Exercises"
+      "exercises": "Exercises",
+      "phonemes": "Phonemes"
     },
     "actions": {
       "edit": "Edit",
-      "downloadPdf": "Download PDF"
+      "downloadPdf": "Download PDF",
+      "loadRecommendations": "Load Recommendations"
+    },
+    "rag": {
+      "therapyQuestion": "Give 3 key unusual recommendations for the speech therapist about this child. Answer in brief bullet points.",
+      "recommendationsError": "Failed to load AI therapy recommendations.",
+      "emptyHint": "Click \"Load Recommendations\" to generate AI-based therapy suggestions."
     },
     "diagnosisCardTitle": "Dysarthria Diagnosis",
     "probabilityChartTitle": "Diagnosis Probability Progress (%)",
@@ -123,6 +130,31 @@
   "you_said": "You said:",
   "well_done": "Great!",
   "try_again": "Try again slowly",
+  "phonemes": {
+    "maxScore": "Maximum score",
+    "selectPhonemes": "Select problematic phonemes",
+    "selected": "{{count}} phoneme(s) selected",
+    "clearSelection": "Clear selection",
+    "aiAnalysis": "AI Analysis",
+    "manualEval": "Manual Evaluation",
+    "manualEvalDesc": "Assign a score from 0 to the maximum for each selected phoneme.",
+    "mixedLangError": "Cannot select phonemes from different languages",
+    "noSelection": "No phonemes selected",
+    "analyzing": "Analyzing...",
+    "analysisResult": "Analysis Result",
+    "analysisError": "Failed to analyze phonemes",
+    "scoreLabel": "Score",
+    "commentLabel": "Comment",
+    "commentPlaceholder": "Optional comment...",
+    "submit": "Submit",
+    "submitting": "Submitting...",
+    "submitError": "Failed to submit scores",
+    "cancel": "Cancel",
+    "langEnglish": "English",
+    "langRussian": "Russian",
+    "langKazakh": "Kazakh",
+    "langTurkish": "Turkish"
+  },
   "recommendations": {
     "articulation_assessment": "Conduct a detailed articulation assessment to identify misarticulated phonemes.",
     "phonemic_hearing_test": "Evaluate phonemic awareness using standardized perception tests.",

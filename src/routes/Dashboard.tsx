@@ -9,6 +9,7 @@ import RecordsTab from "@/components/dashboard/RecordsTab";
 import { OverviewTab } from "@/components/dashboard/OverviewTab";
 import { ProgressTab } from "@/components/dashboard/ProgressTab";
 import { ExercisesTab } from "@/components/dashboard/ExercisesTab";
+import { PhonemesTab } from "@/components/dashboard/PhonemesTab";
 
 import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
 import { DashboardSkeleton } from "@/components/dashboard/DashboardSkeleton";
@@ -116,6 +117,9 @@ export default function Dashboard() {
             <TabsTrigger value="progress">
               {t("dashboard.tabs.progress")}
             </TabsTrigger>
+            <TabsTrigger value="phonemes">
+              {t("dashboard.tabs.phonemes")}
+            </TabsTrigger>
             <TabsTrigger value="exercises">
               {t("dashboard.tabs.exercises")}
             </TabsTrigger>
@@ -141,6 +145,10 @@ export default function Dashboard() {
 
           <TabsContent value="exercises">
             <ExercisesTab />
+          </TabsContent>
+
+          <TabsContent value="phonemes">
+            <PhonemesTab childId={id} />
           </TabsContent>
         </Tabs>
       </div>
@@ -170,11 +178,10 @@ export default function Dashboard() {
             {chatMessages.map((m) => (
               <div
                 key={m.id}
-                className={`rounded-lg px-3 py-2 whitespace-pre-wrap ${
-                  m.role === "user"
-                    ? "bg-yellow-500 text-black self-end ml-8"
-                    : "bg-white text-yellow-900 mr-8 border border-yellow-100"
-                }`}
+                className={`rounded-lg px-3 py-2 whitespace-pre-wrap ${m.role === "user"
+                  ? "bg-yellow-500 text-black self-end ml-8"
+                  : "bg-white text-yellow-900 mr-8 border border-yellow-100"
+                  }`}
               >
                 {m.text}
               </div>

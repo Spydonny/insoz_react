@@ -58,11 +58,13 @@
       "overview": "Шолу",
       "records": "Жазбалар",
       "progress": "Даму",
-      "exercises": "Жаттығулар"
+      "exercises": "Жаттығулар",
+      "phonemes": "Фонемалар"
     },
     "actions": {
       "edit": "Өңдеу",
-      "downloadPdf": "PDF жүктеп алу"
+      "downloadPdf": "PDF жүктеп алу",
+      "loadRecommendations": "Ұсыныстарды жүктеу"
     },
     "diagnosisCardTitle": "ПНПК диагнозы",
     "probabilityChartTitle": "Диагноз ықтималдықтарының прогресі (%)",
@@ -89,7 +91,8 @@
     },
     "rag": {
       "therapyQuestion": "Логопед үшін осы балаға қатысты 3 ерекше негізгі ұсыныс бер. Жауапты қысқа тармақтармен жаз.",
-      "recommendationsError": "Терапия бойынша ЖИ ұсыныстарын жүктеу мүмкін болмады."
+      "recommendationsError": "Терапия бойынша ЖИ ұсыныстарын жүктеу мүмкін болмады.",
+      "emptyHint": "ЖИ негізіндегі ұсыныстарды алу үшін «Ұсыныстарды жүктеу» батырмасын басыңыз."
     },
     "pdf": {
       "title": "Пациент туралы есеп",
@@ -139,6 +142,31 @@
   "you_said": "Сіз айттыңыз:",
   "well_done": "Тамаша!",
   "try_again": "Баяу тағы бір рет көріңіз",
+  "phonemes": {
+    "maxScore": "Максималды балл",
+    "selectPhonemes": "Проблемалық фонемаларды таңдаңыз",
+    "selected": "{{count}} фонема таңдалды",
+    "clearSelection": "Таңдауды тазалау",
+    "aiAnalysis": "ЖИ арқылы талдау",
+    "manualEval": "Қолмен бағалау",
+    "manualEvalDesc": "Әрбір таңдалған фонемаға 0-ден максимумға дейін баға қойыңыз.",
+    "mixedLangError": "Әр түрлі тілдердің фонемаларын таңдауға болмайды",
+    "noSelection": "Фонемалар таңдалмаған",
+    "analyzing": "Талдау жүруде...",
+    "analysisResult": "Талдау нәтижесі",
+    "analysisError": "Фонемаларды талдау мүмкін болмады",
+    "scoreLabel": "Баға",
+    "commentLabel": "Түсініктеме",
+    "commentPlaceholder": "Қосымша түсініктеме...",
+    "submit": "Жіберу",
+    "submitting": "Жіберілуде...",
+    "submitError": "Бағаларды жіберу мүмкін болмады",
+    "cancel": "Болдырмау",
+    "langEnglish": "Ағылшын",
+    "langRussian": "Орыс",
+    "langKazakh": "Қазақ",
+    "langTurkish": "Түрік"
+  },
   "recommendations": {
     "articulation_assessment": "Артикуляциялық аппараттың толық диагностикасын жүргізу.",
     "phonemic_hearing_test": "Фонематикалық есту деңгейін тест арқылы бағалау.",
