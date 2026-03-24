@@ -31,13 +31,13 @@ export function CreatePost({ onCreated }: CreatePostProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-yellow-50 border border-yellow-200 rounded-2xl p-4 mb-6"
+      className="bg-yellow-50 border border-yellow-400 rounded-2xl p-4 mb-6"
     >
       <textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
         placeholder={t("network.create_placeholder", "Поделитесь результатами или новостями...")}
-        className="w-full resize-none rounded-xl border border-yellow-200 bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 min-h-[80px]"
+        className="w-full resize-none rounded-xl border border-yellow-400 bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 min-h-[80px]"
         maxLength={2000}
       />
       {error && <p className="text-red-500 text-sm mt-1">{error}</p>}

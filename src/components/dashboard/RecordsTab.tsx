@@ -158,7 +158,7 @@ const RecordsTab: React.FC<RecordsTabProps> = ({
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-yellow-200 text-yellow-700">
+              <tr className="border-b border-yellow-400 text-yellow-700">
                 <th className="text-left py-2">
                   {t("records.columns.date")}
                 </th>

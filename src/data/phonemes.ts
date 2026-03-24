@@ -4,50 +4,28 @@
 
 export interface PhonemeLanguage {
   id: string;
-  labelKey: string; // i18n key for the language name
+  labelKey: string;
   phonemes: string[];
 }
 
 export const PHONEME_LANGUAGES: PhonemeLanguage[] = [
-  // {
-  //   id: "en",
-  //   labelKey: "phonemes.langEnglish",
-  //   phonemes: [
-  //     "p", "b", "t", "d", "k", "g",
-  //     "f", "v", "θ", "ð",
-  //     "s", "z", "ʃ", "ʒ",
-  //     "h", "tʃ", "dʒ",
-  //     "m", "n", "ŋ",
-  //     "l", "r", "w", "j",
-  //   ],
-  // },
   {
     id: "ru",
     labelKey: "phonemes.langRussian",
     phonemes: [
-      "а", "б", "в", "г", "д", "е", "ж", "з",
-      "и", "к", "л", "м", "н", "о", "п", "р",
-      "с", "т", "у", "ф", "х", "ц", "ч", "ш", "щ",
-    ],
+      "а/ɑ","б/b","в/v","г/ɡ","д/d","е/e","ж/ʒ","з/z",
+"и/i","к/k","л/l","м/m","н/n","о/o","п/p","р/r",
+"с/s","т/t","у/u","ф/f","х/x","ц/ts","ч/tɕ","ш/ʃ","щ/ɕː"
+    ]
   },
   {
     id: "kk",
     labelKey: "phonemes.langKazakh",
     phonemes: [
-      "а", "ә", "б", "в", "г", "ғ", "д", "е",
-      "ж", "з", "и", "й", "к", "қ", "л", "м",
-      "н", "ң", "о", "ө", "п", "р", "с", "т",
-      "у", "ұ", "ү", "ф", "х", "ш",
+"а/ɑ","ә/æ","б/b","в/v","г/ɡ","ғ/ʁ","д/d","е/e",
+"ж/ʒ","з/z","и/ɪ","й/j","к/k","қ/q","л/l","м/m",
+"н/n","ң/ŋ","о/o","ө/ø","п/p","р/r","с/s","т/t",
+"у/u","ұ/ʊ","ү/ʏ","ф/f","х/χ","ш/ʃ"
     ],
   },
-  // {
-  //   id: "tr",
-  //   labelKey: "phonemes.langTurkish",
-  //   phonemes: [
-  //     "a", "b", "c", "ç", "d", "e", "f", "g",
-  //     "ğ", "h", "ı", "i", "j", "k", "l", "m",
-  //     "n", "o", "ö", "p", "r", "s", "ş", "t",
-  //     "u", "ü", "v", "y", "z",
-  //   ],
-  // },
 ];

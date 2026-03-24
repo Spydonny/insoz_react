@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_API_URL || "https://insoz-api.fly.dev";
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 function getToken(): string | null {
   return localStorage.getItem("access_token");

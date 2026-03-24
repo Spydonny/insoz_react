@@ -11,8 +11,11 @@ interface PostCardProps {
   onDeleted?: (id: string) => void;
 }
 
+const POST_TIME_OFFSET_MS = 5 * 60 * 60 * 1000;
+
 function timeAgo(dateStr: string): string {
-  const diff = (Date.now() - new Date(dateStr).getTime()) / 1000;
+  const publishedAt = new Date(dateStr).getTime() + POST_TIME_OFFSET_MS;
+  const diff = Math.max(0, (Date.now() - publishedAt) / 1000);
   if (diff < 60) return "только что";
   if (diff < 3600) return `${Math.floor(diff / 60)} мин назад`;
   if (diff < 86400) return `${Math.floor(diff / 3600)} ч назад`;
@@ -28,8 +31,8 @@ export function PostCard({ post, onDeleted }: PostCardProps) {
   const [showComments, setShowComments] = useState(false);
   const [liking, setLiking] = useState(false);
 
-  const isLiked = user ? currentPost.likes.includes(user.uuid) : false;
-  const isOwner = user?.uuid === currentPost.author_id;
+  const isLiked = user ? currentPost.likes.includes(user._id) : false;
+  const isOwner = user?._id === currentPost.author_id;
 
   const handleLike = async () => {
     if (!user || liking) return;

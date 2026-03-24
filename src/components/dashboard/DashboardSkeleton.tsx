@@ -29,7 +29,7 @@ export function DashboardSkeleton() {
 
             {/* Tabs Skeleton */}
             <div className="space-y-4">
-                <div className="flex gap-2 border border-yellow-200 rounded-lg p-1 bg-white w-fit shadow-sm">
+                <div className="flex gap-2 border border-yellow-400 rounded-lg p-1 bg-white w-fit shadow-sm">
                     <Skeleton className="h-10 w-24 rounded bg-yellow-200/50" />
                     <Skeleton className="h-10 w-24 rounded bg-yellow-200/50" />
                     <Skeleton className="h-10 w-24 rounded bg-yellow-200/50" />
@@ -39,20 +39,20 @@ export function DashboardSkeleton() {
                 {/* Content Skeleton */}
                 <div className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <Card className="bg-white border-yellow-200 shadow-md">
+                        <Card className="bg-white border-yellow-400 shadow-md">
                             <CardContent className="p-4 space-y-3">
                                 <Skeleton className="h-6 w-1/2 bg-yellow-200/50" />
                                 <Skeleton className="h-32 w-full bg-yellow-200/50" />
                             </CardContent>
                         </Card>
-                        <Card className="bg-white border-yellow-200 shadow-md">
+                        <Card className="bg-white border-yellow-400 shadow-md">
                             <CardContent className="p-4 space-y-3">
                                 <Skeleton className="h-6 w-1/2 bg-yellow-200/50" />
                                 <Skeleton className="h-32 w-full bg-yellow-200/50" />
                             </CardContent>
                         </Card>
                     </div>
-                    <Card className="bg-white border-yellow-200 shadow-md">
+                    <Card className="bg-white border-yellow-400 shadow-md">
                         <CardContent className="p-4 space-y-3">
                             <Skeleton className="h-6 w-1/3 bg-yellow-200/50" />
                             <Skeleton className="h-48 w-full bg-yellow-200/50" />

@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { CreatePost } from "@/components/network/CreatePost";
 import { PostCard } from "@/components/network/PostCard";
 import { getUserProfile, getUserProfilePosts, UserProfile, Post } from "@/lib/socialApi";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function NetworkProfile() {
   const { id } = useParams<{ id: string }>();
   const { t } = useTranslation();
+  const { user } = useAuth();
 
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const isOwnProfile = Boolean(user && id && user.uuid === id);
 
   useEffect(() => {
     if (!id) return;
@@ -27,8 +31,18 @@ export default function NetworkProfile() {
       .finally(() => setLoading(false));
   }, [id]);
 
+  const handleCreated = (post: Post) => {
+    setPosts((prev) => [post, ...prev]);
+    setProfile((prev) =>
+      prev ? { ...prev, posts_count: prev.posts_count + 1 } : prev
+    );
+  };
+
   const handleDeleted = (postId: string) => {
     setPosts((prev) => prev.filter((p) => p.id !== postId));
+    setProfile((prev) =>
+      prev ? { ...prev, posts_count: Math.max(0, prev.posts_count - 1) } : prev
+    );
   };
 
   return (
@@ -66,6 +80,8 @@ export default function NetworkProfile() {
           <h3 className="text-base font-semibold text-gray-600 mb-4">
             {t("network.user_posts", "Публикации")}
           </h3>
+
+          {isOwnProfile && <CreatePost onCreated={handleCreated} />}
 
           {posts.length === 0 ? (
             <div className="text-center py-10 text-gray-400">

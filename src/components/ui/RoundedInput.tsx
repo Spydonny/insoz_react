@@ -18,7 +18,7 @@ export default function RoundedInput({ lbl, placeholder, value, onChange, type =
         onChange={onChange}
         placeholder={placeholder || lbl}
         required
-        className="rounded-xl border-yellow-200 focus:border-yellow-400 focus:ring-yellow-300"
+        className="rounded-xl border-yellow-400 focus:border-yellow-400 focus:ring-yellow-300"
       />
     </div>
   );

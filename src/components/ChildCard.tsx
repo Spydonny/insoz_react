@@ -27,14 +27,14 @@ export function ChildCard({ child }: Props) {
   return (
     <Card
       onClick={() => navigate(`/dashboard/${child.uuid}`)}
-      className="cursor-pointer hover:shadow-lg transition-all bg-yellow-50 hover:bg-yellow-100 border border-yellow-200"
+      className="cursor-pointer hover:shadow-lg transition-all bg-yellow-50 hover:bg-yellow-100 border border-yellow-400"
     >
       <CardContent className="flex flex-col items-center p-4">
         {imageUrl ? (
           <img
             src={imageUrl || ""}
             alt={child.name}
-            className="w-24 h-24 rounded-full object-cover mb-3 border-2 border-yellow-200"
+            className="w-24 h-24 rounded-full object-cover mb-3 border-2 border-yellow-400"
           />
         ) : (
           <div className="w-24 h-24 rounded-full bg-yellow-200 flex items-center justify-center mb-3">

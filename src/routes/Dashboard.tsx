@@ -140,7 +140,7 @@ export default function Dashboard() {
         <ChildOverviewCard child={child} />
 
         <Tabs value={tab} onValueChange={setTab}>
-          <TabsList className="bg-white border border-yellow-200 mb-4">
+          <TabsList className="bg-white border border-yellow-400 mb-4">
             <TabsTrigger value="overview">
               {t("dashboard.tabs.overview")}
             </TabsTrigger>
@@ -194,7 +194,7 @@ export default function Dashboard() {
       </div>
 
       {chatOpen && (
-        <aside className="hidden lg:flex w-96 flex-col border-l border-yellow-200 pl-4 h-[calc(100vh-3rem)] sticky top-4">
+        <aside className="hidden lg:flex w-96 flex-col border-l border-yellow-400 pl-4 h-[calc(100vh-3rem)] sticky top-4">
           <div className="flex items-center justify-between mb-3">
             <h2 className="font-semibold text-lg text-yellow-900">
               {t("dashboard.assistant.title")}
@@ -244,7 +244,7 @@ export default function Dashboard() {
             }}
           >
             <textarea
-              className="flex-1 resize-none rounded-xl border border-yellow-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
+              className="flex-1 resize-none rounded-xl border border-yellow-400 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
               rows={2}
               placeholder={t("dashboard.assistant.placeholder")}
               value={chatInput}
@@ -267,9 +267,6 @@ export default function Dashboard() {
         onClick={() => setChatOpen((prev) => !prev)}
         className="fixed bottom-4 right-4 lg:hidden px-4 py-2 rounded-full shadow-md bg-yellow-500 text-black text-sm font-semibold"
       >
-        {chatOpen
-          ? t("dashboard.assistant.mobileClose")
-          : t("dashboard.assistant.mobileOpen")}
       </button>
     </div>
   );

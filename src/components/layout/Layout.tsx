@@ -9,16 +9,18 @@ interface LayoutProps {
 export function Layout({ children }: LayoutProps) {
   return (
     <div className="flex min-h-screen bg-white">
-      {/* Sidebar — фиксированный, 224px */}
-      <Sidebar />
+      {/* Sidebar spacer matches the fixed sidebar width */}
+      <div className="w-56 shrink-0">
+        <Sidebar />
+      </div>
 
       {/* Main area */}
-      <div className="flex-1 flex flex-col ml-56">
+      <div className="flex min-w-0 flex-1 flex-col">
         {/* Top bar */}
         <TopBar />
 
         {/* Page content */}
-        <main className="flex-1 px-8 py-6 max-w-3xl w-full mx-auto">
+        <main className="flex-1 min-w-0 w-full overflow-x-hidden px-4 py-4 sm:px-6 sm:py-6">
           {children}
         </main>
       </div>

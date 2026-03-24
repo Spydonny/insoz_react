@@ -159,7 +159,7 @@ export const OverviewTab = ({
               {phonemeAnalyses.slice(0, 4).map((analysis) => (
                 <div
                   key={analysis.id}
-                  className="rounded-xl border border-yellow-200 bg-yellow-50/40 p-4"
+                  className="rounded-xl border border-yellow-200 bg-white p-4"
                 >
                   <div className="flex items-start justify-between gap-3 flex-wrap">
                     <div>
@@ -295,67 +295,68 @@ export const OverviewTab = ({
       </Card>
 
       {/* ===== RAG RECOMMENDATIONS (A4 paper-like) ===== */}
-      <div
-        className="mx-auto w-full"
-        style={{ maxWidth: "794px" }}
-      >
-        <Card className="border-yellow-400 bg-white shadow-lg min-h-[600px] flex flex-col">
-          <CardContent className="p-8 flex-1 flex flex-col">
-            <h2 className="font-semibold text-lg mb-3">
-              {t("dashboard.recommendationsTitle")}
-            </h2>
+{/* ===== RAG RECOMMENDATIONS (A4-like, left-aligned) ===== */}
+<div
+  className="w-full"
+  style={{ maxWidth: "794px" }} // A4 width
+>
+  <Card className="border-yellow-400 bg-white shadow-lg min-h-[600px] flex flex-col">
+    <CardContent className="p-8 flex-1 flex flex-col">
+      <h2 className="font-semibold text-lg mb-3">
+        {t("dashboard.recommendationsTitle")}
+      </h2>
 
-            {/* Action buttons */}
-            <div className="flex flex-wrap gap-2 mb-4">
-              <Button
-                variant="outline"
-                className="border-yellow-300 text-yellow-800 hover:bg-yellow-100"
-                onClick={handleDownloadPDF}
-                disabled={!ragAnswer}
-              >
-                <FiDownload className="mr-2 w-4 h-4" />
-                {t("dashboard.actions.downloadPdf")}
-              </Button>
+      {/* Action buttons */}
+      <div className="flex flex-wrap gap-2 mb-4">
+        <Button
+          variant="outline"
+          className="border-yellow-300 text-yellow-800 hover:bg-yellow-100"
+          onClick={handleDownloadPDF}
+          disabled={!ragAnswer}
+        >
+          <FiDownload className="mr-2 w-4 h-4" />
+          {t("dashboard.actions.downloadPdf")}
+        </Button>
 
-              <Button
-                className="bg-yellow-500 hover:bg-yellow-600 text-white"
-                onClick={onLoadRecommendations}
-                disabled={ragLoading}
-              >
-                <FiRefreshCw className={`mr-2 w-4 h-4 ${ragLoading ? "animate-spin" : ""}`} />
-                {t("dashboard.actions.loadRecommendations")}
-              </Button>
-            </div>
-
-            {/* Content area */}
-            <div className="flex-1">
-              {ragLoading && (
-                <p className="italic text-yellow-700">
-                  {t("common.loading")}
-                </p>
-              )}
-
-              {!ragLoading && ragAnswer && (
-                <div className="prose prose-sm max-w-none text-yellow-900">
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                    {ragAnswer}
-                  </ReactMarkdown>
-                </div>
-              )}
-
-              {!ragLoading && !ragAnswer && !ragError && (
-                <p className="text-yellow-600 italic text-sm">
-                  {t("dashboard.rag.emptyHint")}
-                </p>
-              )}
-
-              {ragError && (
-                <p className="text-xs text-red-500 mt-2">{ragError}</p>
-              )}
-            </div>
-          </CardContent>
-        </Card>
+        <Button
+          className="bg-yellow-500 hover:bg-yellow-600 text-white"
+          onClick={onLoadRecommendations}
+          disabled={ragLoading}
+        >
+          <FiRefreshCw className={`mr-2 w-4 h-4 ${ragLoading ? "animate-spin" : ""}`} />
+          {t("dashboard.actions.loadRecommendations")}
+        </Button>
       </div>
+
+      {/* Content area */}
+      <div className="flex-1">
+        {ragLoading && (
+          <p className="italic text-yellow-700">
+            {t("common.loading")}
+          </p>
+        )}
+
+        {!ragLoading && ragAnswer && (
+          <div className="prose prose-sm max-w-none text-yellow-900">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {ragAnswer}
+            </ReactMarkdown>
+          </div>
+        )}
+
+        {!ragLoading && !ragAnswer && !ragError && (
+          <p className="text-yellow-600 italic text-sm">
+            {t("dashboard.rag.emptyHint")}
+          </p>
+        )}
+
+        {ragError && (
+          <p className="text-xs text-red-500 mt-2">{ragError}</p>
+        )}
+      </div>
+    </CardContent>
+  </Card>
+</div>
     </div>
   );
 };

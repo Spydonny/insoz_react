@@ -1,6 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { CreatePost } from "@/components/network/CreatePost";
 import { PostCard } from "@/components/network/PostCard";
 import { getPosts, Post } from "@/lib/socialApi";
 
@@ -42,10 +41,6 @@ export default function Network() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleCreated = (post: Post) => {
-    setPosts((prev) => [post, ...prev]);
-  };
-
   const handleDeleted = (id: string) => {
     setPosts((prev) => prev.filter((p) => p.id !== id));
   };
@@ -55,9 +50,6 @@ export default function Network() {
       <p className="text-sm text-gray-400 mb-5">
         {t("network.subtitle", "Делитесь результатами и вдохновляйте других")}
       </p>
-
-      <CreatePost onCreated={handleCreated} />
-
       {error && (
         <div className="text-red-500 text-sm text-center py-4">{error}</div>
       )}

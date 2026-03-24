@@ -402,7 +402,7 @@ export function PhonemesTab({ childId, onAnalysisSaved }: PhonemesTabProps) {
                                 </p>
                             </div>
                             {recordedAudio && (
-                                <span className="rounded-full border border-yellow-300 bg-yellow-50 px-3 py-1 text-xs font-medium text-yellow-800">
+                                <span className="rounded-full border border-yellow-300 bg-white px-3 py-1 text-xs font-medium text-yellow-800">
                                     {t("phonemes.recordReady", {
                                         defaultValue: "Recording is ready",
                                     })}
@@ -506,7 +506,7 @@ export function PhonemesTab({ childId, onAnalysisSaved }: PhonemesTabProps) {
                                     {analysisKindLabel}
                                 </p>
                             </div>
-                            <div className="rounded-full border border-yellow-300 bg-yellow-50 px-3 py-1 text-sm font-medium text-yellow-800">
+                            <div className="rounded-full border border-yellow-300 bg-white px-3 py-1 text-sm font-medium text-yellow-800">
                                 {analysisResult.average_score.toFixed(1)}/{analysisResult.max_score}
                             </div>
                         </div>
@@ -521,7 +521,7 @@ export function PhonemesTab({ childId, onAnalysisSaved }: PhonemesTabProps) {
                             {analysisResult.results.map((item) => (
                                 <div
                                     key={`${analysisResult.id}-${item.phoneme}`}
-                                    className="rounded-xl border border-yellow-200 bg-yellow-50/60 px-4 py-3"
+                                    className="rounded-xl border border-yellow-400 bg-white px-4 py-3"
                                 >
                                     <div className="flex items-center justify-between gap-2">
                                         <div>
@@ -557,7 +557,7 @@ export function PhonemesTab({ childId, onAnalysisSaved }: PhonemesTabProps) {
             )}
 
             <Dialog open={manualDialogOpen} onOpenChange={setManualDialogOpen}>
-                <DialogContent className="max-w-lg max-h-[85vh] overflow-y-auto bg-white border-yellow-200">
+                <DialogContent className="max-w-lg max-h-[85vh] overflow-y-auto bg-white border-yellow-400">
                     <DialogHeader>
                         <DialogTitle className="text-yellow-900">{t("phonemes.manualEval")}</DialogTitle>
                         <DialogDescription className="text-yellow-700">
@@ -660,8 +660,8 @@ function PhonemeLanguageSection({
     return (
         <div
             className={`rounded-xl border transition-colors ${isDisabled
-                ? "border-gray-200 bg-gray-50 opacity-60"
-                : "border-yellow-200 bg-yellow-50/40"
+                ? "border-gray-200 bg-white opacity-60"
+                : "border-yellow-400 bg-white"
                 }`}
         >
             <button
@@ -694,8 +694,8 @@ function PhonemeLanguageSection({
                                 <label
                                     key={ph}
                                     className={`flex items-center gap-1.5 cursor-pointer select-none rounded-lg border px-2 py-1.5 text-sm transition-colors ${checked
-                                        ? "border-yellow-400 bg-yellow-100"
-                                        : "border-yellow-100 hover:bg-yellow-50"
+                                        ? "border-yellow-400 bg-white"
+                                        : "border-yellow-100 bg-white hover:bg-white"
                                         } ${isDisabled ? "pointer-events-none" : ""}`}
                                 >
                                     <Checkbox
@@ -704,7 +704,7 @@ function PhonemeLanguageSection({
                                         onCheckedChange={() => onTogglePhoneme(ph)}
                                     />
                                     <span className="font-mono font-medium text-yellow-900">
-                                        {ph}
+                                        {ph[0]}
                                     </span>
                                 </label>
                             );

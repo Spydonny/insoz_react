@@ -90,7 +90,7 @@ export async function loginUser(data: {
 }) {
   const formData = new URLSearchParams({
     grant_type: "password",
-    username: data.email, // backend ждёт username
+    username: data.email, 
     password: data.password,
     scope: "",
     client_id: "string",
@@ -201,7 +201,7 @@ export async function createChild(data: Omit<Child, "uuid">): Promise<Child | nu
 export async function fetchPicture(pictureId: string): Promise<Blob> {
   try {
     const token = getToken(); // если используешь авторизацию
-    const res = await fetch(`${API_URL}/pictures/${pictureId}`, {
+    const res = await fetch(`${pictureId}`, {
       headers: token ? { Authorization: `Bearer ${token}` } : {},
     });
 
@@ -345,18 +345,28 @@ export async function analyzePhonemes(
 ): Promise<AnalyzePhonemesResponse> {
   const token = getToken();
   const formData = new FormData();
+
+  // 👇 извлекаем IPA (после слеша)
+  const ipaPhonemes = payload.phonemes.map((p) => {
+    const parts = p.split("/");
+    return parts[1] || parts[0]; // если вдруг нет слеша
+  });
+
   formData.append("language", payload.language);
-  formData.append("phonemes", JSON.stringify(payload.phonemes));
+  formData.append("phonemes", JSON.stringify(ipaPhonemes)); // 👈 отправляем IPA
   formData.append("max_score", String(payload.max_score));
   formData.append("record", payload.record);
 
-  return fetchWithHandling<AnalyzePhonemesResponse>(`${API_URL}/children/phonemes/analyze/${payload.child_uuid}`, {
-    method: "POST",
-    headers: {
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    },
-    body: formData,
-  });
+  return fetchWithHandling<AnalyzePhonemesResponse>(
+    `${API_URL}/children/phonemes/analyze/${payload.child_uuid}`,
+    {
+      method: "POST",
+      headers: {
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: formData,
+    }
+  );
 }
 
 export interface ManualPhonemeScoreRequest {

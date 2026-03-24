@@ -77,7 +77,7 @@ export function CommentSection({ postId, onCountChange }: CommentSectionProps) {
                   </span>
                   <div className="flex items-center gap-2">
                     <span className="text-xs text-gray-400">{timeAgo(c.created_at)}</span>
-                    {user && c.author_id === user.uuid && (
+                    {user && c.author_id === user._id && (
                       <button
                         onClick={() => handleDelete(c.id)}
                         className="text-xs text-red-400 hover:text-red-600"
@@ -100,7 +100,7 @@ export function CommentSection({ postId, onCountChange }: CommentSectionProps) {
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder={t("network.comment_placeholder", "Написать комментарий...")}
-          className="flex-1 rounded-xl border border-yellow-200 bg-white px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
+          className="flex-1 rounded-xl border border-yellow-400 bg-white px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
           maxLength={1000}
         />
         <button

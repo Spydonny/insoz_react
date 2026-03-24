@@ -3,6 +3,7 @@ import { getCurrentUser, logoutUser } from "@/lib/api";
 
 export interface User {
   _id: string;
+  uuid: string;
   username: string;
   full_name: string;
   disabled: boolean;

@@ -121,7 +121,7 @@ export function Sidebar() {
               <p className="text-xs font-semibold text-gray-800 truncate">
                 {user.full_name}
               </p>
-              <p className="text-xs text-gray-400 truncate">@{user.username}</p>
+              <p className="text-xs text-gray-400 truncate">{user.username}</p>
             </div>
           </div>
           <button
