@@ -1,0 +1,208 @@
+{
+  "common": {
+    "loading": "Жүктелуде...",
+    "notFound": "Деректер табылмады.",
+    "back": "Артқа",
+    "save": "Сақтау",
+    "saving": "Сақталуда...",
+    "addFile": "Файл қосу",
+    "uploading": "Жүктелуде...",
+    "audio": "Аудио"
+  },
+  "auth": {
+    "login": "Кіру",
+    "logout": "Шығу",
+    "unauthorized": "Қол жеткізу рұқсат етілмеген",
+    "loginTitle": "Кіру",
+    "loginButton": "Кіру",
+    "loginSubmitting": "Кіріп жатыр...",
+    "loginError": "Қате email немесе құпиясөз",
+    "registerLink": "Тіркелу",
+    "registerTitle": "Тіркелу",
+    "registerButton": "Тіркелу",
+    "registerSubmitting": "Тіркелуде...",
+    "registerError": "Тіркелу мүмкін болмады",
+    "noAccountQuestion": "Тіркелгі жоқ па?",
+    "haveAccountQuestion": "Тіркелгіңіз бар ма?"
+  },
+  "addChild": {
+    "openButton": "Баланы қосу",
+    "title": "Баланы қосу",
+    "description": "Тізімге қосу үшін баланың ақпаратын толтырыңыз.",
+    "photoLabel": "Фото",
+    "fullNameLabel": "Аты-жөні",
+    "ageLabel": "Баланың жасы",
+    "diagnosesLabel": "Негізгі диагноздар",
+    "diagnosesPlaceholder": "Үтір арқылы жазыңыз",
+    "validationError": "Аты-жөнін және жасын толтырыңыз.",
+    "createError": "Баланы қосу кезінде қате кетті.",
+    "unknownError": "Баланы қосу мүмкін болмады."
+  },
+  "form": {
+    "email": "Email",
+    "password": "Құпиясөз",
+    "fullName": "Толық аты-жөні"
+  },
+  "child": {
+    "ageYears_one": "жаста",
+    "ageYears_few": "жаста",
+    "ageYears_many": "жаста",
+    "ageYears_other": "жаста",
+    "status": {
+      "activeTreatment": "емдеу үдерісінде"
+    }
+  },
+  "dashboard": {
+    "missingChild": "Пациент табылмады.",
+    "tabs": {
+      "overview": "Шолу",
+      "records": "Жазбалар",
+      "progress": "Даму",
+      "exercises": "Жаттығулар",
+      "phonemes": "Фонемалар"
+    },
+    "actions": {
+      "edit": "Өңдеу",
+      "downloadPdf": "PDF жүктеп алу",
+      "loadRecommendations": "Ұсыныстарды жүктеу"
+    },
+    "diagnosisCardTitle": "ПМПК диагнозы",
+    "probabilityChartTitle": "Диагноз ықтималдықтарының прогресі (%)",
+    "filterTitle": "Белгілер сүзгісі",
+    "recommendationsTitle": "Емдеу бойынша ұсыныстар",
+    "recommendations": [
+      "Күніне 10 минут тыныс жаттығулары",
+      "Қарқыны баяу қысқа мәтіндерді оқу",
+      "«Ма-ме-ми» жаттығуы"
+    ],
+    "confirmRecommendations": "Ұсыныстарды растау",
+    "progressCardTitle": "{{diagnosis}} (%)",
+    "assistant": {
+      "open": "Ассистентті ашу",
+      "hide": "Ассистентті жасыру",
+      "title": "Терапевт-ассистент",
+      "close": "Жабу",
+      "empty": "Осы балаға арналған терапия стратегиясы туралы сұрақ қойыңыз. Жауаптар сіздің материалдарыңызға (RAG) сүйенеді.",
+      "thinking": "Ойлануда...",
+      "placeholder": "Терапевт-ассистенттен сұраңыз...",
+      "mobileOpen": "Ассистент",
+      "mobileClose": "Ассистентті жабу",
+      "error": "Ассистент уақытша қолжетімсіз. Кейінірек қайталап көріңіз."
+    },
+    "rag": {
+      "therapyQuestion": "Логопед үшін осы балаға қатысты 3 ерекше негізгі ұсыныс бер. Жауапты қысқа тармақтармен жаз.",
+      "recommendationsError": "Терапия бойынша ЖИ ұсыныстарын жүктеу мүмкін болмады.",
+      "emptyHint": "ЖИ негізіндегі ұсыныстарды алу үшін «Ұсыныстарды жүктеу» батырмасын басыңыз."
+    },
+    "pdf": {
+      "title": "Пациент туралы есеп",
+      "name": "Аты: {{name}}",
+      "age": "Жасы: {{age}} {{unit}}",
+      "ageUnknown": "Жасы: көрсетілмеген",
+      "progressTitle": "Сөйлеу көрсеткіштерінің прогресі",
+      "noData": "Талдауға дерек жоқ.",
+      "recordLine": "{{index}}. {{date}} күнгі жазба",
+      "noRecordData": "- Дерек жоқ",
+      "summaryTitle": "Жалпы қорытынды:",
+      "avgNormal": "Сөйлеудің норма көрсеткіші: {{value}}%",
+      "filename": "Есеп_{{name}}_{{date}}"
+    }
+  },
+  "records": {
+    "loading": "Жазбалар жүктелуде...",
+    "empty": "Жазбалар әлі жоқ",
+    "columns": {
+      "date": "Күні",
+      "type": "Түрі",
+      "prediction": "ЖИ болжамы",
+      "comment": "Түсініктеме",
+      "listen": "Тыңдау"
+    },
+    "typeAudio": "Аудио",
+    "stop": "Тоқтату",
+    "record": "Жазу",
+    "microphoneError": "Микрофонға қол жеткізу мүмкін болмады."
+  },
+  "diagnosis": {
+    "rhotacism": "Ротацизм",
+    "lisp": "Сигматизм",
+    "general_speech_disorder": "Сөйлеудің жалпы дамымауы",
+    "phonetic_phonemic_disorder": "Фонетика-фонемалық бұзылыс",
+    "stuttering": "Кекештену",
+    "aphasia": "Афазия",
+    "dysarthria": "Дизартрия",
+    "normal": "Норма"
+  },
+  "browser_no_speech_support": "Браузер дауыс тануды қолдамайды",
+  "say_prompt": "Айтыңыз:",
+  "start": "Бастау",
+  "stop": "Тоғызу",
+  "recording": "Жазу жүріп жатыр...",
+  "waiting": "Күтуде",
+  "you_said": "Сіз айттыңыз:",
+  "well_done": "Тамаша!",
+  "try_again": "Баяу тағы бір рет көріңіз",
+  "exercises": {
+    "notFound": "Жаттығу табылмады",
+    "onr": {
+      "title": "«МА-МО-МУ» буындарын қайтала",
+      "description": "Сөздегі буын құрылымын дамыту",
+      "category": "ЖСД",
+      "prompt": "ма мо му"
+    },
+    "phonetics": {
+      "title": "П дыбысы — ПА",
+      "description": "Жарылғыш дауыссыз дыбысты машықтандыру",
+      "category": "Фонетика",
+      "prompt": "па"
+    },
+    "breathing": {
+      "title": "«Шам» тыныс алуы",
+      "description": "Бірқалыпты дем шығаруды дамыту",
+      "category": "Артикуляция",
+      "prompt": "үрле"
+    }
+  },
+  "phonemes": {
+    "maxScore": "Максималды балл",
+    "selectPhonemes": "Проблемалық фонемаларды таңдаңыз",
+    "selected": "{{count}} фонема таңдалды",
+    "clearSelection": "Таңдауды тазалау",
+    "aiAnalysis": "ЖИ арқылы талдау",
+    "manualEval": "Қолмен бағалау",
+    "manualEvalDesc": "Әрбір таңдалған фонемаға 0-ден максимумға дейін баға қойыңыз.",
+    "mixedLangError": "Әр түрлі тілдердің фонемаларын таңдауға болмайды",
+    "noSelection": "Фонемалар таңдалмаған",
+    "analyzing": "Талдау жүруде...",
+    "analysisResult": "Талдау нәтижесі",
+    "analysisError": "Фонемаларды талдау мүмкін болмады",
+    "scoreLabel": "Баға",
+    "commentLabel": "Түсініктеме",
+    "commentPlaceholder": "Қосымша түсініктеме...",
+    "submit": "Жіберу",
+    "submitting": "Жіберілуде...",
+    "submitError": "Бағаларды жіберу мүмкін болмады",
+    "cancel": "Болдырмау",
+    "langEnglish": "Ағылшын",
+    "langRussian": "Орыс",
+    "langKazakh": "Қазақ",
+    "langTurkish": "Түрік"
+  },
+  "recommendations": {
+    "articulation_assessment": "Артикуляциялық аппараттың толық диагностикасын жүргізу.",
+    "phonemic_hearing_test": "Фонематикалық есту деңгейін тест арқылы бағалау.",
+    "individual_plan_update": "Жеке түзету жоспарын нәтижелерге сәйкес жаңарту.",
+    "dynamic_monitoring": "Алдыңғы көрсеткіштермен салыстырып, динамиканы тіркеу.",
+    "breathing_protocol": "Сөйлеу тынысын қалыпқа келтіру үшін тыныс жаттығуларын енгізу.",
+    "sound_automation": "Дыбысты сөздер мен сөйлемдерде автоматтандыру кезеңіне көшу.",
+    "syllable_drills": "Буындық жаттығулар арқылы артикуляцияны бекіту.",
+    "speech_tempo_control": "Сөйлеу қарқыны мен ырғақты бақылау.",
+    "prosody_training": "Интонация және екпінмен жұмыс істеу.",
+    "parent_instruction": "Ата-аналарға үй тапсырмалары бойынша нұсқаулық беру.",
+    "homework_assignment": "Үй жаттығуларын тағайындап, орындалуын бақылау.",
+    "audio_record_analysis": "Прогресті бағалау үшін аудиожазбаларды талдау.",
+    "difficulty_scaling": "Материалдың күрделілігін біртіндеп арттыру.",
+    "session_frequency_review": "Қажет болса сабақ жиілігін қайта қарастыру.",
+    "specialist_referral": "Қажет жағдайда басқа мамандарға жолдау."
+  }
+}

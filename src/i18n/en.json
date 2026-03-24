@@ -1,0 +1,208 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "notFound": "Data not found.",
+    "back": "Back",
+    "save": "Save",
+    "saving": "Saving...",
+    "addFile": "Add file",
+    "uploading": "Uploading...",
+    "audio": "Audio"
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "unauthorized": "Unauthorized access",
+    "loginTitle": "Login",
+    "loginButton": "Login",
+    "loginSubmitting": "Logging in...",
+    "loginError": "Wrong email or password",
+    "registerLink": "Register",
+    "registerTitle": "Registration",
+    "registerButton": "Register",
+    "registerSubmitting": "Registering...",
+    "registerError": "Couldn't sign up",
+    "noAccountQuestion": "Don't have an account?",
+    "haveAccountQuestion": "Already have an account?"
+  },
+  "addChild": {
+    "openButton": "Add child",
+    "title": "Add child",
+    "description": "Fill in the child's information to add them to the list.",
+    "photoLabel": "Photo",
+    "fullNameLabel": "Full name",
+    "ageLabel": "Child's age",
+    "diagnosesLabel": "Main diagnoses",
+    "diagnosesPlaceholder": "Separate with commas",
+    "validationError": "Please fill in the name and age.",
+    "createError": "Error while adding the child.",
+    "unknownError": "Failed to add the child."
+  },
+  "form": {
+    "email": "Email",
+    "password": "Password",
+    "fullName": "Full name"
+  },
+  "child": {
+    "ageYears_one": "year",
+    "ageYears_few": "years",
+    "ageYears_many": "years",
+    "ageYears_other": "years",
+    "status": {
+      "activeTreatment": "active treatment"
+    }
+  },
+  "dashboard": {
+    "missingChild": "Patient not found.",
+    "tabs": {
+      "overview": "Overview",
+      "records": "Records",
+      "progress": "Progress",
+      "exercises": "Exercises",
+      "phonemes": "Phonemes"
+    },
+    "actions": {
+      "edit": "Edit",
+      "downloadPdf": "Download PDF",
+      "loadRecommendations": "Load Recommendations"
+    },
+    "rag": {
+      "therapyQuestion": "Give 3 key unusual recommendations for the speech therapist about this child. Answer in brief bullet points.",
+      "recommendationsError": "Failed to load AI therapy recommendations.",
+      "emptyHint": "Click \"Load Recommendations\" to generate AI-based therapy suggestions."
+    },
+    "diagnosisCardTitle": "Dysarthria Diagnosis",
+    "probabilityChartTitle": "Diagnosis Probability Progress (%)",
+    "filterTitle": "Feature filter",
+    "recommendationsTitle": "Treatment recommendations",
+    "recommendations": [
+      "Breathing training 10 min/day",
+      "Reading short texts at a slow pace",
+      "Exercise “Ma-me-mi”"
+    ],
+    "confirmRecommendations": "Confirm recommendations",
+    "progressCardTitle": "{{diagnosis}} (%)",
+    "assistant": {
+      "open": "Open assistant",
+      "hide": "Hide assistant",
+      "title": "Therapy Assistant",
+      "close": "Close",
+      "empty": "Ask a question about the therapy strategy for this child. Answers are based on your materials (RAG).",
+      "thinking": "Thinking...",
+      "placeholder": "Ask the therapy assistant...",
+      "mobileOpen": "Assistant",
+      "mobileClose": "Close assistant",
+      "error": "Assistant is temporarily unavailable. Please try again later."
+    },
+    "pdf": {
+      "title": "Patient report",
+      "name": "Name: {{name}}",
+      "age": "Age: {{age}} {{unit}}",
+      "ageUnknown": "Age: not specified",
+      "progressTitle": "Speech performance progress",
+      "noData": "No data for analysis.",
+      "recordLine": "{{index}}. Record from {{date}}",
+      "noRecordData": "- No data",
+      "summaryTitle": "Overall summary:",
+      "avgNormal": "Average speech norm score: {{value}}%",
+      "filename": "Report_{{name}}_{{date}}"
+    }
+  },
+  "records": {
+    "loading": "Loading records...",
+    "empty": "No records yet",
+    "columns": {
+      "date": "Date",
+      "type": "Type",
+      "prediction": "AI prediction",
+      "comment": "Comment",
+      "listen": "Listen"
+    },
+    "typeAudio": "Audio",
+    "stop": "Stop",
+    "record": "Record",
+    "microphoneError": "Unable to access the microphone."
+  },
+  "diagnosis": {
+    "rhotacism": "Rhotacism",
+    "lisp": "Lisp",
+    "general_speech_disorder": "General speech underdevelopment",
+    "phonetic_phonemic_disorder": "Phonetic-phonemic disorder",
+    "stuttering": "Stuttering",
+    "aphasia": "Aphasia",
+    "dysarthria": "Dysarthria",
+    "normal": "Normal"
+  },
+  "browser_no_speech_support": "Your browser does not support speech recognition",
+  "say_prompt": "Say:",
+  "start": "Start",
+  "stop": "Stop",
+  "recording": "Recording...",
+  "waiting": "Waiting",
+  "you_said": "You said:",
+  "well_done": "Great!",
+  "try_again": "Try again slowly",
+  "exercises": {
+    "notFound": "Exercise not found",
+    "onr": {
+      "title": "Repeat the syllables “MA-MO-MU”",
+      "description": "Development of syllable structure in speech",
+      "category": "ONR",
+      "prompt": "ma mo mu"
+    },
+    "phonetics": {
+      "title": "Sound P — PA",
+      "description": "Practicing the plosive consonant",
+      "category": "Phonetics",
+      "prompt": "pa"
+    },
+    "breathing": {
+      "title": "Breathing “Candle”",
+      "description": "Developing smooth exhalation",
+      "category": "Articulation",
+      "prompt": "blow"
+    }
+  },
+  "phonemes": {
+    "maxScore": "Maximum score",
+    "selectPhonemes": "Select problematic phonemes",
+    "selected": "{{count}} phoneme(s) selected",
+    "clearSelection": "Clear selection",
+    "aiAnalysis": "AI Analysis",
+    "manualEval": "Manual Evaluation",
+    "manualEvalDesc": "Assign a score from 0 to the maximum for each selected phoneme.",
+    "mixedLangError": "Cannot select phonemes from different languages",
+    "noSelection": "No phonemes selected",
+    "analyzing": "Analyzing...",
+    "analysisResult": "Analysis Result",
+    "analysisError": "Failed to analyze phonemes",
+    "scoreLabel": "Score",
+    "commentLabel": "Comment",
+    "commentPlaceholder": "Optional comment...",
+    "submit": "Submit",
+    "submitting": "Submitting...",
+    "submitError": "Failed to submit scores",
+    "cancel": "Cancel",
+    "langEnglish": "English",
+    "langRussian": "Russian",
+    "langKazakh": "Kazakh",
+    "langTurkish": "Turkish"
+  },
+  "recommendations": {
+    "articulation_assessment": "Conduct a detailed articulation assessment to identify misarticulated phonemes.",
+    "phonemic_hearing_test": "Evaluate phonemic awareness using standardized perception tests.",
+    "individual_plan_update": "Update the individualized intervention plan based on current performance data.",
+    "dynamic_monitoring": "Document progress dynamics and compare results with previous sessions.",
+    "breathing_protocol": "Introduce structured breathing exercises to normalize expiratory control during speech.",
+    "sound_automation": "Progress from sound elicitation to automation at word and sentence levels.",
+    "syllable_drills": "Use syllable drills to reinforce correct articulatory placement.",
+    "speech_tempo_control": "Monitor and regulate speech rate and fluency during tasks.",
+    "prosody_training": "Target prosody, stress patterns, and intonation for natural speech production.",
+    "parent_instruction": "Provide caregivers with clear home-practice guidelines and supervision strategies.",
+    "homework_assignment": "Assign structured home exercises with measurable goals.",
+    "audio_record_analysis": "Analyze recorded speech samples for objective progress tracking.",
+    "difficulty_scaling": "Gradually increase linguistic and articulatory task complexity.",
+    "session_frequency_review": "Reassess therapy frequency if progress remains limited.",
+    "specialist_referral": "Refer to related specialists (neurologist, psychologist, ENT) when clinically indicated."
+  }
+}
