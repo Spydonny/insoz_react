@@ -90,8 +90,8 @@ export const OverviewTab = ({
     .sort((a, b) => a.ts - b.ts);
 
   const validDiagnosisKeys = [
-    "rhotacism",
-    "lisp",
+    // "rhotacism",
+    // "lisp",
     "general_speech_disorder",
     "phonetic_phonemic_disorder",
     "stuttering",

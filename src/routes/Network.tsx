@@ -48,7 +48,7 @@ export default function Network() {
   return (
     <div>
       <p className="text-sm text-gray-400 mb-5">
-        {t("network.subtitle", "Делитесь результатами и вдохновляйте других")}
+        {t("network.subtitle", "Share progress and inspire others")}
       </p>
       {error && (
         <div className="text-red-500 text-sm text-center py-4">{error}</div>
@@ -56,8 +56,7 @@ export default function Network() {
 
       {!loading && posts.length === 0 && (
         <div className="text-center py-12 text-gray-400">
-          <p className="text-4xl mb-3">📝</p>
-          <p>{t("network.empty", "Пока нет публикаций. Будьте первым!")}</p>
+          <p>{t("network.empty", "No posts yet. Be the first to share!")}</p>
         </div>
       )}
 
@@ -79,7 +78,7 @@ export default function Network() {
             onClick={() => fetchPosts(false)}
             className="text-yellow-600 hover:text-yellow-800 text-sm font-medium underline"
           >
-            {t("network.load_more", "Загрузить ещё")}
+            {t("network.load_more", "Load more")}
           </button>
         </div>
       )}

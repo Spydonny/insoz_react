@@ -16,21 +16,21 @@ const NAV_ITEMS: NavItem[] = [
   {
     icon: FiUsers,
     labelKey: "sidebar.clients",
-    labelFallback: "Клиенты",
+    labelFallback: "Clients",
     path: "/",
     matchPrefix: "/",
   },
   {
     icon: FiRss,
     labelKey: "sidebar.feed",
-    labelFallback: "Лента",
+    labelFallback: "Feed",
     path: "/network",
     matchPrefix: "/network",
   },
   {
     icon: FiUser,
     labelKey: "sidebar.profile",
-    labelFallback: "Профиль",
+    labelFallback: "Profile",
     path: "__profile__",
     matchPrefix: "/network/profile",
   },
@@ -128,7 +128,7 @@ export function Sidebar() {
             onClick={handleLogout}
             className="w-full text-xs text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg py-1.5 transition-colors"
           >
-            {t("auth.logout", "Выйти")}
+            {t("auth.logout", "Logout")}
           </button>
         </div>
       )}

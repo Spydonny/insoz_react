@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --background: #fffbea; /* светлая пастельная жёлтая */
+  --background: #fffbea; /* light pastel yellow */
   --foreground: #222;
   --card: #ffffff;
   --muted: #e5e7eb;
@@ -19,6 +19,6 @@
 }
 
 body {
-  @apply bg-background text-foreground min-h-screen text-lg; /* увеличиваем размер шрифта */
+  @apply bg-background text-foreground min-h-screen text-lg; /* increase the font size */
   font-family: system-ui, sans-serif;
 }

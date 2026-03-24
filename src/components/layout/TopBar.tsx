@@ -3,9 +3,9 @@ import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 const PAGE_TITLES: Record<string, { key: string; fallback: string }> = {
-  "/": { key: "sidebar.clients", fallback: "Клиенты" },
-  "/network": { key: "sidebar.feed", fallback: "Лента" },
-  "/network/profile": { key: "sidebar.profile", fallback: "Профиль" },
+  "/": { key: "sidebar.clients", fallback: "Clients" },
+  "/network": { key: "sidebar.feed", fallback: "Feed" },
+  "/network/profile": { key: "sidebar.profile", fallback: "Profile" },
 };
 
 function getPageTitle(pathname: string) {

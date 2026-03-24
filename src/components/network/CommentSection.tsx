@@ -10,10 +10,10 @@ interface CommentSectionProps {
 
 function timeAgo(dateStr: string): string {
   const diff = (Date.now() - new Date(dateStr).getTime()) / 1000;
-  if (diff < 60) return "только что";
-  if (diff < 3600) return `${Math.floor(diff / 60)} мин назад`;
-  if (diff < 86400) return `${Math.floor(diff / 3600)} ч назад`;
-  return `${Math.floor(diff / 86400)} д назад`;
+  if (diff < 60) return "just now";
+  if (diff < 3600) return `${Math.floor(diff / 60)} min ago`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)} h ago`;
+  return `${Math.floor(diff / 86400)} d ago`;
 }
 
 export function CommentSection({ postId, onCountChange }: CommentSectionProps) {
@@ -61,7 +61,7 @@ export function CommentSection({ postId, onCountChange }: CommentSectionProps) {
     <div className="mt-3 border-t border-yellow-100 pt-3">
       {loading ? (
         <p className="text-xs text-gray-400">
-          {t("network.loading_comments", "Загрузка...")}
+          {t("network.loading_comments", "Loading...")}
         </p>
       ) : (
         <div className="space-y-2 mb-3">
@@ -99,7 +99,7 @@ export function CommentSection({ postId, onCountChange }: CommentSectionProps) {
           type="text"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder={t("network.comment_placeholder", "Написать комментарий...")}
+          placeholder={t("network.comment_placeholder", "Write a comment...")}
           className="flex-1 rounded-xl border border-yellow-400 bg-white px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
           maxLength={1000}
         />
@@ -108,7 +108,7 @@ export function CommentSection({ postId, onCountChange }: CommentSectionProps) {
           disabled={submitting || !text.trim()}
           className="bg-yellow-400 hover:bg-yellow-500 disabled:opacity-50 text-white font-semibold px-4 py-1.5 rounded-xl text-sm transition-colors"
         >
-          {t("network.send", "Отправить")}
+          {t("network.send", "Send")}
         </button>
       </form>
     </div>

@@ -29,7 +29,7 @@ export const ProgressTab = ({ records }: ProgressTabProps) => {
       const ts = new Date(rec.uploaded_at).getTime();
 
       return {
-        ts, // ← ключевой момент: timestamp
+        ts, // key point: timestamp
         date: new Date(ts).toLocaleString(locale, {
           day: "2-digit",
           month: "2-digit",
@@ -41,11 +41,11 @@ export const ProgressTab = ({ records }: ProgressTabProps) => {
         ...probabilities,
       };
     })
-    .sort((a, b) => a.ts - b.ts); // ← обязательно сортируем
+    .sort((a, b) => a.ts - b.ts); 
 
   const validDiagnosisKeys = [
-    "rhotacism",
-    "lisp",
+    // "rhotacism",
+    // "lisp",
     "general_speech_disorder",
     "phonetic_phonemic_disorder",
     "stuttering",

@@ -120,7 +120,7 @@ export function AddChildDialog({ onAdd }: AddChildDialogProps) {
             </DialogDescription>
           </DialogHeader>
 
-          {/* Фото */}
+          {/* Photo */}
           <div className="flex flex-col items-center gap-4 mt-3">
             {form.preview ? (
               <div className="relative">
@@ -158,7 +158,7 @@ export function AddChildDialog({ onAdd }: AddChildDialogProps) {
             />
           </div>
 
-          {/* Поля формы */}
+          {/* Form fields */}
           <div className="flex flex-col gap-4 mt-4">
             <RoundedInput
               lbl={t("addChild.fullNameLabel")}

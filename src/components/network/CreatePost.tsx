@@ -36,7 +36,7 @@ export function CreatePost({ onCreated }: CreatePostProps) {
       <textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        placeholder={t("network.create_placeholder", "Поделитесь результатами или новостями...")}
+        placeholder={t("network.create_placeholder", "Share updates or progress...")}
         className="w-full resize-none rounded-xl border border-yellow-400 bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 min-h-[80px]"
         maxLength={2000}
       />
@@ -49,8 +49,8 @@ export function CreatePost({ onCreated }: CreatePostProps) {
           className="bg-yellow-400 hover:bg-yellow-500 disabled:opacity-50 text-white font-semibold px-5 py-2 rounded-xl text-sm transition-colors"
         >
           {loading
-            ? t("network.publishing", "Публикую...")
-            : t("network.publish", "Опубликовать")}
+            ? t("network.publishing", "Publishing...")
+            : t("network.publish", "Publish")}
         </button>
       </div>
     </form>

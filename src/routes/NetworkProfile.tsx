@@ -71,22 +71,21 @@ export default function NetworkProfile() {
                 <p className="text-sm text-gray-600 mt-1">{profile.bio}</p>
               )}
               <p className="text-xs text-yellow-600 mt-1 font-medium">
-                {profile.posts_count} {t("network.posts_count", "публикаций")}
+                {profile.posts_count} {t("network.posts_count", "posts")}
               </p>
             </div>
           </div>
 
           {/* Posts */}
           <h3 className="text-base font-semibold text-gray-600 mb-4">
-            {t("network.user_posts", "Публикации")}
+            {t("network.user_posts", "Posts")}
           </h3>
 
           {isOwnProfile && <CreatePost onCreated={handleCreated} />}
 
           {posts.length === 0 ? (
             <div className="text-center py-10 text-gray-400">
-              <p className="text-3xl mb-2">📭</p>
-              <p>{t("network.no_posts", "Публикаций пока нет")}</p>
+              <p>{t("network.no_posts", "No posts yet")}</p>
             </div>
           ) : (
             <div className="space-y-4">

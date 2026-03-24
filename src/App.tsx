@@ -25,7 +25,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* Protected — все внутри Layout с сайдбаром */}
+        {/* Protected routes inside Layout with the sidebar */}
         <Route
           path="/"
           element={

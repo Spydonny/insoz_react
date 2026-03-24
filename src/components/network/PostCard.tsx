@@ -16,10 +16,10 @@ const POST_TIME_OFFSET_MS = 5 * 60 * 60 * 1000;
 function timeAgo(dateStr: string): string {
   const publishedAt = new Date(dateStr).getTime() + POST_TIME_OFFSET_MS;
   const diff = Math.max(0, (Date.now() - publishedAt) / 1000);
-  if (diff < 60) return "только что";
-  if (diff < 3600) return `${Math.floor(diff / 60)} мин назад`;
-  if (diff < 86400) return `${Math.floor(diff / 3600)} ч назад`;
-  return `${Math.floor(diff / 86400)} д назад`;
+  if (diff < 60) return "just now";
+  if (diff < 3600) return `${Math.floor(diff / 60)} min ago`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)} h ago`;
+  return `${Math.floor(diff / 86400)} d ago`;
 }
 
 export function PostCard({ post, onDeleted }: PostCardProps) {
@@ -31,8 +31,8 @@ export function PostCard({ post, onDeleted }: PostCardProps) {
   const [showComments, setShowComments] = useState(false);
   const [liking, setLiking] = useState(false);
 
-  const isLiked = user ? currentPost.likes.includes(user._id) : false;
-  const isOwner = user?._id === currentPost.author_id;
+  const isLiked = user ? currentPost.likes.includes(user.uuid) : false;
+  const isOwner = user?.uuid === currentPost.author_id;
 
   const handleLike = async () => {
     if (!user || liking) return;
@@ -47,7 +47,7 @@ export function PostCard({ post, onDeleted }: PostCardProps) {
   };
 
   const handleDelete = async () => {
-    if (!window.confirm(t("network.confirm_delete", "Удалить пост?"))) return;
+    if (!window.confirm(t("network.confirm_delete", "Delete this post?"))) return;
     try {
       await deletePost(currentPost.id);
       onDeleted?.(currentPost.id);
@@ -78,7 +78,7 @@ export function PostCard({ post, onDeleted }: PostCardProps) {
             onClick={handleDelete}
             className="text-xs text-red-400 hover:text-red-600 transition-colors"
           >
-            {t("network.delete", "Удалить")}
+            {t("network.delete", "Delete")}
           </button>
         )}
       </div>

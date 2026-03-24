@@ -34,17 +34,17 @@ const dict: LocaleDict = {
         top: "Top diagnoses",
     },
     ru: {
-        title: "Отчёт по логопедической терапии",
-        child: "Информация о ребёнке",
-        nn: "Сводка нейросети",
-        progress: "Динамика терапии",
-        details: "Подробный анализ",
-        date: "Дата",
-        normal: "Норма",
-        risk: "Риск",
+        title: "Speech Therapy Report",
+        child: "Child Information",
+        nn: "Neural Network Summary",
+        progress: "Therapy Progress",
+        details: "Detailed Analysis",
+        date: "Date",
+        normal: "Normal",
+        risk: "Risk",
         improvement: "Δ",
-        trend: "Тренд",
-        top: "Основные диагнозы",
+        trend: "Trend",
+        top: "Top diagnoses",
     },
     kk: {
         title: "Сөйлеу терапиясының есебі",
@@ -139,7 +139,7 @@ export async function generateAndDownloadTherapyReport(
     y -= 20;
 
     // =====================================================
-    // ✅ COMPACT NN TABLE (красивый)
+    // ✅ COMPACT NN TABLE (clean layout)
     // =====================================================
     text(tr.nn, 14, true);
 
@@ -206,7 +206,7 @@ export async function generateAndDownloadTherapyReport(
     });
 
     // =====================================================
-    // ✅ DETAILS (вертикально — читабельно)
+    // ✅ DETAILS (vertical and easier to read)
     // =====================================================
     y -= 25;
     text(tr.details, 14, true);
