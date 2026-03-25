@@ -9,6 +9,14 @@
     "uploading": "Uploading...",
     "audio": "Audio"
   },
+  "app": {
+    "name": "InSoz.ai"
+  },
+  "sidebar": {
+    "clients": "Clients",
+    "feed": "Feed",
+    "profile": "Profile"
+  },
   "auth": {
     "login": "Login",
     "logout": "Logout",
@@ -71,7 +79,7 @@
       "recommendationsError": "Failed to load AI therapy recommendations.",
       "emptyHint": "Click \"Load Recommendations\" to generate AI-based therapy suggestions."
     },
-    "diagnosisCardTitle": "Dysarthria Diagnosis",
+    "diagnosisCardTitle": "PMPC's Diagnosis",
     "probabilityChartTitle": "Diagnosis Probability Progress (%)",
     "filterTitle": "Feature filter",
     "recommendationsTitle": "Treatment recommendations",
@@ -82,6 +90,10 @@
     ],
     "confirmRecommendations": "Confirm recommendations",
     "progressCardTitle": "{{diagnosis}} (%)",
+    "phonemeScoresTitle": "Phoneme analysis scores",
+    "phonemeScoresEmpty": "No saved phoneme analyses yet.",
+    "phonemeScoresAi": "AI analysis",
+    "phonemeScoresManual": "Manual evaluation",
     "assistant": {
       "open": "Open assistant",
       "hide": "Hide assistant",
@@ -179,6 +191,16 @@
     "scoreLabel": "Score",
     "commentLabel": "Comment",
     "commentPlaceholder": "Optional comment...",
+    "recordUnsupported": "This browser does not support audio recording.",
+    "recordPermissionError": "Could not access the microphone.",
+    "recordRequired": "Record audio before starting AI analysis.",
+    "recordPrompt": "Record a short audio sample and send it for AI phoneme analysis.",
+    "recordReady": "Recording is ready",
+    "recording": "Recording...",
+    "recordStart": "Start recording",
+    "recordStop": "Stop",
+    "playRecording": "Play",
+    "recordAgain": "Re-record",
     "submit": "Submit",
     "submitting": "Submitting...",
     "submitError": "Failed to submit scores",
@@ -187,6 +209,22 @@
     "langRussian": "Russian",
     "langKazakh": "Kazakh",
     "langTurkish": "Turkish"
+  },
+  "network": {
+    "subtitle": "Share progress and inspire others",
+    "empty": "No posts yet. Be the first to share!",
+    "load_more": "Load more",
+    "posts_count": "posts",
+    "user_posts": "Posts",
+    "no_posts": "No posts yet",
+    "loading_comments": "Loading comments...",
+    "comment_placeholder": "Write a comment...",
+    "send": "Send",
+    "create_placeholder": "Share updates or progress...",
+    "publishing": "Publishing...",
+    "publish": "Publish",
+    "confirm_delete": "Delete this post?",
+    "delete": "Delete"
   },
   "recommendations": {
     "articulation_assessment": "Conduct a detailed articulation assessment to identify misarticulated phonemes.",

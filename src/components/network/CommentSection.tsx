@@ -8,12 +8,15 @@ interface CommentSectionProps {
   onCountChange?: (count: number) => void;
 }
 
-function timeAgo(dateStr: string): string {
+function timeAgo(
+  dateStr: string,
+  t: (key: string, options?: Record<string, unknown>) => string
+): string {
   const diff = (Date.now() - new Date(dateStr).getTime()) / 1000;
-  if (diff < 60) return "just now";
-  if (diff < 3600) return `${Math.floor(diff / 60)} min ago`;
-  if (diff < 86400) return `${Math.floor(diff / 3600)} h ago`;
-  return `${Math.floor(diff / 86400)} d ago`;
+  if (diff < 60) return t("network.time.justNow");
+  if (diff < 3600) return t("network.time.minutesAgo", { count: Math.floor(diff / 60) });
+  if (diff < 86400) return t("network.time.hoursAgo", { count: Math.floor(diff / 3600) });
+  return t("network.time.daysAgo", { count: Math.floor(diff / 86400) });
 }
 
 export function CommentSection({ postId, onCountChange }: CommentSectionProps) {
@@ -76,7 +79,7 @@ export function CommentSection({ postId, onCountChange }: CommentSectionProps) {
                     {c.author_name}
                   </span>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs text-gray-400">{timeAgo(c.created_at)}</span>
+                    <span className="text-xs text-gray-400">{timeAgo(c.created_at, t)}</span>
                     {user && c.author_id === user._id && (
                       <button
                         onClick={() => handleDelete(c.id)}

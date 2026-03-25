@@ -9,6 +9,14 @@
         "uploading": "Yükleniyor...",
         "audio": "Ses"
     },
+    "app": {
+        "name": "InSoz.ai"
+    },
+    "sidebar": {
+        "clients": "Danışanlar",
+        "feed": "Akış",
+        "profile": "Profil"
+    },
     "auth": {
         "login": "Giriş",
         "logout": "Çıkış",
@@ -66,6 +74,11 @@
             "downloadPdf": "PDF İndir",
             "loadRecommendations": "Önerileri Yükle"
         },
+        "rag": {
+            "therapyQuestion": "Bu çocuk için konuşma terapistine yönelik 3 temel ve alışılmadık öneri ver. Kısa maddeler halinde yanıtla.",
+            "recommendationsError": "Yapay zekâ terapi önerileri yüklenemedi.",
+            "emptyHint": "Yapay zekâ tabanlı terapi önerileri oluşturmak için \"Önerileri Yükle\" düğmesine tıklayın."
+        },
         "diagnosisCardTitle": "Dizartri Teşhisi",
         "probabilityChartTitle": "Teşhis Olasılığı İlerlemesi (%)",
         "filterTitle": "Özellik filtresi",
@@ -77,6 +90,10 @@
         ],
         "confirmRecommendations": "Önerileri onayla",
         "progressCardTitle": "{{diagnosis}} (%)",
+        "phonemeScoresTitle": "Fonem analiz puanları",
+        "phonemeScoresEmpty": "Henüz kaydedilmiş fonem analizi yok.",
+        "phonemeScoresAi": "Yapay zekâ analizi",
+        "phonemeScoresManual": "Manuel değerlendirme",
         "assistant": {
             "open": "Asistanı aç",
             "hide": "Asistanı gizle",
@@ -88,11 +105,6 @@
             "mobileOpen": "Asistan",
             "mobileClose": "Asistanı kapat",
             "error": "Asistan geçici olarak kullanılamıyor. Lütfen tekrar deneyin."
-        },
-        "rag": {
-            "therapyQuestion": "Bu çocuk için konuşma terapistine yönelik 3 temel ve alışılmadık öneri ver. Kısa maddeler halinde yanıtla.",
-            "recommendationsError": "Yapay zekâ terapi önerileri yüklenemedi.",
-            "emptyHint": "Yapay zekâ tabanlı terapi önerileri oluşturmak için \"Önerileri Yükle\" düğmesine tıklayın."
         },
         "pdf": {
             "title": "Hasta raporu",
@@ -179,6 +191,16 @@
         "scoreLabel": "Puan",
         "commentLabel": "Yorum",
         "commentPlaceholder": "İsteğe bağlı yorum...",
+        "recordUnsupported": "Bu tarayıcı ses kaydını desteklemiyor.",
+        "recordPermissionError": "Mikrofona erişilemedi.",
+        "recordRequired": "YZ analizini başlatmadan önce ses kaydı yapın.",
+        "recordPrompt": "Kısa bir ses örneği kaydedin ve YZ fonem analizi için gönderin.",
+        "recordReady": "Kayıt hazır",
+        "recording": "Kaydediliyor...",
+        "recordStart": "Kaydı başlat",
+        "recordStop": "Durdur",
+        "playRecording": "Oynat",
+        "recordAgain": "Yeniden kaydet",
         "submit": "Gönder",
         "submitting": "Gönderiliyor...",
         "submitError": "Puanlar gönderilemedi",
@@ -187,6 +209,22 @@
         "langRussian": "Rusça",
         "langKazakh": "Kazakça",
         "langTurkish": "Türkçe"
+    },
+    "network": {
+        "subtitle": "İlerlemeyi paylaşın ve başkalarına ilham verin",
+        "empty": "Henüz gönderi yok. İlk paylaşan siz olun!",
+        "load_more": "Daha fazla yükle",
+        "posts_count": "gönderi",
+        "user_posts": "Gönderiler",
+        "no_posts": "Henüz gönderi yok",
+        "loading_comments": "Yorumlar yükleniyor...",
+        "comment_placeholder": "Yorum yazın...",
+        "send": "Gönder",
+        "create_placeholder": "Güncellemeleri veya ilerlemeyi paylaşın...",
+        "publishing": "Yayınlanıyor...",
+        "publish": "Yayınla",
+        "confirm_delete": "Bu gönderi silinsin mi?",
+        "delete": "Sil"
     },
     "recommendations": {
         "articulation_assessment": "Hatalı telaffuz edilen fonemleri belirlemek için detaylı bir artikülasyon değerlendirmesi yapın.",

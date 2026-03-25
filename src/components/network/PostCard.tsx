@@ -13,13 +13,16 @@ interface PostCardProps {
 
 const POST_TIME_OFFSET_MS = 5 * 60 * 60 * 1000;
 
-function timeAgo(dateStr: string): string {
+function timeAgo(
+  dateStr: string,
+  t: (key: string, options?: Record<string, unknown>) => string
+): string {
   const publishedAt = new Date(dateStr).getTime() + POST_TIME_OFFSET_MS;
   const diff = Math.max(0, (Date.now() - publishedAt) / 1000);
-  if (diff < 60) return "just now";
-  if (diff < 3600) return `${Math.floor(diff / 60)} min ago`;
-  if (diff < 86400) return `${Math.floor(diff / 3600)} h ago`;
-  return `${Math.floor(diff / 86400)} d ago`;
+  if (diff < 60) return t("network.time.justNow");
+  if (diff < 3600) return t("network.time.minutesAgo", { count: Math.floor(diff / 60) });
+  if (diff < 86400) return t("network.time.hoursAgo", { count: Math.floor(diff / 3600) });
+  return t("network.time.daysAgo", { count: Math.floor(diff / 86400) });
 }
 
 export function PostCard({ post, onDeleted }: PostCardProps) {
@@ -69,7 +72,7 @@ export function PostCard({ post, onDeleted }: PostCardProps) {
             <p className="font-semibold text-sm text-gray-800">
               {currentPost.author_name}
             </p>
-            <p className="text-xs text-gray-400">{timeAgo(currentPost.created_at)}</p>
+            <p className="text-xs text-gray-400">{timeAgo(currentPost.created_at, t)}</p>
           </div>
         </button>
 
@@ -91,7 +94,7 @@ export function PostCard({ post, onDeleted }: PostCardProps) {
       {currentPost.image_url && (
         <img
           src={currentPost.image_url}
-          alt="post"
+          alt={t("network.postImageAlt")}
           className="w-full rounded-xl mb-3 max-h-64 object-cover"
         />
       )}
