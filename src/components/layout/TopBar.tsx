@@ -27,7 +27,7 @@ export function TopBar() {
   const title = getPageTitle(location.pathname);
 
   return (
-    <header className="h-14 border-b border-yellow-100 px-8 flex items-center justify-between bg-white sticky top-0 z-10">
+    <header className="h-14 border-b border-yellow-100 px-4 sm:px-6 flex items-center justify-between bg-white sticky top-0 z-10">
       <h2 className="text-base font-semibold text-gray-700">
         {t(title.key, title.fallback)}
       </h2>
