@@ -206,6 +206,95 @@ export async function generateAndDownloadTherapyReport(
     });
 
     // =====================================================
+    // ✅ PHONEME ANALYSIS (добавленный блок)
+    // =====================================================
+    y -= 25;
+    text("Phoneme Analysis", 14, true);
+
+    const analyses = child.phoneme_analyses || [];
+
+    if (!analyses.length) {
+        text("No phoneme data available");
+    } else {
+        const sortedAnalyses = [...analyses].sort(
+            (a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+        );
+
+        // ==============================
+        // AVERAGE SCORE TREND
+        // ==============================
+        text("Average Score Progress", 12, true);
+
+        const avgWidths = [90, 90, 90, 60];
+        row(["Date", "Avg Score", "Change", "Trend"], avgWidths, true);
+
+        let prevScore: number | null = null;
+
+        sortedAnalyses.forEach((a) => {
+            const score = a.average_score;
+            const date = new Date(a.created_at).toLocaleDateString(locale);
+
+            let diff = 0;
+            let trend = "→";
+
+            if (prevScore !== null) {
+                diff = score - prevScore;
+                if (diff > 0.5) trend = "↑";
+                else if (diff < -0.5) trend = "↓";
+            }
+
+            row(
+                [
+                    date,
+                    score.toFixed(2),
+                    `${diff >= 0 ? "+" : ""}${diff.toFixed(2)}`,
+                    trend,
+                ],
+                avgWidths
+            );
+
+            prevScore = score;
+        });
+
+        y -= 15;
+
+        // ==============================
+        // DETAILS PER ANALYSIS
+        // ==============================
+        const threshold = 0.6;
+
+        sortedAnalyses.forEach((a) => {
+            const date = new Date(a.created_at).toLocaleDateString(locale);
+
+            text(`${date} (${a.analysis_type})`, 12, true);
+            text(`Avg score: ${a.average_score.toFixed(2)} / ${a.max_score}`);
+
+            if (a.summary) text(`Summary: ${a.summary}`, 10);
+            if (a.comment) text(`Comment: ${a.comment}`, 10);
+
+            // слабые фонемы
+            const weak = a.results
+                .filter((p) => p.score < threshold)
+                .sort((a, b) => a.score - b.score)
+                .slice(0, 5);
+
+            if (weak.length) {
+                text("Weak phonemes:", 11, true);
+
+                weak.forEach((p) => {
+                    text(`   ${p.phoneme} (${p.letter}): ${p.score.toFixed(2)}`, 10);
+                });
+            } else {
+                text("No critical phoneme issues", 10);
+            }
+
+            y -= 10;
+            checkPage();
+        });
+    }
+
+
+    // =====================================================
     // ✅ DETAILS (vertical and easier to read)
     // =====================================================
     y -= 25;
