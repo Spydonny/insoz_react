@@ -211,6 +211,12 @@
     "langTurkish": "Турецкий"
   },
   "network": {
+    "time": {
+      "justNow": "Только что",
+      "minutesAgo": "{{count}} мин назад",
+      "hoursAgo": "{{count}} ч назад",
+      "daysAgo": "{{count}} дн назад"
+    },
     "subtitle": "Делитесь прогрессом и вдохновляйте других",
     "empty": "Пока нет публикаций",
     "load_more": "Загрузить ещё",

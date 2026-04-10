@@ -211,6 +211,12 @@
     "langTurkish": "Turkish"
   },
   "network": {
+    "time": {
+      "justNow": "Just now",
+      "minutesAgo": "{{count}} min ago",
+      "hoursAgo": "{{count}}h ago",
+      "daysAgo": "{{count}}d ago"
+    },
     "subtitle": "Share progress and inspire others",
     "empty": "No posts yet. Be the first to share!",
     "load_more": "Load more",

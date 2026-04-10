@@ -211,6 +211,12 @@
         "langTurkish": "Türkçe"
     },
     "network": {
+        "time": {
+            "justNow": "Az önce",
+            "minutesAgo": "{{count}} dk önce",
+            "hoursAgo": "{{count}} saat önce",
+            "daysAgo": "{{count}} gün önce"
+        },
         "subtitle": "İlerlemeyi paylaşın ve başkalarına ilham verin",
         "empty": "Henüz gönderi yok. İlk paylaşan siz olun!",
         "load_more": "Daha fazla yükle",
