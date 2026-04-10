@@ -29,8 +29,6 @@ export default function Dashboard() {
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [chatInput, setChatInput] = useState("");
   const [chatLoading, setChatLoading] = useState(false);
-
-  // ===== RAG RECOMMENDATIONS (page-level so it survives tab switches) =====
   const [ragAnswer, setRagAnswer] = useState<string | null>(null);
   const [ragLoading, setRagLoading] = useState(false);
   const [ragError, setRagError] = useState<string | null>(null);
